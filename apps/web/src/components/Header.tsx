@@ -7,7 +7,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onOpenDossier }) => {
-  const { team, eventClock, setTheoryModalOpen, logout, levels } =
+  const { team, eventClock, setTheoryModalOpen, logout, theoryUnlocked } =
     useGameStore();
 
   const [remainingSeconds, setRemainingSeconds] = useState(0);
@@ -32,7 +32,6 @@ export const Header: React.FC<HeaderProps> = ({ onOpenDossier }) => {
     return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
-  const isLevel10Solved = levels.find((l) => l.id === 10)?.status === 'SOLVED';
 
   return (
     <header className="bg-tape/95 border-b-2 border-signal/40 px-4 py-2.5 text-label flex flex-wrap items-center justify-between gap-3 shadow-desk z-30 select-none relative">
@@ -125,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({ onOpenDossier }) => {
           type="button"
           onClick={() => setTheoryModalOpen(true)}
           className={`px-2.5 py-1.5 text-xs font-serif rounded border flex items-center gap-1.5 transition-all motion-reduce:transition-none shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-signal ${
-            isLevel10Solved
+            theoryUnlocked
               ? 'bg-signal text-ink font-bold border-signal animate-bounce motion-reduce:animate-none shadow-[0_0_15px_rgba(166,115,50,0.6)]'
               : 'bg-ink/80 hover:bg-tape text-label border-signal/40 hover:border-signal'
           }`}

@@ -1,6 +1,6 @@
 # MURDER MYSTERY // Case File Archive Platform
 
-A web platform for a 3.5-hour team murder mystery competition set in late October 1986 (London). Teams solve 10 sequential forensic investigation cases. Every solved case unseals a clue card onto the squad's physical Evidence Board with an authentic redaction-wipe reveal. After Case 10, teams submit their final Case Theory of the Prosecution for organizer review.
+A web platform for a 3.5-hour team murder mystery competition set on 23 October 2026 (Hampstead, London). Teams solve 10 sequential forensic investigation cases. Every solved case unseals a clue card, which is then kept in the squad's **Case Dossier** (Evidence section). After Case 10, teams submit their final Case Theory of the Prosecution for organizer review.
 
 ---
 
@@ -10,6 +10,8 @@ A web platform for a 3.5-hour team murder mystery competition set in late Octobe
 - **Client Runtimes**: Ships strictly one heavy runtime—`sql.js` (SQLite WASM) for Level 4. No client-side code execution, interpreters, or compilers.
 - **Server-Side Validation**: All solutions are validated on the server using HMAC-SHA256 salted hashes (`answers.hashed.json`). Answers and sealed case assets are never transmitted to the client before being earned.
 - **Dynamic In-World Templating**: Characters (`content/characters.json`) and event tokens (`content/event.config.json`) are injected at render time. Renaming any character or location automatically updates all story briefs.
+- **Progress-Gated Story Content**: Characters, important terms and timeline events are served by team-authenticated endpoints and are filtered on the server by the squad's own progress. Nothing from an unsolved level is sent to the browser.
+- **Safe Markdown Rendering**: Story, document and evidence text is rendered with `react-markdown` + `remark-gfm`. Raw HTML is not enabled (no `rehype-raw`, no `dangerouslySetInnerHTML`), so content cannot inject HTML or scripts.
 - **Single Process Deployment**: A single Node process serves both the REST API, SSE streams, and the built React SPA.
 
 ---
@@ -127,3 +129,52 @@ Access the application at `http://localhost:3000`.
 - Automatic rate limiting: max 6 submissions per minute per squad per level.
 - Lockout protection: 10 consecutive incorrect attempts trigger a 60-second cooldown.
 - Full submission logs with microsecond timestamps recorded in `attempts` table.
+
+---
+
+## 6. Player Interface & Case Dossier
+
+**Layout.** After login, the *Investigation Desk* keeps the current case workspace in the centre. There is no permanent list of levels and no permanent
+evidence side panel (the old `CaseBoard` level list was removed). The top bar holds the squad/case branding, the event clock, **Case Dossier**,
+**Prosecution Theory** (existing unlock rules unchanged) and log out.
+
+**Case Dossier.** Opened from the top bar. Evidence is a section *inside* the Dossier; there is no separate Evidence Board page or button.
+
+| Section | Content |
+|---|---|
+| Overview | Investigating unit, incident date (23 October 2026), active file and count of evidence files earned |
+| Characters | Profiles with known facts and a per-character timeline, shown only once the story has introduced the person |
+| Terms | Identifiers and terminology discovered so far (`content/terms.json`) |
+| Timeline | Events discovered so far (`content/timeline.json`) |
+| Documents | Index of unlocked reports, transcripts and records (opens in a readable Markdown view) |
+| Evidence | Earned clue cards; click for a readable detail view (`ClueCardModal`) |
+| Notes | The squad notebook |
+
+**Progress-gated endpoints** (all require a team session; an item is returned only after its level is `SOLVED` or `SKIPPED`):
+
+| Endpoint | Source | Gating |
+|---|---|---|
+| `GET /api/levels` | `apps/server/src/routes/levels.ts` | Sealed (future) levels are omitted, so no future titles or total level count are sent. Response also carries `theoryUnlocked` (true once Level 10 is solved), which only drives the Prosecution Theory button highlight |
+| `GET /api/characters` | `apps/server/src/routes/characters.ts`, names/codes from `content/characters.json` | Each character has an "introduced at level" threshold; later facts appear per completed level |
+| `GET /api/terms` | `content/terms.json` | `level` of each term must be completed |
+| `GET /api/timeline` | `content/timeline.json` | `level` of each event must be completed |
+
+**Level 9 (The Locked Room).** The three code blanks are free-text inputs with neutral placeholders (`Enter value`, `Enter operator`); there are no answer choices.
+Validation stays server-side.
+
+---
+
+## 7. Known Issues (pending owner decision)
+
+These were found while reviewing the `redesign` branch. None are fixed in this README update.
+
+- **Server working directory.** Content and DB paths are now resolved relative to `apps/server` (`process.cwd()/../..`, `data/`). Starting the server from the
+  repo root (`npm start`, or the Docker `CMD node apps/server/dist/index.js`) makes `/api/levels/*`, `/api/characters`, `/api/terms` and `/api/timeline`
+  return HTTP 500, and the SQLite DB is written to `./data` instead of `apps/server/data` (outside the Docker volume). `npm run dev` works.
+- **Tests need private answer files.** `npm test` calls `hashAllAnswers()`, which reads `content/levels/NN/answers.private.json` (git-ignored). Without them the
+  suite fails and `apps/server/data/answers.hashed.json` is overwritten with `{}`; restore it with `git checkout -- apps/server/data/answers.hashed.json`.
+  The tests also assume the repo root as working directory.
+- **Default credentials are visible.** `/hq` login page prints the default admin code, and the roster placeholder and seeded demo squads use `case1986`.
+  Set `ADMIN_PASSWORD`, `ANSWER_SECRET`, `SESSION_SECRET` before any real event.
+- **Placeholders that match answers.** Level 9's output field uses `2308-4417` as placeholder text (the other cases listed in the redesign handoff were not re-audited here).
+- **Wording.** The clue modal footer still says "Evidence Corkboard" and its button says "Examine Evidence Board"; evidence now lives in the Case Dossier.

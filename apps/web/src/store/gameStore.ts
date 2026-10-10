@@ -37,6 +37,7 @@ interface GameState {
   team: TeamInfo | null;
   isAdmin: boolean;
   levels: LevelSummary[];
+  theoryUnlocked: boolean;
   selectedLevelId: number;
   levelDetail: LevelDetail | null;
   loadingLevel: boolean;
@@ -79,6 +80,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   team: null,
   isAdmin: false,
   levels: [],
+  theoryUnlocked: false,
   selectedLevelId: 1,
   levelDetail: null,
   loadingLevel: false,
@@ -114,7 +116,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
         const levelsRes = await api.getLevels();
         const levelsList: LevelSummary[] = levelsRes.levels;
-        set({ levels: levelsList });
+        set({ levels: levelsList, theoryUnlocked: !!levelsRes.theoryUnlocked });
 
         // Find active level (first OPEN or SOLVED or 1)
         const openLevel = levelsList.find(l => l.status === 'OPEN') || levelsList[0];
@@ -192,7 +194,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
           // Refresh levels list and current detail
           const levelsRes = await api.getLevels();
-          set({ levels: levelsRes.levels });
+          set({ levels: levelsRes.levels, theoryUnlocked: !!levelsRes.theoryUnlocked });
           await get().loadCharacters();
           await get().loadTerms();
         await get().loadTimeline();
@@ -251,7 +253,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         }));
 
         const levelsRes = await api.getLevels();
-        set({ levels: levelsRes.levels });
+        set({ levels: levelsRes.levels, theoryUnlocked: !!levelsRes.theoryUnlocked });
         await get().loadCharacters();
         await get().loadTerms();
         await get().loadTimeline();
@@ -333,7 +335,7 @@ loadCharacters: async () => {
 },
   logout: async () => {
     await api.logout();
-    set({ team: null, isAdmin: false, levelDetail: null, levels: [] });
+    set({ team: null, isAdmin: false, levelDetail: null, levels: [], theoryUnlocked: false });
     window.location.href = '/login';
   }
 }));

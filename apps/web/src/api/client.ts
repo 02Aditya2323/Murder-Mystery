@@ -51,7 +51,7 @@ export const api = {
   getMe: () => apiRequest('/auth/me'),
 
   // Levels
-  getLevels: () => apiRequest<{ levels: any[] }>('/levels'),
+  getLevels: () => apiRequest<{ levels: any[]; theoryUnlocked: boolean }>('/levels'),
   getLevelDetail: (level: number) => apiRequest(`/levels/${level}`),
   submitAnswer: (level: number, stage: number, answer: string) =>
     apiRequest(`/levels/${level}/submit`, { method: 'POST', body: JSON.stringify({ stage, answer }) }),

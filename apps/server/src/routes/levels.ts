@@ -27,6 +27,8 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   for (let i = 1; i <= 10; i++) {
     const meta = getLevelMeta(i);
     const state = states.find(s => s.level === i) || { status: 'SEALED', started_at: null, solved_at: null, skipped: 0 };
+    // Sealed (future) levels are never sent: no future titles, types or total count.
+    if (state.status === 'SEALED') continue;
     levelsList.push({
       id: meta.id,
       title: meta.title,
@@ -40,7 +42,10 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
     });
   }
 
-  return res.json({ levels: levelsList });
+  // Same condition the header used to derive client-side from the full list.
+  const theoryUnlocked = states.some(s => s.level === 10 && s.status === 'SOLVED');
+
+  return res.json({ levels: levelsList, theoryUnlocked });
 });
 
 // GET /api/levels/:n - detail of level N
