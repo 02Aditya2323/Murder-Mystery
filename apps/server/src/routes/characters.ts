@@ -2,6 +2,7 @@ import { Router, Response } from 'express';
 import { db } from '../db.js';
 import { requireTeamAuth, AuthenticatedRequest } from '../auth.js';
 import { LevelStateRow } from '../types.js';
+import { loadCharactersConfig } from '../config.js';
 
 const router = Router();
 
@@ -23,13 +24,27 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   const has = (n: number) => done.has(n);
 
   const characters: any[] = [];
+  const C = loadCharactersConfig();
+  const BADGE = C.accomplice.badge as string;
+  const MIRA_CODE = C.mira.patient_code as string;
+  const LENA_DEVICE = C.lena.device as string;
+
+  // Level that must be completed (SOLVED or SKIPPED) before a character is
+  // introduced. Characters not yet introduced are NOT sent to the client at all.
+  const INTRODUCED_AT: Record<string, number> = {
+    elias: 0, rowan: 0, // named in the Level 1 briefing
+    mira: 2, julian: 2, // Recording Seven
+    lena: 4,            // LENA_IPAD in the database audit
+    adrian: 5, clara: 5, daniel: 5, noah: 5, // Level 5 suspect list
+    helen: 6,           // first revealed in Level 6
+  };
 
   // ── DR. ELIAS VANE (victim) ─────────────────────────────────────────────────
   // Appears in the opening story — always visible once any level is open
   {
     const profile: any = {
       id: 'elias',
-      name: 'Dr. Elias Vane',
+      name: C.victim.full,
       role: 'Consultant Psychologist — Victim',
       classification: 'VICTIM',
       status: 'DECEASED',
@@ -80,13 +95,13 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'mira',
-      name: 'Mira Vale',
+      name: C.mira.full,
       role: 'Former Patient / Witness',
       classification: 'WITNESS',
       status: 'ALIVE',
-      patientCode: 'P-0101',
+      patientCode: MIRA_CODE,
       knownFacts: [
-        'Former patient of Dr. Elias Vane (patient code P-0101).',
+        `Former patient of Dr. Elias Vane (patient code ${MIRA_CODE}).`,
         'Gave a statement to investigators that "nothing she says will count".',
       ],
       timeline: [],
@@ -123,12 +138,12 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'julian',
-      name: 'Julian Marsh',
+      name: C.julian.full,
       role: 'Earlier Victim (2023)',
       classification: 'VICTIM',
       status: 'DECEASED (2023)',
       knownFacts: [
-        'Died in December 2023. Mother: Helen Marsh.',
+        'Died in December 2023.',
         'Official report recorded time of death as 20:40.',
       ],
       timeline: [],
@@ -146,12 +161,13 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
 
     if (has(3)) {
       profile.knownFacts.push(
-        'The official incident report time of death (20:40) was backdated to clear someone with a dinner alibi. Badge 4417 signed the altered record.'
+        `The official incident report time of death (20:40) was backdated to clear someone with a dinner alibi. Badge ${BADGE} signed the altered record.`
       );
       profile.linkedEvidence.push('Level 3 — Tampered incident report');
     }
 
     if (has(6)) {
+      profile.knownFacts.push('Mother: Helen Marsh.');
       profile.knownFacts.push(
         'Mira heard Julian alive — shouting Elias\'s name — at approximately 21:15. A police radio sound preceded any 999 dispatch.'
       );
@@ -171,12 +187,12 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'helen',
-      name: 'Helen Marsh',
+      name: C.julian.mother,
       role: "Julian Marsh's Mother",
       classification: 'PERSON OF INTEREST',
       status: 'ALIVE',
       knownFacts: [
-        "Mother of Julian Marsh. Dedicated the memorial at West Cliff, Whitby after Julian's death.",
+        'Mother of Julian Marsh.',
       ],
       timeline: [],
       linkedEvidence: [],
@@ -184,6 +200,9 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
     };
 
     if (has(7)) {
+      profile.knownFacts.push(
+        "Dedicated the memorial at West Cliff, Whitby after Julian's death."
+      );
       profile.knownFacts.push(
         'The North Yorkshire Parish Memorial Registry confirms that Helen Marsh and her son Adrian Cross (Marsh) jointly dedicated Julian\'s memorial.'
       );
@@ -206,7 +225,7 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'adrian',
-      name: 'Adrian Cross',
+      name: C.killer.full,
       role: 'Research Assistant',
       classification: 'SUSPECT',
       status: 'UNDER INVESTIGATION',
@@ -268,7 +287,7 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'rowan',
-      name: 'Detective Rowan Hale',
+      name: C.accomplice.full,
       role: 'Lead Investigator',
       classification: 'INVESTIGATOR',
       status: 'ACTIVE',
@@ -282,9 +301,9 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
 
     if (has(3)) {
       profile.knownFacts.push(
-        'Badge 4417 — the first officer on scene in the 2023 Julian Marsh incident — arrived at the premises at 22:05, a full 15 minutes before the 999 emergency call was logged at 22:20.'
+        `Badge ${BADGE} — the first officer on scene in the 2023 Julian Marsh incident — arrived at the premises at 22:05, a full 15 minutes before the 999 emergency call was logged at 22:20.`
       );
-      profile.linkedEvidence.push('Level 3 — Tampered incident report (Badge 4417)');
+      profile.linkedEvidence.push(`Level 3 — Tampered incident report (Badge ${BADGE})`);
       // Hint that 4417 is suspicious but don't name Rowan yet if not confirmed
     }
 
@@ -314,7 +333,7 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'lena',
-      name: 'Lena Vane',
+      name: C.lena.full,
       role: 'Wife of Dr. Elias Vane',
       classification: 'SUSPECT',
       status: 'PERSON OF INTEREST',
@@ -328,9 +347,9 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
 
     if (has(4)) {
       profile.knownFacts.push(
-        'Device LENA_IPAD logged into the clinical database at 23:52 and deleted record R-0003 (Recording Three).'
+        `Device ${LENA_DEVICE} logged into the clinical database at 23:52 and deleted record R-0003 (Recording Three).`
       );
-      profile.timeline.push('23:52 — deleted Recording Three via LENA_IPAD');
+      profile.timeline.push(`23:52 — deleted Recording Three via ${LENA_DEVICE}`);
       profile.linkedEvidence.push('Level 4 — Database audit log');
     }
 
@@ -351,7 +370,7 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'clara',
-      name: 'Clara Vane',
+      name: C.clara.full,
       role: "Dr. Vane's Sister",
       classification: 'SUSPECT',
       status: 'PERSON OF INTEREST',
@@ -377,7 +396,7 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'daniel',
-      name: 'Daniel Reed',
+      name: C.daniel.full,
       role: 'Former Patient',
       classification: 'SUSPECT',
       status: 'PERSON OF INTEREST',
@@ -403,7 +422,7 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   {
     const profile: any = {
       id: 'noah',
-      name: 'Noah Mercer',
+      name: C.noah.full,
       role: 'Journalist',
       classification: 'SUSPECT',
       status: 'PERSON OF INTEREST',
@@ -426,7 +445,12 @@ router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
     characters.push(profile);
   }
 
-  return res.json({ characters, levelsCompleted: maxDone });
+  const visible = characters.filter((c) => {
+    const at = INTRODUCED_AT[c.id];
+    return at === 0 || (at !== undefined && has(at));
+  });
+
+  return res.json({ characters: visible, levelsCompleted: maxDone });
 });
 
 export default router;
