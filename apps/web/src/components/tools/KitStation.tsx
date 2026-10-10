@@ -155,7 +155,7 @@ export const KitStation: React.FC = () => {
             <div className="flex items-center justify-between pb-3 border-b-2 border-ink mb-4">
               <div>
                 <h3 id="worksheet-title" className="font-typewriter text-lg font-bold text-red-950 uppercase">
-                  CASE ARCHIVE 1986 // GARAGE CONTROLLER HARDWARE WORKSHEET
+                  CASE ARCHIVE 2026 // GARAGE CONTROLLER HARDWARE WORKSHEET
                 </h3>
                 <span className="text-xs font-mono text-zinc-600">METROPOLITAN CRIME SQUAD FORENSIC ENGINEERING UNIT</span>
               </div>
