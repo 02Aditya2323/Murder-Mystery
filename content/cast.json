@@ -1,0 +1,226 @@
+{
+  "_comment": "Full character dossiers. 'introducedAt' = beat that must be CLOSED before the person appears at all. 'standing' entries are applied when that beat closes; the latest applicable wins. Nothing in this file reaches a team before its gate opens.",
+
+  "setting": {
+    "city": "Bombay",
+    "caseRef": "MUM/HOM/2026/2310",
+    "cityFormal": "Mumbai",
+    "timezone": "IST",
+    "house": "Vane residence, Ridge Road, Malabar Hill",
+    "houseShort": "Ridge Road",
+    "incidentDate": "Friday 23 October 2026",
+    "oldDate": "Saturday 2 December 2023",
+    "force": "Mumbai Police — Crime Branch, Homicide",
+    "emergencyLine": "112",
+    "telco": "MTNL landline toll record",
+    "press": "The Peninsula Gazette"
+  },
+
+  "standings": {
+    "unknown":   { "label": "Not assessed",   "tone": "neutral" },
+    "witness":   { "label": "Witness",        "tone": "neutral" },
+    "interest":  { "label": "Person of interest", "tone": "watch" },
+    "suspected": { "label": "Suspected",      "tone": "warn" },
+    "cleared":   { "label": "Cleared",        "tone": "good" },
+    "charged":   { "label": "Charged",        "tone": "bad" },
+    "victim":    { "label": "Deceased",       "tone": "dead" }
+  },
+
+  "people": [
+    {
+      "id": "elias",
+      "name": "Dr. Elias Vane",
+      "short": "Elias",
+      "age": 54,
+      "role": "Consultant psychologist",
+      "introducedAt": 0,
+      "standing": "victim",
+      "portraitKey": "EV",
+      "summary": "Twenty-six years in private practice. Recorded every session onto reel tape and kept the archive in his own study, not the consulting room. Patients were filed by code, never by name.",
+      "fields": [
+        { "k": "Build", "v": "5'10\", right-handed, greying at the temples. Wore a signet ring on the left hand. It was not on the body.", "at": 0 },
+        { "k": "Residence", "v": "Ridge Road, Malabar Hill. Ground-floor consulting room, first-floor private study. The study has one door and a deadbolt on the inside.", "at": 0 },
+        { "k": "Found", "v": "11:58 PM, slumped at the study desk. Single penetrating wound, upper chest. Door bolted from within.", "at": 0 },
+        { "k": "Effects", "v": "Reading glasses with one arm bent, a tumbler of water, the appointment diary open at the following week, and a brass letter-opener stand — empty.", "at": 0 },
+        { "k": "Manner", "v": "Precise, unhurried, widely respected. Three colleagues used the word \"careful\" without being asked. None of them used the word \"warm\".", "at": 0 },
+        { "k": "Last confirmed alive", "v": "9:52 PM, at his own desk. Keyboard entry and study motion agree to within three seconds once the panel's error is corrected.", "at": 1 },
+        { "k": "Knew about Julian", "v": "Told Mira outright that she had not killed Julian — and then spent three years persuading her that her memory could not be trusted.", "at": 2 },
+        { "k": "Practice, the truth of it", "v": "Falsified patient records and used recorded sessions to hold patients in place. The archive was not sentiment. It was leverage.", "at": 4 },
+        { "k": "P-0912", "v": "Three days after Julian died, Elias personally edited and locked one patient file and scrubbed the name off it.", "at": 4 },
+        { "k": "Last visit", "v": "Went to Mira's flat the afternoon before he died and returned her music box, saying he'd had it repaired. It does not play.", "at": 6 },
+        { "k": "What he worked out", "v": "Three days before his death he realised who his assistant really was. He recorded it, hid the tape, and told nobody.", "at": 6 },
+        { "k": "Julian", "v": "Julian found the falsified records and phoned to say so. Elias left a public dinner, drove to him, and killed him.", "at": 10 }
+      ]
+    },
+
+    {
+      "id": "rowan",
+      "name": "Det. Rowan Hale",
+      "short": "Rowan",
+      "age": 41,
+      "role": "Lead investigator, Crime Branch",
+      "introducedAt": 0,
+      "standing": "unknown",
+      "portraitKey": "RH",
+      "summary": "Assigned to the Vane case within the hour. Secured the scene, logged the stopped clock at 10:17 PM, and compiled the evidence bundle the team is working from.",
+      "fields": [
+        { "k": "Manner", "v": "Helpful. Answers questions before they are finished. Has twice described the case as straightforward.", "at": 0 },
+        { "k": "What he gave you", "v": "The system logs, unprompted. He has not given you the lock export.", "at": 0 },
+        { "k": "Badge 4417", "v": "First officer on scene at Julian Marsh's death in 2023. Logged his arrival at 10:05 PM — fifteen minutes before the emergency call reached the switchboard at 10:20 PM.", "at": 3 },
+        { "k": "The altered report", "v": "Badge 4417 signed the incident report that put Julian's death at 8:40 PM, an hour before Julian made a phone call.", "at": 3 },
+        { "k": "LIAISON_4417", "v": "An account by that name was erased from the lock export before it reached the file. Someone with police-level access was in the system that night.", "at": 9 },
+        { "k": "P-0912", "v": "Elias's redacted patient was Rowan himself. In an old session he admitted planting evidence in an earlier case. Elias recorded it and kept it.", "at": 10 },
+        { "k": "The deal", "v": "Six months before the murder Adrian found that tape and offered terms: Elias goes, the confession disappears, and Rowan runs the investigation.", "at": 10 },
+        { "k": "What he did that night", "v": "Used his liaison access to the security vendor to open an unlogged maintenance window from 9:20 to 11:50 PM. Nothing the house recorded in that span left the building.", "at": 10 },
+        { "k": "The note", "v": "Elias's last note was written the day after Rowan missed a session and told him he was finished being a patient. It was filed under Rowan's own name.", "at": 10 }
+      ]
+    },
+
+    {
+      "id": "mira",
+      "name": "Mira Vale",
+      "short": "Mira",
+      "age": 28,
+      "role": "Julian's fiancée. Former patient of Dr. Vane.",
+      "introducedAt": 2,
+      "standing": "witness",
+      "portraitKey": "MV",
+      "summary": "Has not spoken aloud for three years. She was in the house the night Julian died and was found beside him. She was never charged, and never believed.",
+      "fields": [
+        { "k": "Patient code", "v": "P-0101. Referred to Dr. Vane within weeks of Julian's death — by the investigating officer.", "at": 2 },
+        { "k": "Why she stopped", "v": "Every account she gave was treated as confusion. Eventually she stopped giving them. She answers in writing, or by tapping.", "at": 2 },
+        { "k": "What she heard", "v": "Julian on the phone, alive and shouting, at about 9:15 PM. Later a door, and two short chirps and a click — she described it as a radio.", "at": 2 },
+        { "k": "Engagement", "v": "She and Julian were to be married in the spring of 2024. He wound her music box for her every night; it was a gift for her birthday.", "at": 6 },
+        { "k": "The diary", "v": "Written in order, every page, exactly as it happened. Elias told her for three years that she had it jumbled. She did not.", "at": 6 },
+        { "k": "What she says", "v": "Her first words in three years, once the team reads her pages back to her in the right order: \"Lena didn't kill him.\"", "at": 6 }
+      ]
+    },
+
+    {
+      "id": "julian",
+      "name": "Julian Marsh",
+      "short": "Julian",
+      "age": 27,
+      "role": "Died 2 December 2023",
+      "introducedAt": 2,
+      "standing": "victim",
+      "portraitKey": "JM",
+      "summary": "Engaged to Mira Vale. Died at the house on the night of 2 December 2023. The file was closed quickly and has never been reopened.",
+      "fields": [
+        { "k": "Official record", "v": "Time of death 8:40 PM. First officer on scene, badge 4417.", "at": 2 },
+        { "k": "The call", "v": "An MTNL toll record shows an outgoing call from Julian to Dr. Vane at 9:12 PM lasting 47 seconds — thirty-two minutes after he was officially already dead.", "at": 3 },
+        { "k": "Why", "v": "He had found proof that Elias was falsifying records and using session tapes to hold patients in place. He called to say he was going to the authorities.", "at": 10 },
+        { "k": "Family", "v": "Mother, Helen Marsh. A younger half-brother who took his father's surname.", "at": 6 },
+        { "k": "Memorial", "v": "A plaque above the sea, placed by his mother and his brother. \"Seeking the truth that was taken from him.\"", "at": 7 }
+      ]
+    },
+
+    {
+      "id": "lena",
+      "name": "Lena Vane",
+      "short": "Lena",
+      "age": 46,
+      "role": "Elias's wife. Clinical psychologist.",
+      "introducedAt": 4,
+      "standing": "interest",
+      "portraitKey": "LV",
+      "summary": "Co-signatory on her husband's clinical certifications for eleven years. Says she was at a charity dinner until midnight and then went straight home.",
+      "fields": [
+        { "k": "Statement", "v": "\"I was at the dinner until midnight, then straight home.\"", "at": 4 },
+        { "k": "The deletion", "v": "At 11:52 PM, device LENA_IPAD signed into the clinical archive as lena.v and deleted record R-0003 — Recording Three.", "at": 4 },
+        { "k": "Contradicted", "v": "A parking exit receipt puts her out of the dinner garage at 10:58 PM, and a neighbour's doorbell camera has her car on Ridge Road at 11:38 PM. She was never at the dinner until midnight.", "at": 5 },
+        { "k": "Recording Three", "v": "Her own session. In it she discusses a clinical certification she co-signed knowing it was false. Elias kept the tape. That is what she came back for.", "at": 5 },
+        { "k": "What she actually did", "v": "Let herself in at 11:40 PM with her spare key, found her husband dead, deleted the tape, wiped the surfaces, bolted the study and left. She did not kill him — she arrived more than half an hour after the window closed.", "at": 6 }
+      ]
+    },
+
+    {
+      "id": "adrian",
+      "name": "Adrian Cross",
+      "short": "Adrian",
+      "age": 27,
+      "role": "Research assistant to Dr. Vane",
+      "introducedAt": 5,
+      "standing": "unknown",
+      "portraitKey": "AC",
+      "summary": "Ran Elias's files and the tape archive for four years. Quiet, exact, trusted with everything. Badged out of the house at 9:18 PM.",
+      "fields": [
+        { "k": "Statement", "v": "\"I left at 9:18 and I was across the city by 10:21. Here's my photo.\"", "at": 5 },
+        { "k": "Not contradicted", "v": "Alone among the five, nothing in the evidence bundle breaks his account. His photograph appears to hold.", "at": 5 },
+        { "k": "Who he is", "v": "Julian Marsh's younger half-brother. He took his father's surname, applied to Elias under it, and spent four years inside the practice collecting proof.", "at": 6 },
+        { "k": "Why he stopped trusting the police", "v": "Every anonymous tip he filed about Julian's death came back to the same officer's desk.", "at": 6 },
+        { "k": "The photograph", "v": "Not taken that night and not taken across the city. It is an old picture from the coast his family comes from, reposted at 10:21 PM to sit four minutes after a clock he had already set by hand.", "at": 7 },
+        { "k": "How he got back in", "v": "Re-entered through the garage keypad at 9:31 PM on a service override under the name A. Cross, thirteen minutes after badging out the front.", "at": 8 },
+        { "k": "The locked room", "v": "The study was never bolted from inside. He locked it remotely from Elias's tablet at 11:08 PM on his way out, then ran a script over the export so it would read INTERIOR_PANEL.", "at": 9 },
+        { "k": "What he will not say", "v": "He did not have police access. Someone else opened the window in the security system and erased the liaison account from the log.", "at": 9 }
+      ]
+    },
+
+    {
+      "id": "clara",
+      "name": "Clara Vane",
+      "short": "Clara",
+      "age": 50,
+      "role": "Elias's elder sister",
+      "introducedAt": 5,
+      "standing": "interest",
+      "portraitKey": "CV",
+      "summary": "Says she and her brother had barely spoken in months.",
+      "fields": [
+        { "k": "Statement", "v": "\"We barely spoke for months.\"", "at": 5 },
+        { "k": "Contradicted", "v": "Café bills and card records show four separate meetings in the previous eight weeks.", "at": 5 },
+        { "k": "Why she lied", "v": "She was not estranged from him — she was frightened of what he was doing. He had begun handing her things to keep. She still has them, and did not want to be asked.", "at": 6 }
+      ]
+    },
+
+    {
+      "id": "daniel",
+      "name": "Daniel Reed",
+      "short": "Daniel",
+      "age": 33,
+      "role": "Former patient",
+      "introducedAt": 5,
+      "standing": "interest",
+      "portraitKey": "DR",
+      "summary": "Left the practice badly four years ago. Says he has had no contact since an angry email.",
+      "fields": [
+        { "k": "Statement", "v": "\"I haven't been near Elias since my angry email months ago.\"", "at": 5 },
+        { "k": "Contradicted", "v": "A text message sent from his phone to Dr. Vane forty-eight hours before the murder: \"This isn't over.\"", "at": 5 },
+        { "k": "Why he lied", "v": "An old grievance he is ashamed of and a threat he did not act on. He was nowhere near Ridge Road that night and can prove it.", "at": 6 }
+      ]
+    },
+
+    {
+      "id": "noah",
+      "name": "Noah Mercer",
+      "short": "Noah",
+      "age": 29,
+      "role": "Journalist",
+      "introducedAt": 5,
+      "standing": "interest",
+      "portraitKey": "NM",
+      "summary": "Has been working on Dr. Vane for five months. Says he has never been near the house.",
+      "fields": [
+        { "k": "Statement", "v": "\"I never went near that house.\"", "at": 5 },
+        { "k": "Contradicted", "v": "A cab dispatch record drops him one street from Ridge Road at 9:00 PM.", "at": 5 },
+        { "k": "Why he lied", "v": "He was staking the house out for a story he had not cleared with anyone, and he was still outside when the first car arrived.", "at": 6 }
+      ]
+    },
+
+    {
+      "id": "helen",
+      "name": "Helen Marsh",
+      "short": "Helen",
+      "age": 61,
+      "role": "Julian's mother",
+      "introducedAt": 6,
+      "standing": "unknown",
+      "portraitKey": "HM",
+      "summary": "Buried one son in 2023 and has not been told what the other has been doing for four years.",
+      "fields": [
+        { "k": "Two sons", "v": "Julian Marsh, and a younger son who took his father's surname — Cross.", "at": 6 },
+        { "k": "The memorial", "v": "She placed the plaque above the sea herself. The registry records both names: hers, and her surviving son's.", "at": 7 }
+      ]
+    }
+  ]
+}

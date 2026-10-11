@@ -146,7 +146,7 @@ export const PhotoViewer: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap items-center justify-between text-[11px] text-[#c9a777]/80 font-mono italic pt-1">
-          <span>FORENSIC EXHIBIT 07 // METADATA: 22:21 BST GEOLOCATION TARGET</span>
+          <span>FORENSIC EXHIBIT 07 // POSTED 22:21 IST // NO EMBEDDED METADATA</span>
           <span>{attribution}</span>
         </div>
       </div>
@@ -172,7 +172,7 @@ export const PhotoViewer: React.FC = () => {
               Dedicated by his mother, Helen Marsh, and his brother, Adrian Cross (Marsh).
             </p>
             <p className="text-[11px] text-center font-mono text-zinc-600">
-              Official Registry Location: West Cliff, Whitby, North Yorkshire, England (54.4897° N, 0.6173° W)
+              Official Registry Location: Seafront Promenade, Diu (20.7144° N, 70.9874° E)
             </p>
           </div>
         </div>
@@ -190,7 +190,7 @@ export const PhotoViewer: React.FC = () => {
               type="text"
               value={answerInput}
               onChange={(e) => setAnswerInput(e.target.value)}
-              placeholder="e.g. Whitby, West Cliff Whitby, or 54.4897, -0.6173"
+              placeholder="Town, landmark, or lat,lng"
               className="flex-1 bg-ink text-label font-mono text-xs sm:text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
             />
             <button
@@ -218,7 +218,7 @@ export const PhotoViewer: React.FC = () => {
                 LOCATION VERIFIED // CASE #07 SOLVED
               </span>
               <span className="text-xs font-serif text-emerald-100/80">
-                Alibi photograph traced to Whitby West Cliff memorial bench. Adrian Cross's true identity uncovered.
+                Alibi photograph traced to the Diu seafront memorial. Adrian Cross's true identity uncovered.
               </span>
             </div>
           </div>

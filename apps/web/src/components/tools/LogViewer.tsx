@@ -87,7 +87,7 @@ export const LogViewer: React.FC = () => {
 
             <div className="mt-2.5 text-center">
               <span className="font-typewriter text-xs font-bold text-label block tracking-wider">
-                HANDS FROZEN AT 22:17 (BST)
+                HANDS FROZEN AT 22:17 (IST)
               </span>
               <span className="text-[11px] font-mono text-alarm italic block mt-0.5">
                 * Staged time of attack suspected by Medical Examiner
@@ -118,7 +118,7 @@ export const LogViewer: React.FC = () => {
             <div className="text-[11px] font-mono text-ink/80 space-y-1 pt-1">
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-signal" />
-                <span>UK Local Time in late October is on <strong>British Summer Time (BST = UTC+1)</strong>.</span>
+                <span>Every local system in the house runs on <strong>India Standard Time (IST = UTC+5:30)</strong>.</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-alarm" />
@@ -128,7 +128,7 @@ export const LogViewer: React.FC = () => {
           </div>
 
           <div className="text-[10px] font-mono text-ink/60 pt-2 border-t border-ink/15 text-right">
-            DR. H. ABERNATHY, METROPOLITAN CORONER
+            DR. H. ABERNATHY, POLICE SURGEON
           </div>
         </div>
       </div>
@@ -171,7 +171,7 @@ export const LogViewer: React.FC = () => {
 
             <div className="flex items-center justify-between text-xs font-mono text-dim pt-1">
               <span>EVIDENCE ID: CR-2026-EX-A &bull; 14 KEATS GROVE</span>
-              <span className="text-signal font-bold">FROZEN TIME: 22:17 BST</span>
+              <span className="text-signal font-bold">FROZEN TIME: 22:17 IST</span>
             </div>
           </div>
         </div>
@@ -285,14 +285,14 @@ export const LogViewer: React.FC = () => {
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-ok" />
               <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
-                TIME OF DEATH WINDOW VERIFIED: 22:37 BST
+                TIME OF DEATH WINDOW VERIFIED: 22:37 IST
               </span>
             </div>
             <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>
           </div>
 
           <p className="font-serif text-xs text-dim leading-relaxed">
-            Forensic discrepancy identified: The 22:17 clock was deliberately staged. Correcting for panel skew, Elias was active until 21:52 BST, establishing the genuine Medical Examiner window starting at <strong>22:37</strong>. Submission field is locked.
+            Forensic discrepancy identified: The 22:17 clock was deliberately staged. Correcting for panel skew, Elias was active until 21:52 IST, establishing the genuine Medical Examiner window starting at <strong>22:37</strong>. Submission field is locked.
           </p>
 
           <div className="pt-1 flex justify-end">
@@ -309,7 +309,7 @@ export const LogViewer: React.FC = () => {
       ) : (
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border-2 border-signal/40 space-y-2.5 shadow-desk">
           <label className="block text-xs font-serif text-label font-medium">
-            Enter the start of the Medical Examiner's window of death (4-digit 24-hr UK BST time, e.g. 2145):
+            Enter the start of the Medical Examiner's window of death (4-digit 24-hour IST, e.g. 2145):
           </label>
           <div className="flex gap-2">
             <input
@@ -317,7 +317,7 @@ export const LogViewer: React.FC = () => {
               maxLength={5}
               value={answerInput}
               onChange={(e) => setAnswerInput(e.target.value)}
-              placeholder="2237"
+              placeholder="HHMM"
               className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/50 focus:border-signal focus:outline-none tracking-widest uppercase shadow-inner"
             />
             <button

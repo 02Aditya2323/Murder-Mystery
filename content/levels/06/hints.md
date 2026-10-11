@@ -1,8 +1,8 @@
 ### Tier 1
-Look for relative temporal phrases such as "the night after", "the morning of", and "the day after".
+Not one page carries a date. Every page carries its position relative to another one.
 
 ### Tier 2
-Exact calendar dates are not written on every sheet. Trace the progression of milestones: the immediate aftermath, the funeral, Dr. Vane's counseling, the request to stop writing, and her ultimate silence.
+Follow the events she describes rather than her wording: the night itself, the report appearing in the papers, the sessions that followed, the request to stop writing, and what she did with the pages afterwards.
 
 ### Tier 3
-The funeral takes place before Dr. Vane urges her to cease writing things down. Her final decision to never speak again is the very last entry in the notebook.
+The funeral happens before the session in which he tells her she has the sequence confused. Her decision to stop speaking is the last thing she ever wrote down.

@@ -26,7 +26,7 @@
       "level": 3,
       "term": "Badge 4417",
       "category": "Badge number",
-      "description": "First officer on scene of Julian Marsh's case. Logged arrival at 22:05, before the 999 call at 22:20, and signed the altered report."
+      "description": "First officer on scene of Julian Marsh's case. Logged arrival at 22:05, before the 112 call at 22:20, and signed the altered report."
     },
     {
       "id": "T05",
@@ -66,23 +66,23 @@
     {
       "id": "T10",
       "level": 7,
-      "term": "West Cliff, Whitby",
+      "term": "Diu seafront",
       "category": "Location",
-      "description": "Real location of Adrian's alibi photograph: West Cliff Overlook, Whitby, North Yorkshire."
+      "description": "Real location of Adrian's alibi photograph: the Portuguese seafront at Diu, six hundred kilometres from Ridge Road."
     },
     {
       "id": "T11",
       "level": 7,
       "term": "Book 14, Entry 882",
       "category": "Record",
-      "description": "North Yorkshire Parish Memorial Registry entry for Julian Marsh."
+      "description": "Diu Municipal Memorial Registry entry for Julian Marsh."
     },
     {
       "id": "T12",
       "level": 8,
       "term": "A. Cross",
       "category": "Account",
-      "description": "User who entered the service override code at the garage keypad at 21:31:04 BST."
+      "description": "User who entered the service override code at the garage keypad at 21:31:04 IST."
     },
     {
       "id": "T13",
@@ -96,7 +96,7 @@
       "level": 9,
       "term": "TABLET_API",
       "category": "Device interface",
-      "description": "Used to trigger the study lock remotely at 23:08 BST."
+      "description": "Used to trigger the study lock remotely at 23:08 IST."
     },
     {
       "id": "T15",

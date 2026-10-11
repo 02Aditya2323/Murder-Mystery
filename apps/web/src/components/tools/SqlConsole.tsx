@@ -353,7 +353,7 @@ export const SqlConsole: React.FC = () => {
                 type="text"
                 value={deviceInput}
                 onChange={(e) => setDeviceInput(e.target.value)}
-                placeholder="e.g. LENA_IPAD"
+                placeholder="Device identifier"
                 className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
               />
             </div>
@@ -366,7 +366,7 @@ export const SqlConsole: React.FC = () => {
                 type="text"
                 value={patientInput}
                 onChange={(e) => setPatientInput(e.target.value)}
-                placeholder="e.g. P-0912"
+                placeholder="Patient code"
                 className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
               />
             </div>
@@ -374,7 +374,7 @@ export const SqlConsole: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
             <span className="text-[11px] font-mono text-dim">
-              COMBINED FORMAT: [DEVICE]-[PATIENT_CODE] (e.g. LENA_IPAD-P0912)
+              COMBINED FORMAT: [DEVICE]-[PATIENT_CODE] — as the audit log spells them, joined by a hyphen
             </span>
             <button
               type="submit"

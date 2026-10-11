@@ -129,7 +129,7 @@ export const KitStation: React.FC = () => {
               type="text"
               value={answerInput}
               onChange={(e) => setAnswerInput(e.target.value)}
-              placeholder="e.g. 67"
+              placeholder="Value shown on your kit"
               className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
             />
             <button
@@ -186,7 +186,7 @@ export const KitStation: React.FC = () => {
                 <h3 id="worksheet-title" className="font-typewriter text-lg font-bold text-red-950 uppercase">
                   CASE ARCHIVE 2026 // GARAGE CONTROLLER HARDWARE WORKSHEET
                 </h3>
-                <span className="text-xs font-mono text-zinc-600">METROPOLITAN CRIME SQUAD FORENSIC ENGINEERING UNIT</span>
+                <span className="text-xs font-mono text-zinc-600">CRIME BRANCH · FORENSIC ENGINEERING UNIT</span>
               </div>
               <div className="border-2 border-ink px-3 py-1 font-typewriter font-bold text-sm bg-manila">
                 KIT #{kitNo}

@@ -13,4 +13,4 @@ Inside the false base of the inlaid mahogany music box, Dr. Elias Vane left an e
 ---
 
 **Clue Unlocked:**
-Mira's account confirms Julian was alive past 21:15 and a police radio arrived prior to any 999 call. Elias discovered his research assistant Adrian Cross is actually Helen Marsh's son—Julian's half-brother—infiltrating under his father's surname to gather evidence.
+Mira's account confirms Julian was alive past 21:15 and a police radio arrived prior to any 112 call. Elias discovered his research assistant Adrian Cross is actually Helen Marsh's son—Julian's half-brother—infiltrating under his father's surname to gather evidence.

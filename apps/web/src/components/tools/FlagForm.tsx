@@ -104,7 +104,7 @@ export const FlagForm: React.FC = () => {
               <span className="stamp stamp-skipped text-[9px]">CRIMINAL CONFESSION</span>
             </div>
             <div className="font-serif text-xs leading-relaxed text-zinc-950 italic bg-manila/60 p-4 rounded-lg border border-ink/15">
-              <strong>DETECTIVE ROWAN HALE:</strong> "I altered the time of death on Julian's file to 20:40 because you told me you were at that dinner until 9:15, Elias. You told me it was an accident. But if anyone ever links badge 4417 to that crime scene before the 999 dispatch was logged... we both go down for murder."
+              <strong>DETECTIVE ROWAN HALE:</strong> "I altered the time of death on Julian's file to 20:40 because you told me you were at that dinner until 9:15, Elias. You told me it was an accident. But if anyone ever links badge 4417 to that crime scene before the 112 dispatch was logged... we both go down for murder."
             </div>
           </div>
 

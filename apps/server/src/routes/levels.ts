@@ -18,6 +18,55 @@ import { rootDir } from '../config.js';
 
 const router = Router();
 
+/**
+ * Mira's diary. `canonical` is what the answer key is hashed against; `token` is
+ * the only thing the browser ever sees. Tokens are archive exhibit refs and carry
+ * no ordering information.
+ */
+const DIARY_PAGES = [
+  { canonical: 'P1', token: 'MV-73', text: 'The night after it happened. Julian was on the phone around quarter past nine, shouting Elias’s name. Alive. Much later I heard the side door open and a police radio—two quick chirps and a click—before any sirens or emergency call were logged. Nobody believes what I heard.' },
+  { canonical: 'P2', token: 'MV-18', text: 'The morning of the funeral. The police report came out in the papers. It claims Julian was gone before nine o’clock. I keep shouting that the time is impossible, that he was talking to Elias, but my words sound hollow even to my own ears.' },
+  { canonical: 'P3', token: 'MV-41', text: 'Three days after the funeral. Dr. Vane sat beside my chair. He said grief does violent things to perception, that my memories are mixing up the sequence. He spoke so calmly, like a physician prescribing certainty, telling me the clock in my mind is broken.' },
+  { canonical: 'P4', token: 'MV-66', text: 'The Sunday after our session. Dr. Vane visited the flat again. He looked at my notebook on the table and gently asked me to stop writing things down. He said committing these fractured impressions to paper only cements false trauma.' },
+  { canonical: 'P5', token: 'MV-05', text: 'The day after Elias told me to stop. I took the diary pages and the small wooden music box Julian gave me for my birthday and hid them beneath the floorboard. If I cannot write the truth, I must at least protect what Julian touched.' },
+  { canonical: 'P6', token: 'MV-29', text: 'The first day I did not speak. Not a syllable. When words only serve to let others rearrange your reality, silence is the only fortress. I will not explain myself again until someone sees what really took place.' }
+];
+
+function seedFrom(text: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+/** Deterministic per-team shuffle: stable across refreshes, different per team. */
+function getDiaryPagesFor(teamId: string) {
+  const pages = DIARY_PAGES.map((p) => ({ id: p.token, label: `Loose sheet ${p.token}`, text: p.text }));
+  let seed = seedFrom(teamId) || 1;
+  const rand = () => {
+    seed = (seed * 1664525 + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
+  for (let i = pages.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [pages[i], pages[j]] = [pages[j], pages[i]];
+  }
+  return pages;
+}
+
+/** Map a submitted token order back to the canonical ids the key is hashed against. */
+function translateDiaryOrder(answer: string): string {
+  const parts = String(answer).split(',').map((x) => x.trim().toUpperCase());
+  const byToken = new Map(DIARY_PAGES.map((p) => [p.token.toUpperCase(), p.canonical]));
+  if (parts.length !== DIARY_PAGES.length) return answer;
+  const mapped = parts.map((t) => byToken.get(t));
+  if (mapped.some((m) => !m)) return answer;
+  return mapped.join(',');
+}
+
+
 // GET /api/levels - list of all levels with status
 router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
   const teamId = req.team!.id;
@@ -129,41 +178,11 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
       { id: 'E9', title: 'E9: Audio Archive Session Three Transcript', description: 'Damaged transcript of Lena Vane disputing clinical certifications and professional liability.' }
     ];
   } else if (levelNum === 6) {
-    // 6 diary pages shuffled
-    const pages = [
-      {
-        id: 'P1',
-        label: 'Diary Sheet A',
-        text: 'The night after it happened. Julian was on the phone around quarter past nine, shouting Elias’s name. Alive. Much later I heard the side door open and a police radio—two quick chirps and a click—before any sirens or emergency call were logged. Nobody believes what I heard.'
-      },
-      {
-        id: 'P2',
-        label: 'Diary Sheet B',
-        text: 'The morning of the funeral. The police report came out in the papers. It claims Julian was gone before nine o’clock. I keep shouting that the time is impossible, that he was talking to Elias, but my words sound hollow even to my own ears.'
-      },
-      {
-        id: 'P3',
-        label: 'Diary Sheet C',
-        text: 'Three days after the funeral. Dr. Vane sat beside my chair. He said grief does violent things to perception, that my memories are mixing up the sequence. He spoke so calmly, like a physician prescribing certainty, telling me the clock in my mind is broken.'
-      },
-      {
-        id: 'P4',
-        label: 'Diary Sheet D',
-        text: 'The Sunday after our session. Dr. Vane visited the flat again. He looked at my notebook on the table and gently asked me to stop writing things down. He said committing these fractured impressions to paper only cements false trauma.'
-      },
-      {
-        id: 'P5',
-        label: 'Diary Sheet E',
-        text: 'The day after Elias told me to stop. I took the diary pages and the small wooden music box Julian gave me for my birthday and hid them beneath the floorboard. If I cannot write the truth, I must at least protect what Julian touched.'
-      },
-      {
-        id: 'P6',
-        label: 'Diary Sheet F',
-        text: 'The first day I did not speak. Not a syllable. When words only serve to let others rearrange your reality, silence is the only fortress. I will not explain myself again until someone sees what really took place.'
-      }
-    ];
-    // Deterministic shuffle
-    payload.diaryPages = [pages[3], pages[0], pages[5], pages[1], pages[4], pages[2]];
+    // Pages carry opaque exhibit refs, never ordered ids. The old payload shipped
+    // id:"P1".."P6" and the answer was those ids in ascending order, so sorting by
+    // id solved the level. Display order is seeded per team so one team's ordering
+    // cannot be read off another team's screen.
+    payload.diaryPages = getDiaryPagesFor(teamId);
   } else if (levelNum === 7) {
     payload.photoUrl = `/api/levels/7/assets/l7_geo_photo.jpg`;
     const geoConfigPath = path.resolve(rootDir, 'content/assets-private/l7_geo_config.json');
@@ -285,10 +304,11 @@ router.post('/:n/submit', requireTeamAuth, (req: AuthenticatedRequest, res: Resp
   }
 
   const meta = getLevelMeta(levelNum);
+  const answerForCheck = levelNum === 6 ? translateDiaryOrder(String(answer)) : String(answer);
   const validation = validateAnswer({
     level: levelNum,
     stage,
-    answer: String(answer),
+    answer: answerForCheck,
     teamKitNo: req.team!.kit_no
   });
 

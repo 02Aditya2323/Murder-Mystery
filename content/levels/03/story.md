@@ -12,13 +12,13 @@ Enter the year the theatrical play premiered and the husband's surname (e.g. `19
 ---
 
 ### Stage 2: Forensic Comparison
-Once inside the sealed police archives, you will access three UK police and telecommunications records from the night {{julian.full}} died (2 December 2023):
-- **Doc 2: Metropolitan Incident Initial Report (Crim-02-12-23)**
-- **Doc 3: BT Carrier Cellular & Landline Toll Record**
-- **Doc 4: North London Gazette Press Clipping**
+Once inside the sealed police archives, you will access three Mumbai police and telecommunications records from the night {{julian.full}} died (2 December 2023):
+- **Doc 2: Crime Branch Incident Initial Report (Crim-02-12-23)**
+- **Doc 3: MTNL Cellular & Landline Toll Record**
+- **Doc 4: The Peninsula Gazette Press Clipping**
 
 Calculate:
 1. The difference in minutes between the official **estimated time of death** on the police report and **Julian's recorded outgoing call** to Dr. Elias Vane.
 2. The **badge number** of the first responding police officer on scene.
 
-Submit format: `[Minutes]-[BadgeNumber]` (e.g. `32-4417`).
+Submit as `[Minutes]-[BadgeNumber]` — the number of minutes, a hyphen, then the four-digit badge. No spaces.

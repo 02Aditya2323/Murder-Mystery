@@ -228,7 +228,7 @@ export const LevelWorkspace: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <span className="font-typewriter text-xs tracking-widest font-bold uppercase text-ink/75">
-                METROPOLITAN POLICE SERVICE &bull; CASE FILE #
+                MUMBAI POLICE SERVICE &bull; CASE FILE #
                 {String(id).padStart(2, '0')}
               </span>
               <span className="text-[10px] font-mono bg-ink/15 text-ink px-1.5 py-0.5 rounded">

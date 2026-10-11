@@ -65,6 +65,7 @@ export const api = {
   getTimeline: () => apiRequest<{ events: TimelineEvent[] }>('/timeline'),
   getTerms: () => apiRequest<{ terms: TermEntry[] }>('/terms'),
   getCharacters: () => apiRequest<{ characters: any[]; levelsCompleted: number }>('/characters'),
+  getCase: () => apiRequest<any>('/case'),
 
   // Notebook
   getNotebook: () => apiRequest('/notebook'),

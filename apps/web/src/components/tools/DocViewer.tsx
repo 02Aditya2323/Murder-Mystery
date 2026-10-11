@@ -59,7 +59,7 @@ export const DocViewer: React.FC = () => {
             <div className="flex items-center gap-2">
               <Lock className="w-5 h-5 text-red-800" />
               <span className="font-typewriter font-bold text-sm text-red-950 uppercase tracking-widest">
-                METROPOLITAN POLICE ARCHIVE // SEALED HOMICIDE DOSSIER
+                MUMBAI POLICE ARCHIVE // SEALED HOMICIDE DOSSIER
               </span>
             </div>
             <span className="stamp stamp-sealed text-[10px]">RESTRICTED ACCESS</span>
@@ -87,7 +87,7 @@ export const DocViewer: React.FC = () => {
                   maxLength={4}
                   value={gateYear}
                   onChange={(e) => setGateYear(e.target.value)}
-                  placeholder="e.g. 1938"
+                  placeholder="Year"
                   className="w-full bg-[#fdfbf7] text-ink font-mono text-sm px-3.5 py-2 rounded border border-ink/40 focus:border-red-900 focus:outline-none shadow-inner"
                 />
               </div>
@@ -100,7 +100,7 @@ export const DocViewer: React.FC = () => {
                   type="text"
                   value={gateSurname}
                   onChange={(e) => setGateSurname(e.target.value)}
-                  placeholder="e.g. MANNINGHAM"
+                  placeholder="Surname"
                   className="w-full bg-[#fdfbf7] text-ink font-mono text-sm px-3.5 py-2 rounded border border-ink/40 focus:border-red-900 focus:outline-none uppercase shadow-inner"
                 />
               </div>
@@ -108,7 +108,7 @@ export const DocViewer: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2">
               <span className="text-[11px] font-mono text-ink/70">
-                COMBINED KEY FORMAT: [YEAR][SURNAME] (e.g. 1938MANNINGHAM)
+                COMBINED KEY FORMAT: [YEAR][SURNAME] — four digits then the surname, no space
               </span>
               <button
                 type="submit"
@@ -213,7 +213,7 @@ export const DocViewer: React.FC = () => {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-typewriter text-base sm:text-lg font-bold tracking-widest uppercase text-red-950">
-                        METROPOLITAN POLICE SERVICE // INCIDENT REPORT
+                        MUMBAI POLICE · CRIME BRANCH // INCIDENT REPORT
                       </span>
                     </div>
                     <p className="text-[11px] font-mono text-ink/75">
@@ -226,12 +226,12 @@ export const DocViewer: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono p-3 bg-manila/40 rounded border border-ink/15">
                   <div>
                     <strong>Date of Incident:</strong> 02 December 2023<br />
-                    <strong>Location:</strong> 8 Park Terrace, London NW1<br />
+                    <strong>Location:</strong> Flat 3, Sea Glimpse, Carter Road, Bandra West<br />
                     <strong>Deceased:</strong> Julian Marsh (Male, 27)
                   </div>
                   <div>
-                    <strong>999 Emergency Dispatch Logged:</strong> 22:20 BST<br />
-                    <strong>First Responding Officer Arrival:</strong> 22:05 BST<br />
+                    <strong>112 Emergency Dispatch Logged:</strong> 22:20 IST<br />
+                    <strong>First Responding Officer Arrival:</strong> 22:05 IST<br />
                     <strong className="text-red-900">Attending Officer:</strong> Badge 4417
                   </div>
                 </div>
@@ -244,7 +244,7 @@ export const DocViewer: React.FC = () => {
                     Responding officer arrived on scene. Discovered subject Julian Marsh deceased in ground floor drawing room. Individual Mira Vale discovered in shock beside the body. Initial rigor and physical state evaluated.
                   </p>
                   <p className="font-mono font-bold text-red-900 bg-red-100/60 p-2 rounded border border-red-300">
-                    OFFICIAL ESTIMATED TIME OF DEATH: 20:40 BST
+                    OFFICIAL ESTIMATED TIME OF DEATH: 20:40 IST
                   </p>
                   <div className="flex items-center justify-between pt-2 text-[11px] text-ink/70 italic border-t border-dashed border-ink/20">
                     <span>Officer Signature: [Smudged stamp: Det. Const. Badge 4417]</span>
@@ -384,7 +384,7 @@ export const DocViewer: React.FC = () => {
                     type="text"
                     value={minutesInput}
                     onChange={(e) => setMinutesInput(e.target.value)}
-                    placeholder="32"
+                    placeholder="Minutes"
                     className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
                   />
                 </div>
@@ -397,7 +397,7 @@ export const DocViewer: React.FC = () => {
                     type="text"
                     value={badgeInput}
                     onChange={(e) => setBadgeInput(e.target.value)}
-                    placeholder="4417"
+                    placeholder="Badge"
                     className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
                   />
                 </div>
@@ -405,20 +405,20 @@ export const DocViewer: React.FC = () => {
 
               <div className="pt-1">
                 <label className="block font-serif text-dim text-[11px] mb-1">
-                  Optional: Minutes the officer arrived before 999 call was logged (recorded for organizers):
+                  Optional: Minutes the officer arrived before 112 call was logged (recorded for organizers):
                 </label>
                 <input
                   type="text"
                   value={earlyMinutesInput}
                   onChange={(e) => setEarlyMinutesInput(e.target.value)}
-                  placeholder="15"
+                  placeholder="Minutes"
                   className="w-32 bg-ink text-label font-mono text-xs px-3 py-1.5 rounded border border-dim/40 focus:border-signal focus:outline-none"
                 />
               </div>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
                 <span className="text-[11px] font-mono text-dim">
-                  SUBMISSION FORMAT: [Minutes]-[Badge] (e.g. 32-4417)
+                  SUBMISSION FORMAT: [Minutes]-[Badge] — the difference in minutes, a hyphen, the four-digit badge
                 </span>
                 <button
                   type="submit"

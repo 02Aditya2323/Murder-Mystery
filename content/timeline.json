@@ -26,7 +26,7 @@
       "level": 3,
       "sort": "2023-12-02T22:20",
       "when": "Julian Marsh case (2023), 22:20",
-      "text": "999 emergency call registered on the dispatch switchboard, 15 minutes after badge 4417 arrived."
+      "text": "112 emergency call registered on the dispatch switchboard, 15 minutes after badge 4417 arrived."
     },
     {
       "id": "E05",
@@ -68,7 +68,7 @@
       "level": 1,
       "sort": "2026-10-23T21:52",
       "when": "23 Oct 2026, 21:52",
-      "text": "Dr. Elias Vane's last confirmed activity: workstation input at 21:52:07 BST, study motion at 21:52:04."
+      "text": "Dr. Elias Vane's last confirmed activity: workstation input at 21:52:07 IST, study motion at 21:52:04."
     },
     {
       "id": "E11",
@@ -82,7 +82,7 @@
       "level": 7,
       "sort": "2026-10-23T22:21",
       "when": "23 Oct 2026, 22:21",
-      "text": "Time claimed for Adrian Cross's alibi photo. It was actually taken at West Cliff, Whitby, and is not from that night."
+      "text": "Time claimed for Adrian Cross's alibi photo. It was actually taken at Diu, and is not from that night."
     },
     {
       "id": "E13",
@@ -102,7 +102,7 @@
       "id": "E15",
       "level": 9,
       "sort": "2026-10-23T23:08",
-      "when": "23 Oct 2026, 23:08 BST",
+      "when": "23 Oct 2026, 23:08 IST",
       "text": "Study locked remotely via TABLET_API. It was never locked from the inside."
     },
     {
@@ -110,7 +110,7 @@
       "level": 5,
       "sort": "2026-10-23T23:38",
       "when": "23 Oct 2026, 23:38",
-      "text": "Lena Vane's sedan seen on a neighbour's doorbell camera outside Keats Grove (E3)."
+      "text": "Lena Vane's sedan seen on a neighbour's doorbell camera outside Ridge Road (E3)."
     },
     {
       "id": "E17",

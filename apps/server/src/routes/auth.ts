@@ -21,6 +21,13 @@ router.post('/login', (req, res) => {
     return res.status(401).json({ error: 'Invalid password.' });
   }
 
+  // Start this team's clock on first login, not at roster import. With
+  // staggered batches (12-3, 1-4, 2-5) and ranking on elapsed time, stamping
+  // at import would hand the first batch the podium before anyone sat down.
+  db.prepare(
+    "UPDATE level_state SET started_at = ? WHERE team_id = ? AND level = 1 AND started_at IS NULL"
+  ).run(new Date().toISOString(), team.id);
+
   const token = signToken(team.id);
 
   // httpOnly signed cookie

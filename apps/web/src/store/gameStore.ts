@@ -55,6 +55,7 @@ interface GameState {
   characters: CharacterProfile[];
   terms: TermEntry[];
   timeline: TimelineEvent[];
+  caseData: any | null;
 
   // Actions
   init: () => Promise<void>;
@@ -71,6 +72,7 @@ interface GameState {
   setPrintModalOpen: (open: boolean) => void;
   setActiveDrawerTab: (tab: 'notebook' | 'hints' | 'leaderboard') => void;
   loadCharacters: () => Promise<void>;
+  loadCase: () => Promise<void>;
   loadTerms: () => Promise<void>;
   loadTimeline: () => Promise<void>;
   logout: () => Promise<void>;
@@ -98,6 +100,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   characters: [],
   terms: [],
   timeline: [],
+  caseData: null,
 
   init: async () => {
     try {
@@ -113,6 +116,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         await get().loadCharacters();
         await get().loadTerms();
         await get().loadTimeline();
+        await get().loadCase();
 
         const levelsRes = await api.getLevels();
         const levelsList: LevelSummary[] = levelsRes.levels;
@@ -197,7 +201,8 @@ export const useGameStore = create<GameState>((set, get) => ({
           set({ levels: levelsRes.levels, theoryUnlocked: !!levelsRes.theoryUnlocked });
           await get().loadCharacters();
           await get().loadTerms();
-        await get().loadTimeline();
+          await get().loadTimeline();
+          await get().loadCase();
           await get().selectLevel(selectedLevelId);
         } else if (res.nextStage) {
           // Advance to next stage in current level
@@ -322,9 +327,17 @@ loadCharacters: async () => {
     console.error('Failed to load character profiles:', err);
   }
 },
+loadCase: async () => {
+  try {
+    const response = await api.getCase();
+    set({ caseData: response });
+  } catch (err) {
+    console.error('Failed to load case state:', err);
+  }
+},
   logout: async () => {
     await api.logout();
     set({ team: null, isAdmin: false, levelDetail: null, levels: [], theoryUnlocked: false });
-    window.location.href = '/login';
+    window.location.href = '/enter';
   }
 }));

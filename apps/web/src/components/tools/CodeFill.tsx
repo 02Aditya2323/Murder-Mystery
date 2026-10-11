@@ -325,7 +325,7 @@ export const CodeFill: React.FC = () => {
               type="text"
               value={outputInput}
               onChange={(e) => setOutputInput(e.target.value)}
-              placeholder="2308-4417"
+              placeholder="HHMM-XXXX"
               className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner tracking-wider"
             />
             <button

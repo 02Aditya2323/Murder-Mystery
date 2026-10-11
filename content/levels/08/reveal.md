@@ -2,7 +2,7 @@
 
 **Hardware Register Extraction:**
 The garage keypad controller memory dump reveals:
-- **Timestamp:** 21:31:04 BST (13 minutes after Adrian badged out of the front entrance).
+- **Timestamp:** 21:31:04 IST (13 minutes after Adrian badged out of the front entrance).
 - **Service Override Code:** Entered manually by user `A. Cross`.
 - **System Flag:** *BYPASS ACTIVE (MAINTENANCE WINDOW GRANTED).*
 - **Operator Notes:** The panel alarm was fully suppressed throughout the bypass interval because a global maintenance window had been initiated at 21:20 under authority credentials.

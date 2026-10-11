@@ -1,13 +1,14 @@
 # Photographic Verification: The 22:21 Alibi
 
-During interrogation, {{killer.full}} provided investigators with what appeared to be an airtight alibi. 
+During questioning, {{killer.full}} produced what looks like an airtight alibi.
 
-At 22:21 on the night of the murder—right in the middle of the estimated window of death—Adrian posted a seaside landscape photograph to his personal feed, captioned:
-> *"Clear October night watching the tide roll in at {{geo.claimed_place}}."*
+At 22:21 on the night of the murder — four minutes after the time frozen on the smashed desk clock, and squarely inside the medical window of death — Adrian posted a seaside photograph to his personal feed, captioned:
 
-If he was genuinely on the promenade at {{geo.claimed_place}} at 22:21, he could not physically have murdered Dr. Elias Vane in {{place.house_area}}.
+> *"Clear October night, watching the tide come in at {{geo.claimed_place}}."*
 
-However, following Mira's statement and Dr. Vane's hidden recording indicating Adrian's true origin, digital specialists suspect this photo is a recycled image taken from the Marsh family's historic hometown, posted remotely to forge his whereabouts.
+{{geo.claimed_place}} is roughly ninety minutes from Ridge Road in either direction. If he was genuinely standing on that shoreline at 22:21, he could not have been in Malabar Hill at any point in the window, and the case against him collapses.
+
+But after Mira's statement and Dr. Vane's hidden recording, the digital forensics unit no longer believes the photograph is his. There is no metadata on the file. There is no sign it was taken that night at all.
 
 **Your Objective:**
-Examine the geographical landmarks, coastline, monuments, and coastal architecture in the evidence photograph. Where was this photograph actually taken? Enter the town name, distinctive landmark, or precise coordinates (`lat,lng`).
+Work out where this photograph was actually taken. Read the coastline, the fortifications, the church architecture and the stonework. Enter the town, the landmark, or the coordinates as `lat,lng`.

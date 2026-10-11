@@ -83,7 +83,7 @@ export const AdminLoginPage: React.FC = () => {
 
         <div className="text-center pt-2 border-t border-ink/20">
           <span className="text-[11px] font-mono text-ink/60">
-            Default emergency code: <code>hampstead1986</code>
+            Set ADMIN_PASSWORD before the event. Organisers only.
           </span>
         </div>
       </div>

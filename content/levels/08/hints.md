@@ -1,8 +1,8 @@
 ### Tier 1
-OWNER TO FILL: Check the power rails and IC pin connections on your physical breadboard/kit.
+Three of the four gates on your sheet are drawn in full. Only one of them is obscured.
 
 ### Tier 2
-OWNER TO FILL: Ensure the truth table inputs correspond to the relay selector switch settings on your worksheet.
+Compare the partial truth table printed in the manual against the inputs and outputs of the gate you cannot read. Exactly one gate type behaves that way.
 
 ### Tier 3
-OWNER TO FILL: Verify the 7-segment or register display value indicated on your assigned unit.
+The missing gate outputs 1 only when its two inputs differ from each other. Wire it as such, then work the switch bank until the LED lights, and read the pattern straight off the switches.

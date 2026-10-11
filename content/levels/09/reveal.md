@@ -2,7 +2,7 @@
 
 **Restored Telemetry Finding:**
 The execution of the forensic script reveals:
-- **True Event Time:** 23:08 BST.
+- **True Event Time:** 23:08 IST.
 - **Genuine Event Mechanism:** Triggered remotely via `TABLET_API`. The room was never secured from the inside.
 - **Scrubbed Account:** `LIAISON_4417`.
 - **Criminal Apprehension:** Adrian Cross was cornered leaving the research archives and taken into formal custody.

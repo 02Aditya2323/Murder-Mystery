@@ -223,7 +223,7 @@ export const MorsePlayer: React.FC = () => {
           {/* Tape Label Sticker */}
           <div className="relative mx-auto max-w-md bg-[#eee5d3] p-3 rounded shadow-md border border-[#a89574] mb-5 transform -rotate-[0.5deg]">
             <div className="flex items-center justify-between border-b border-[#a89574]/60 pb-1 mb-1.5 text-[10px] font-typewriter">
-              <span className="font-bold text-red-800 tracking-wider">METROPOLITAN POLICE EVIDENCE TAPE</span>
+              <span className="font-bold text-red-800 tracking-wider">MUMBAI POLICE EVIDENCE TAPE</span>
               <span className="font-mono text-zinc-700">SIDE A • MONO</span>
             </div>
             <div className="flex items-center justify-between font-mono text-xs text-zinc-900">
@@ -398,7 +398,7 @@ export const MorsePlayer: React.FC = () => {
           <div className="font-typewriter font-bold text-ink pb-2 border-b border-ink/20 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
               <Disc className="w-4 h-4 text-signal" />
-              METROPOLITAN POLICE // COMPLETE TELEGRAPHIC SIGNAL CODE REFERENCE
+              CRIME BRANCH // TELEGRAPHIC SIGNAL CODE REFERENCE
             </span>
             <span className="stamp stamp-open text-[9px]">HINT 3 ATTACHMENT</span>
           </div>
@@ -506,14 +506,14 @@ export const MorsePlayer: React.FC = () => {
       ) : (
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border border-signal/40 shadow-desk space-y-3">
           <label className="block text-xs font-serif text-label font-medium">
-            Enter the decoded message tapped by Mira (e.g. JULIAN or NOT ME JULIAN):
+            Enter the message Mira tapped out:
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               value={answerInput}
               onChange={(e) => setAnswerInput(e.target.value)}
-              placeholder="NOT ME JULIAN"
+              placeholder="Decoded message"
               className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none tracking-widest uppercase shadow-inner"
             />
             <button

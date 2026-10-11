@@ -59,14 +59,14 @@
     "role": "Journalist"
   },
   "place": {
-    "house_area": "Hampstead, North London",
-    "house_address": "14 Keats Grove, Hampstead, London NW3 2RR",
-    "claimed": "Southend-on-Sea seafront"
+    "house_area": "Malabar Hill, Mumbai",
+    "house_address": "Vane residence, Ridge Road, Malabar Hill, Mumbai 400006",
+    "claimed": "Madh Island"
   },
   "geo": {
-    "town": "Whitby",
-    "country": "United Kingdom",
-    "claimed_place": "Southend-on-Sea seafront",
-    "place_display": "West Cliff, Whitby, England"
+    "town": "Diu",
+    "country": "India",
+    "claimed_place": "Madh Island",
+    "place_display": "Diu, Daman and Diu"
   }
 }

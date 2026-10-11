@@ -75,9 +75,9 @@ Access the application at `http://localhost:3000`.
    - Click **Import Squad List**.
    - Click **Download Credentials Sheet** to export printable slips for squad tables.
 2. Demo Squad Credentials already pre-seeded:
-   - Squad: `Baker Street Unit` • Code: `BAKER` • Pass: `case1986` • Kit #1
-   - Squad: `Scotland Yard Bravo` • Code: `YARD` • Pass: `case1986` • Kit #2
-   - Squad: `Hampstead Watch` • Code: `WATCH` • Pass: `case1986` • Kit #3
+   - Squad: `Colaba Division` • Code: `COLABA` • Pass: `ridgeroad` • Kit #1
+   - Squad: `Malabar Hill Watch` • Code: `MALABAR` • Pass: `ridgeroad` • Kit #2
+   - Squad: `Crawford Market Irregulars` • Code: `CRAWFORD` • Pass: `ridgeroad` • Kit #3
 
 #### T-30 Minutes: Level 8 Physical Kit Stations
 1. Place physical electronics kits on each table corresponding to the squad's assigned Kit number.
@@ -164,17 +164,44 @@ Validation stays server-side.
 
 ---
 
-## 7. Known Issues (pending owner decision)
+## 7. Routes
 
-These were found while reviewing the `redesign` branch. None are fixed in this README update.
+| Route | Page |
+|---|---|
+| `/` | Public landing page |
+| `/enter` | Team sign-in (starts that team's three-hour clock) |
+| `/case` | The investigation |
+| `/hq`, `/hq/dashboard` | Organiser console |
 
-- **Server working directory.** Content and DB paths are now resolved relative to `apps/server` (`process.cwd()/../..`, `data/`). Starting the server from the
-  repo root (`npm start`, or the Docker `CMD node apps/server/dist/index.js`) makes `/api/levels/*`, `/api/characters`, `/api/terms` and `/api/timeline`
-  return HTTP 500, and the SQLite DB is written to `./data` instead of `apps/server/data` (outside the Docker volume). `npm run dev` works.
-- **Tests need private answer files.** `npm test` calls `hashAllAnswers()`, which reads `content/levels/NN/answers.private.json` (git-ignored). Without them the
-  suite fails and `apps/server/data/answers.hashed.json` is overwritten with `{}`; restore it with `git checkout -- apps/server/data/answers.hashed.json`.
-  The tests also assume the repo root as working directory.
-- **Default credentials are visible.** `/hq` login page prints the default admin code, and the roster placeholder and seeded demo squads use `case1986`.
-  Set `ADMIN_PASSWORD`, `ANSWER_SECRET`, `SESSION_SECRET` before any real event.
-- **Placeholders that match answers.** Level 9's output field uses `2308-4417` as placeholder text (the other cases listed in the redesign handoff were not re-audited here).
-- **Wording.** The clue modal footer still says "Evidence Corkboard" and its button says "Examine Evidence Board"; evidence now lives in the Case Dossier.
+`/login` redirects to `/enter`. The old `InvestigationDesk` shell, `Header`, `CaseDossier`,
+`RightDrawer`, `ClueCardModal` and `LoginPage` have been removed.
+
+---
+
+## 8. Canon
+
+`content/CANON.md` is the single source of truth for story, timeline, answer key and the five
+logic rulings. Where this README, `MURDER_MYSTERY_BUILD_SPEC.md` or any older draft disagrees
+with it, CANON.md wins. It also carries the leak-check command to run before any content change,
+and the list of what is still outstanding.
+
+Story content lives in three places:
+
+| File | Holds |
+|---|---|
+| `content/cast.json` | Ten people, their dossier fields, and the beat each fact unlocks at |
+| `content/scenes.json` | Per-beat narrative: why you are here, what it proved, how the board moves |
+| `content/levels/NN/` | The puzzle itself: brief, hints, and the evidence note filed on solving |
+
+`GET /api/case` assembles all three and filters by the team's own progress. A sealed beat
+contributes nothing — not its title, not the people it would introduce, not its board changes.
+
+---
+
+## 9. Before the event
+
+Set `ADMIN_PASSWORD`, `ANSWER_SECRET` and `SESSION_SECRET` in `.env`. Changing `ANSWER_SECRET`
+invalidates `apps/server/data/answers.hashed.json`, so re-run `npm run hash-answers` afterwards
+(it needs the git-ignored `content/levels/NN/answers.private.json` files).
+
+Remaining content work is listed at the end of `content/CANON.md`.

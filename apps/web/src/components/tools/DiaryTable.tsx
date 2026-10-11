@@ -9,7 +9,7 @@ interface DiaryPage {
 }
 
 export const DiaryTable: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
 
   const initialPages: DiaryPage[] = levelDetail?.diaryPages || [];
   const [pages, setPages] = useState<DiaryPage[]>(initialPages);
@@ -183,13 +183,7 @@ export const DiaryTable: React.FC = () => {
             </div>
           </div>
 
-          <button
-            onClick={() => selectLevel(7)}
-            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
-          >
-            <span>Proceed to Case #07</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {/* advancement is owned by the case room, not the tool */}
         </div>
       )}
 

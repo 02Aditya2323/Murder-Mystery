@@ -1,8 +1,8 @@
 ### Tier 1
-Compare the visual terrain in the photo against the actual geography of Southend-on-Sea. Look at the cliff elevation and harbor topography.
+Start with the claim rather than the photograph. What would have to be true about the light, the tide and the season for this picture to have been taken on the night in question?
 
 ### Tier 2
-The distinctive architecture, cliff headland, gothic ruins across the harbor, and historic maritime monuments point to the rugged coastline of North Yorkshire, England.
+The fortifications are neither Maratha nor British. Look at the shape of the bastions, the colour of the stone, and the church tower on the rise behind them — this is a Portuguese coastal settlement, and India has only a handful.
 
 ### Tier 3
-Look for the famous Whalebone Arch, Captain Cook monument on the West Cliff, or the 199 steps leading up toward the abbey ruins in the historic port town of Whitby.
+Look for a fort built hard against the sea with a separate island battery offshore, and a whitewashed church with a bell gable above the town. Search the fort together with the church, not the beach.

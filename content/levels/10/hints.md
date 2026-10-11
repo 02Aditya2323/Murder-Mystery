@@ -1,8 +1,8 @@
 ### Tier 1
-The clue hinges on badge/liaison number `4417`. Search for mentions of 4417 in external investigator/club member biographical profiles.
+The clue is a number you have already met twice in this case. Look for it in the profile biographies, not in anybody's posts.
 
 ### Tier 2
-Profile tags contain base64-encoded strings. Decode the string using any standard base64 utility to uncover the redirect URL.
+The string sitting in that bio is base64. Any standard decoder will open it.
 
 ### Tier 3
-The decoded text resolves to an image destination containing the QR key. The name of the officer who created the maintenance window and signed Julian's death report is lead investigator Detective Rowan Hale. Format: `FLAG{ROWAN_HALE}`.
+What comes out is a link, not a message. Follow it; the image at the end of it carries the flag. Submit it in the `FLAG{...}` form exactly as it is written.

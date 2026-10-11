@@ -156,25 +156,25 @@ export function initDatabase() {
     const demoTeams = [
       {
         id: 'team-1',
-        name: 'Baker Street Unit',
-        code: 'BAKER',
-        password: 'case1986',
+        name: 'Colaba Division',
+        code: 'COLABA',
+        password: 'ridgeroad',
         kit_no: 1,
         members: ['Inspector Lestrade', 'Dr. Watson']
       },
       {
         id: 'team-2',
-        name: 'Scotland Yard Bravo',
-        code: 'YARD',
-        password: 'case1986',
+        name: 'Malabar Hill Watch',
+        code: 'MALABAR',
+        password: 'ridgeroad',
         kit_no: 2,
         members: ['Sgt. Miller', 'Constable Evans']
       },
       {
         id: 'team-3',
-        name: 'Hampstead Watch',
-        code: 'WATCH',
-        password: 'case1986',
+        name: 'Crawford Market Irregulars',
+        code: 'CRAWFORD',
+        password: 'ridgeroad',
         kit_no: 3,
         members: ['Officer Davis', 'Analyst Price']
       }
@@ -206,8 +206,10 @@ export function initTeamLevelState(teamId: string) {
       INSERT INTO level_state (team_id, level, status, started_at, solved_at, stage_index, hints_used, wrong_attempts, skipped)
       VALUES (?, ?, ?, ?, NULL, 0, 0, 0, 0)
     `);
-    // Level 1 starts OPEN, levels 2..10 SEALED
-    insertState.run(teamId, 1, 'OPEN', new Date().toISOString());
+    // Level 1 starts OPEN but its clock is NOT stamped here. Rosters are
+    // imported for every batch at once; stamping now would charge a 2pm team
+    // for the two hours they spent waiting. started_at is set on first login.
+    insertState.run(teamId, 1, 'OPEN', null);
     for (let l = 2; l <= 10; l++) {
       insertState.run(teamId, l, 'SEALED', null);
     }

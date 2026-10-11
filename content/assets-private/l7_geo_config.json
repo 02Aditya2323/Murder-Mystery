@@ -1,23 +1,25 @@
 {
-  "place_display": "West Cliff, Whitby, England",
-  "town": "Whitby",
-  "country": "United Kingdom",
-  "claimed_place": "Southend-on-Sea seafront",
+  "_OWNER_NOTE": "The photograph at content/assets-private/l7_geo_photo.jpg is still the old placeholder and MUST be replaced before the event with a real, EXIF-stripped photograph of the seafront at Diu. Until it is, 'whitby' stays in accepted_names so the level can be tested; remove it once the real photo is in.",
+  "place_display": "Diu, Daman and Diu",
+  "town": "Diu",
+  "country": "India",
+  "claimed_place": "Madh Island",
   "accepted_names": [
-    "whitby",
-    "whitby england",
-    "whitby north yorkshire",
-    "west cliff whitby",
-    "whalebone arch",
-    "west cliff",
-    "whitby abbey"
+    "diu",
+    "diu fort",
+    "diu island",
+    "fort of diu",
+    "st pauls church diu",
+    "panikotha",
+    "daman and diu",
+    "whitby"
   ],
   "center": {
-    "lat": 54.4897,
-    "lng": -0.6173
+    "lat": 20.7144,
+    "lng": 70.9874
   },
-  "radius_m": 1500,
-  "attribution": "Photo: Evidence archive (reposted 22:21)",
-  "reveal_text": "Adrian's alibi photo is a recycled old photo from the Marsh family's hometown. The memorial registry names Adrian as Julian's brother.",
-  "registry_text": "In memory of Julian Marsh. Placed by his mother Helen and his brother Adrian. West Cliff, Whitby, England."
+  "radius_m": 4000,
+  "attribution": "Photo: evidence archive (reposted 22:21)",
+  "reveal_text": "Adrian's alibi photo is an old picture of the coast the Marsh family comes from. The memorial registry names Adrian as Julian's brother.",
+  "registry_text": "In memory of Julian Marsh. Placed by his mother Helen and his brother Adrian. Seafront Promenade, Diu."
 }

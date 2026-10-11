@@ -10,7 +10,7 @@ The officer behind `LIAISON_4417`, badge 4417, and the 2023 cover-up is **Detect
 **Subject:** Rowan Hale  
 **Practitioner:** Dr. Elias Vane  
 
-> **HALE:** *(Low, tense voice)* *"I altered the time of death on Julian's file to 20:40 because you told me you were at that dinner until 9:15, Elias. You told me it was an accident. But if anyone ever links badge 4417 to that crime scene before the 999 dispatch was logged... we both go down for murder."*
+> **HALE:** *(Low, tense voice)* *"I altered the time of death on Julian's file to 20:40 because you told me you were at that dinner until 9:15, Elias. You told me it was an accident. But if anyone ever links badge 4417 to that crime scene before the 112 dispatch was logged... we both go down for murder."*
 
 ---
 
