@@ -86,11 +86,23 @@ export function hashAllAnswers(secret = 'MURDER_MYSTERY_1986_SECRET_KEY') {
   }
 
   const outPath = path.join(outDir, 'answers.hashed.json');
+  if (Object.keys(result).length === 0 && fs.existsSync(outPath)) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      if (Object.keys(existing).length > 0) {
+        console.log(`Preserving existing hashed answers in ${outPath}`);
+        return existing;
+      }
+    } catch {}
+  }
   fs.writeFileSync(outPath, JSON.stringify(result, null, 2), 'utf8');
   console.log(`Hashed answers written to ${outPath}`);
   return result;
 }
 
-if (import.meta.url === `file:///${process.argv[1].replace(/\\/g, '/')}`) {
+import { fileURLToPath } from 'node:url';
+
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
   hashAllAnswers();
 }
+

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
 import { api } from '../../api/client.js';
-import { CheckCircle, XCircle, AlertCircle, Terminal, FileCode } from 'lucide-react';
+import { CheckCircle, XCircle, AlertCircle, Terminal, FileCode, CheckCircle2, ArrowRight } from 'lucide-react';
 
 /**
  * One editable blank in the code listing.
@@ -13,7 +13,8 @@ const BlankInput: React.FC<{
   onChange: (value: string) => void;
   label: string;
   kind: 'value' | 'operator';
-}> = ({ value, onChange, label, kind }) => (
+  disabled?: boolean;
+}> = ({ value, onChange, label, kind, disabled }) => (
   <input
     type="text"
     value={value}
@@ -25,14 +26,16 @@ const BlankInput: React.FC<{
     autoCorrect="off"
     spellCheck={false}
     maxLength={8}
+    disabled={disabled}
     className={`${
       kind === 'value' ? 'w-32' : 'w-36'
-    } bg-[#fff9ea] text-zinc-950 px-2.5 py-0.5 rounded border-2 border-red-800 font-mono font-bold text-xs shadow-sm placeholder:text-zinc-500 placeholder:font-normal focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600`}
+    } bg-[#fff9ea] text-zinc-950 px-2.5 py-0.5 rounded border-2 border-red-800 font-mono font-bold text-xs shadow-sm placeholder:text-zinc-500 placeholder:font-normal focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 disabled:opacity-70`}
   />
 );
 
 export const CodeFill: React.FC = () => {
-  const { submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
 
   const [activeLang, setActiveLang] = useState<'python' | 'java' | 'cpp'>('python');
 
@@ -86,7 +89,7 @@ export const CodeFill: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!outputInput.trim()) return;
+    if (!outputInput.trim() || isSolved) return;
 
     setSubmitting(true);
     setErrorMessage(null);
@@ -309,37 +312,61 @@ export const CodeFill: React.FC = () => {
         </div>
       </div>
 
-      {/* Program Output Verification Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
-        <label htmlFor="level9-output" className="block text-xs font-serif text-label font-medium flex items-center gap-2">
-          <Terminal className="w-4 h-4 text-signal" aria-hidden="true" />
-          <span>Enter the exact console output produced by the repaired script (format: HHMM-XXXX):</span>
-        </label>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            id="level9-output"
-            type="text"
-            value={outputInput}
-            onChange={(e) => setOutputInput(e.target.value)}
-            placeholder="2308-4417"
-            className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner tracking-wider"
-          />
+      {/* Program Output Verification Form or Solved Banner */}
+      {!isSolved ? (
+        <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
+          <label htmlFor="level9-output" className="block text-xs font-serif text-label font-medium flex items-center gap-2">
+            <Terminal className="w-4 h-4 text-signal" aria-hidden="true" />
+            <span>Enter the exact console output produced by the repaired script (format: HHMM-XXXX):</span>
+          </label>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              id="level9-output"
+              type="text"
+              value={outputInput}
+              onChange={(e) => setOutputInput(e.target.value)}
+              placeholder="2308-4417"
+              className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner tracking-wider"
+            />
+            <button
+              type="submit"
+              disabled={submitting || !outputInput.trim()}
+              className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors motion-reduce:transition-none shadow disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-label"
+            >
+              {submitting ? 'Verifying Output...' : 'Submit Output String'}
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 bg-red-950/60 rounded border border-red-800" role="alert">
+              <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+        </form>
+      ) : (
+        <div className="p-5 bg-gradient-to-r from-[#172314] via-[#1f301b] to-[#172314] rounded-lg border-2 border-emerald-600/70 shadow-desk flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-typewriter text-sm text-emerald-200 font-bold block uppercase tracking-wider">
+                LOCK TIME RECONCILED // CASE #09 SOLVED
+              </span>
+              <span className="text-xs font-serif text-emerald-100/80">
+                Calculated genuine lock opening at 23:08 by liaison source 4417. Digital tampering proven.
+              </span>
+            </div>
+          </div>
+
           <button
-            type="submit"
-            disabled={submitting || !outputInput.trim()}
-            className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors motion-reduce:transition-none shadow disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-label"
+            onClick={() => selectLevel(10)}
+            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
           >
-            {submitting ? 'Verifying Output...' : 'Submit Output String'}
+            <span>Proceed to Case #10</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-
-        {errorMessage && (
-          <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 bg-red-950/60 rounded border border-red-800" role="alert">
-            <AlertCircle className="w-4 h-4 shrink-0" aria-hidden="true" />
-            <span>{errorMessage}</span>
-          </div>
-        )}
-      </form>
+      )}
     </div>
   );
 };

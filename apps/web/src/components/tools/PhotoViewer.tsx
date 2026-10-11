@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { ZoomIn, ZoomOut, RotateCcw, Image, AlertCircle, FileText, Crosshair, MapPin, Compass } from 'lucide-react';
+import { ZoomIn, ZoomOut, RotateCcw, Image, AlertCircle, FileText, Crosshair, MapPin, Compass, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const PhotoViewer: React.FC = () => {
-  const { levelDetail, submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
 
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -41,14 +41,17 @@ export const PhotoViewer: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!answerInput.trim()) return;
+    if (!answerInput.trim() || isSolved) return;
 
     setSubmitting(true);
     setErrorMessage(null);
 
     const res = await submitAnswer(answerInput.trim());
     if (!res.correct) {
-      setErrorMessage('Location could not be reconciled. Examine distinctive coastal cliffs, monuments, or enter coordinates.');
+      setErrorMessage(
+        res.nudge ||
+          'Location could not be reconciled. Examine distinctive coastal cliffs, monuments, or enter coordinates.'
+      );
     } else {
       setAnswerInput('');
     }
@@ -124,6 +127,9 @@ export const PhotoViewer: React.FC = () => {
             <img
               src={photoUrl}
               alt="Adrian Cross alibi evidence photograph"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/images/l7_geo_photo.jpg';
+              }}
               draggable={false}
               style={{
                 transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
@@ -172,36 +178,60 @@ export const PhotoViewer: React.FC = () => {
         </div>
       )}
 
-      {/* Geolocation Answer Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
-        <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
-          <MapPin className="w-4 h-4 text-signal" />
-          <span>Enter the verified location or landmark shown in this alibi photograph (or enter coordinates lat,lng):</span>
-        </label>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            value={answerInput}
-            onChange={(e) => setAnswerInput(e.target.value)}
-            placeholder="e.g. Whitby, West Cliff Whitby, or 54.4897, -0.6173"
-            className="flex-1 bg-ink text-label font-mono text-xs sm:text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
-          />
+      {/* Geolocation Answer Form or Solved Banner */}
+      {!isSolved ? (
+        <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
+          <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-signal" />
+            <span>Enter the verified location or landmark shown in this alibi photograph (or enter coordinates lat,lng):</span>
+          </label>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              type="text"
+              value={answerInput}
+              onChange={(e) => setAnswerInput(e.target.value)}
+              placeholder="e.g. Whitby, West Cliff Whitby, or 54.4897, -0.6173"
+              className="flex-1 bg-ink text-label font-mono text-xs sm:text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
+            />
+            <button
+              type="submit"
+              disabled={submitting || !answerInput.trim()}
+              className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            >
+              {submitting ? 'Verifying Geo...' : 'Verify Location'}
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 bg-red-950/60 rounded border border-red-800">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+        </form>
+      ) : (
+        <div className="p-5 bg-gradient-to-r from-[#172314] via-[#1f301b] to-[#172314] rounded-lg border-2 border-emerald-600/70 shadow-desk flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-typewriter text-sm text-emerald-200 font-bold block uppercase tracking-wider">
+                LOCATION VERIFIED // CASE #07 SOLVED
+              </span>
+              <span className="text-xs font-serif text-emerald-100/80">
+                Alibi photograph traced to Whitby West Cliff memorial bench. Adrian Cross's true identity uncovered.
+              </span>
+            </div>
+          </div>
+
           <button
-            type="submit"
-            disabled={submitting || !answerInput.trim()}
-            className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            onClick={() => selectLevel(8)}
+            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
           >
-            {submitting ? 'Verifying Geo...' : 'Verify Location'}
+            <span>Proceed to Case #08</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-
-        {errorMessage && (
-          <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 bg-red-950/60 rounded border border-red-800">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{errorMessage}</span>
-          </div>
-        )}
-      </form>
+      )}
     </div>
   );
 };

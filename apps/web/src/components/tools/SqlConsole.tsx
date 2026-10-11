@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
 import initSqlJs, { Database } from 'sql.js';
-import { Play, Database as DbIcon, History, AlertCircle, Table, Terminal, Monitor, HardDrive, ShieldAlert } from 'lucide-react';
+import { Play, Database as DbIcon, History, AlertCircle, Table, Terminal, Monitor, HardDrive, ShieldAlert, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const SqlConsole: React.FC = () => {
-  const { submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
 
   const [db, setDb] = useState<Database | null>(null);
   const [loadingDb, setLoadingDb] = useState<boolean>(true);
@@ -80,18 +81,14 @@ export const SqlConsole: React.FC = () => {
 
     setQueryError(null);
 
-    // Read-only check
-    const upper = q.toUpperCase();
-    if (
-      upper.includes('ATTACH') ||
-      upper.includes('PRAGMA') ||
-      upper.includes('.LOAD') ||
-      upper.includes('DROP') ||
-      upper.includes('ALTER') ||
-      upper.includes('UPDATE') ||
-      upper.includes('INSERT') ||
-      upper.includes('DELETE')
-    ) {
+    // Read-only check: permit SELECT / WITH queries while preventing data alteration statements
+    const trimmedUpper = q.trim().toUpperCase();
+    if (!trimmedUpper.startsWith('SELECT') && !trimmedUpper.startsWith('WITH') && !trimmedUpper.startsWith('EXPLAIN')) {
+      setQueryError('SECURITY VIOLATION: Read-only investigation terminal. Only SELECT queries are permitted.');
+      return;
+    }
+
+    if (/^\s*(DROP|ALTER|UPDATE|INSERT|DELETE|ATTACH|PRAGMA)\b/i.test(q)) {
       setQueryError('SECURITY VIOLATION: Read-only investigation terminal. Data alteration commands are prohibited.');
       return;
     }
@@ -123,7 +120,7 @@ export const SqlConsole: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!deviceInput.trim() || !patientInput.trim()) return;
+    if (!deviceInput.trim() || !patientInput.trim() || isSolved) return;
 
     setSubmitting(true);
     setSubmitError(null);
@@ -196,13 +193,13 @@ export const SqlConsole: React.FC = () => {
             </span>
             <span className="text-[10px] text-zinc-500 group-hover:text-amber-300">TABLE 01</span>
           </div>
-          <div className="text-[11px] text-zinc-400 truncate mt-1">patient_code, display_name</div>
+          <div className="text-[11px] text-zinc-400 truncate mt-1">patient_code, display_name, status</div>
         </div>
 
         <div
           onClick={() => {
-            setQuery('SELECT * FROM records LIMIT 20;');
-            runQuery('SELECT * FROM records LIMIT 20;');
+            setQuery('SELECT * FROM records ORDER BY session_date DESC LIMIT 20;');
+            runQuery('SELECT * FROM records ORDER BY session_date DESC LIMIT 20;');
           }}
           className="p-3 rounded-lg bg-[#241e19] hover:bg-[#2e2620] border border-[#5c4631] cursor-pointer transition-all shadow hover:border-amber-500/60 group"
         >
@@ -213,13 +210,13 @@ export const SqlConsole: React.FC = () => {
             </span>
             <span className="text-[10px] text-zinc-500 group-hover:text-amber-300">TABLE 02</span>
           </div>
-          <div className="text-[11px] text-zinc-400 truncate mt-1">record_id, patient_code, session_date...</div>
+          <div className="text-[11px] text-zinc-400 truncate mt-1">record_id, patient_code, notes_summary...</div>
         </div>
 
         <div
           onClick={() => {
-            setQuery('SELECT * FROM access_log WHERE action = \'DELETE\' LIMIT 20;');
-            runQuery('SELECT * FROM access_log WHERE action = \'DELETE\' LIMIT 20;');
+            setQuery("SELECT * FROM access_log WHERE action = 'DELETE';");
+            runQuery("SELECT * FROM access_log WHERE action = 'DELETE';");
           }}
           className="p-3 rounded-lg bg-[#241e19] hover:bg-[#2e2620] border border-[#5c4631] cursor-pointer transition-all shadow hover:border-amber-500/60 group"
         >
@@ -339,61 +336,85 @@ export const SqlConsole: React.FC = () => {
         )}
       </div>
 
-      {/* Investigator Audit Reconciliation Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-4">
-        <div className="flex items-center gap-2 pb-2 border-b border-signal/30 text-xs font-typewriter font-bold text-label">
-          <ShieldAlert className="w-4 h-4 text-signal" />
-          <span>INVESTIGATOR'S AUDIT RECONCILIATION DOSSIER</span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-          <div>
-            <label className="block font-serif text-label font-medium mb-1">
-              Q1: Device used to DELETE a record on the murder night (2026-10-23):
-            </label>
-            <input
-              type="text"
-              value={deviceInput}
-              onChange={(e) => setDeviceInput(e.target.value)}
-              placeholder="e.g. LENA_IPAD"
-              className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
-            />
+      {/* Investigator Audit Reconciliation Form or Solved Banner */}
+      {!isSolved ? (
+        <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-4">
+          <div className="flex items-center gap-2 pb-2 border-b border-signal/30 text-xs font-typewriter font-bold text-label">
+            <ShieldAlert className="w-4 h-4 text-signal" />
+            <span>INVESTIGATOR'S AUDIT RECONCILIATION DOSSIER</span>
           </div>
 
-          <div>
-            <label className="block font-serif text-label font-medium mb-1">
-              Q2: REDACTED patient code edited by Elias in the week after Julian's death:
-            </label>
-            <input
-              type="text"
-              value={patientInput}
-              onChange={(e) => setPatientInput(e.target.value)}
-              placeholder="e.g. P-0912"
-              className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
-            />
-          </div>
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div>
+              <label className="block font-serif text-label font-medium mb-1">
+                Q1: Device used to DELETE a record on the murder night (2026-10-23):
+              </label>
+              <input
+                type="text"
+                value={deviceInput}
+                onChange={(e) => setDeviceInput(e.target.value)}
+                placeholder="e.g. LENA_IPAD"
+                className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
+              />
+            </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-          <span className="text-[11px] font-mono text-dim">
-            COMBINED FORMAT: [DEVICE]-[PATIENT_CODE] (e.g. LENA_IPAD-P0912)
-          </span>
+            <div>
+              <label className="block font-serif text-label font-medium mb-1">
+                Q2: REDACTED patient code edited by Elias in the week after Julian's death:
+              </label>
+              <input
+                type="text"
+                value={patientInput}
+                onChange={(e) => setPatientInput(e.target.value)}
+                placeholder="e.g. P-0912"
+                className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none uppercase shadow-inner"
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+            <span className="text-[11px] font-mono text-dim">
+              COMBINED FORMAT: [DEVICE]-[PATIENT_CODE] (e.g. LENA_IPAD-P0912)
+            </span>
+            <button
+              type="submit"
+              disabled={submitting || !deviceInput.trim() || !patientInput.trim()}
+              className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            >
+              {submitting ? 'Auditing Database...' : 'Submit Audit Answer'}
+            </button>
+          </div>
+
+          {submitError && (
+            <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-2 p-2 bg-red-950/60 rounded border border-red-800">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{submitError}</span>
+            </div>
+          )}
+        </form>
+      ) : (
+        <div className="p-5 bg-gradient-to-r from-[#172314] via-[#1f301b] to-[#172314] rounded-lg border-2 border-emerald-600/70 shadow-desk flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-typewriter text-sm text-emerald-200 font-bold block uppercase tracking-wider">
+                SQL AUDIT RECONCILED // CASE #04 SOLVED
+              </span>
+              <span className="text-xs font-serif text-emerald-100/80">
+                Log tampering on Lena's iPad verified, and redacted patient code P-0912 connected to the timeline.
+              </span>
+            </div>
+          </div>
+
           <button
-            type="submit"
-            disabled={submitting || !deviceInput.trim() || !patientInput.trim()}
-            className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            onClick={() => selectLevel(5)}
+            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
           >
-            {submitting ? 'Auditing Database...' : 'Submit Audit Answer'}
+            <span>Proceed to Case #05</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-
-        {submitError && (
-          <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-2 p-2 bg-red-950/60 rounded border border-red-800">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{submitError}</span>
-          </div>
-        )}
-      </form>
+      )}
     </div>
   );
 };

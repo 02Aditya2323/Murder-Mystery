@@ -14,9 +14,9 @@ import {
 import { validateAnswer } from '../level-validator.js';
 import { broadcastLeaderboard } from '../sse.js';
 import { LevelStateRow } from '../types.js';
+import { rootDir } from '../config.js';
 
 const router = Router();
-const rootDir = path.resolve(process.cwd(), '../..');
 
 // GET /api/levels - list of all levels with status
 router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
@@ -75,8 +75,8 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
   }
 
   const softCapSeconds = meta.soft_cap_minutes * 60;
-  const canSkip = state.status === 'OPEN' && elapsedSeconds >= softCapSeconds;
-  const remainingUntilSkip = Math.max(0, softCapSeconds - elapsedSeconds);
+  const canSkip = false;
+  const remainingUntilSkip = 0;
 
   const payload: any = {
     id: meta.id,
@@ -386,51 +386,9 @@ router.post('/:n/hint', requireTeamAuth, (req: AuthenticatedRequest, res: Respon
   });
 });
 
-// POST /api/levels/:n/skip - soft cap skip
-router.post('/:n/skip', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
-  const levelNum = parseInt(req.params.n, 10);
-  const teamId = req.team!.id;
-
-  const state = db.prepare('SELECT * FROM level_state WHERE team_id = ? AND level = ?').get(teamId, levelNum) as LevelStateRow | undefined;
-  if (!state || state.status !== 'OPEN') {
-    return res.status(400).json({ error: 'Level is not open.' });
-  }
-
-  const meta = getLevelMeta(levelNum);
-  const softCapSeconds = meta.soft_cap_minutes * 60;
-
-  const startedMs = state.started_at ? new Date(state.started_at).getTime() : Date.now();
-  const elapsedSeconds = Math.floor((Date.now() - startedMs) / 1000);
-
-  if (elapsedSeconds < softCapSeconds) {
-    const remaining = Math.ceil((softCapSeconds - elapsedSeconds) / 60);
-    return res.status(400).json({ error: `Soft cap not elapsed. Available in ${remaining} minutes.` });
-  }
-
-  const now = new Date().toISOString();
-  const reveal = getLevelReveal(levelNum);
-
-  db.prepare(`
-    UPDATE level_state
-    SET status = 'SKIPPED', skipped = 1, solved_at = ?
-    WHERE team_id = ? AND level = ?
-  `).run(now, teamId, levelNum);
-
-  if (levelNum < 10) {
-    db.prepare(`
-      UPDATE level_state
-      SET status = 'OPEN', started_at = ?
-      WHERE team_id = ? AND level = ?
-    `).run(now, teamId, levelNum + 1);
-  }
-
-  broadcastLeaderboard();
-
-  return res.json({
-    skipped: true,
-    reveal,
-    nextLevelOpen: levelNum < 10
-  });
+// POST /api/levels/:n/skip - soft cap skip disabled
+router.post('/:n/skip', requireTeamAuth, (_req: AuthenticatedRequest, res: Response) => {
+  return res.status(403).json({ error: 'Level skipping is disabled. All case files must be solved directly.' });
 });
 
 // POST /api/levels/9/check-blanks - check blanks without revealing answer

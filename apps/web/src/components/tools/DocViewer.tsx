@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { Lock, FileText, PhoneCall, Newspaper, AlertCircle, Printer, Search, Eye, Sparkles } from 'lucide-react';
+import { Lock, FileText, PhoneCall, Newspaper, AlertCircle, Printer, Search, Eye, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const DocViewer: React.FC = () => {
-  const { levelDetail, submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const isSolved = levelDetail?.status === 'SOLVED';
   const currentStage = levelDetail?.currentStageIndex || 0;
 
   // Stage 1 Gate state
@@ -339,74 +340,103 @@ export const DocViewer: React.FC = () => {
             )}
           </div>
 
-          {/* Stage 2 Discrepancy Reconciliation Form */}
-          <form onSubmit={handleStage2Submit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-signal/30 text-xs font-typewriter font-bold text-label">
-              <Sparkles className="w-4 h-4 text-signal" />
-              <span>FORENSIC TIMELINE RECONCILIATION DOSSIER</span>
-            </div>
+          {/* Stage 2 Discrepancy Reconciliation Form or Solved State */}
+          {isSolved ? (
+            <div className="p-5 bg-gradient-to-r from-[#172b1c] to-[#122015] rounded border-2 border-ok/80 shadow-desk space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-ok/30">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-ok" />
+                  <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
+                    FORENSIC DISCREPANCY VERIFIED & ACCEPTED: 32-4417
+                  </span>
+                </div>
+                <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>
+              </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div>
-                <label className="block font-serif text-label font-medium mb-1">
-                  Minutes between estimated TOD (20:40) and Julian's call (21:12):
+              <p className="font-serif text-xs text-dim leading-relaxed">
+                The timeline and officer discrepancy (arrival 32 minutes prior to dispatch by Officer 4417) has been corroborated and entered into the central case file. Submission is locked.
+              </p>
+
+              <div className="pt-1 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => selectLevel(4)}
+                  className="px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow flex items-center gap-2"
+                >
+                  <span>Proceed to Case #04: The Database Audit</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleStage2Submit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-4">
+              <div className="flex items-center gap-2 pb-2 border-b border-signal/30 text-xs font-typewriter font-bold text-label">
+                <Sparkles className="w-4 h-4 text-signal" />
+                <span>FORENSIC TIMELINE RECONCILIATION DOSSIER</span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div>
+                  <label className="block font-serif text-label font-medium mb-1">
+                    Minutes between estimated TOD (20:40) and Julian's call (21:12):
+                  </label>
+                  <input
+                    type="text"
+                    value={minutesInput}
+                    onChange={(e) => setMinutesInput(e.target.value)}
+                    placeholder="32"
+                    className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-serif text-label font-medium mb-1">
+                    Badge number of the first responding officer on scene:
+                  </label>
+                  <input
+                    type="text"
+                    value={badgeInput}
+                    onChange={(e) => setBadgeInput(e.target.value)}
+                    placeholder="4417"
+                    className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-1">
+                <label className="block font-serif text-dim text-[11px] mb-1">
+                  Optional: Minutes the officer arrived before 999 call was logged (recorded for organizers):
                 </label>
                 <input
                   type="text"
-                  value={minutesInput}
-                  onChange={(e) => setMinutesInput(e.target.value)}
-                  placeholder="32"
-                  className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
+                  value={earlyMinutesInput}
+                  onChange={(e) => setEarlyMinutesInput(e.target.value)}
+                  placeholder="15"
+                  className="w-32 bg-ink text-label font-mono text-xs px-3 py-1.5 rounded border border-dim/40 focus:border-signal focus:outline-none"
                 />
               </div>
 
-              <div>
-                <label className="block font-serif text-label font-medium mb-1">
-                  Badge number of the first responding officer on scene:
-                </label>
-                <input
-                  type="text"
-                  value={badgeInput}
-                  onChange={(e) => setBadgeInput(e.target.value)}
-                  placeholder="4417"
-                  className="w-full bg-ink text-label font-mono px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
-                />
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+                <span className="text-[11px] font-mono text-dim">
+                  SUBMISSION FORMAT: [Minutes]-[Badge] (e.g. 32-4417)
+                </span>
+                <button
+                  type="submit"
+                  disabled={submitting || !minutesInput.trim() || !badgeInput.trim()}
+                  className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+                >
+                  {submitting ? 'Checking Dossier...' : 'Submit Forensic Discrepancy'}
+                </button>
               </div>
-            </div>
 
-            <div className="pt-1">
-              <label className="block font-serif text-dim text-[11px] mb-1">
-                Optional: Minutes the officer arrived before 999 call was logged (recorded for organizers):
-              </label>
-              <input
-                type="text"
-                value={earlyMinutesInput}
-                onChange={(e) => setEarlyMinutesInput(e.target.value)}
-                placeholder="15"
-                className="w-32 bg-ink text-label font-mono text-xs px-3 py-1.5 rounded border border-dim/40 focus:border-signal focus:outline-none"
-              />
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-              <span className="text-[11px] font-mono text-dim">
-                SUBMISSION FORMAT: [Minutes]-[Badge] (e.g. 32-4417)
-              </span>
-              <button
-                type="submit"
-                disabled={submitting || !minutesInput.trim() || !badgeInput.trim()}
-                className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
-              >
-                {submitting ? 'Checking Dossier...' : 'Submit Forensic Discrepancy'}
-              </button>
-            </div>
-
-            {errorMessage && (
-              <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-2 p-2 bg-red-950/60 rounded border border-red-800">
-                <AlertCircle className="w-4 h-4 shrink-0" />
-                <span>{errorMessage}</span>
-              </div>
-            )}
-          </form>
+              {errorMessage && (
+                <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-2 p-2 bg-red-950/60 rounded border border-red-800">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+            </form>
+          )}
         </div>
       )}
     </div>

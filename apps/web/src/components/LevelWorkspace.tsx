@@ -2,7 +2,7 @@ import React from 'react';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useGameStore } from '../store/gameStore.js';
-import { Clock, FastForward, Award, Shield } from 'lucide-react';
+import { Clock, Award, Shield, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 import { LogViewer } from './tools/LogViewer.js';
 import { MorsePlayer } from './tools/MorsePlayer.js';
@@ -111,7 +111,7 @@ export const MarkdownText: React.FC<{ text: string }> = ({ text }) => (
 );
 
 export const LevelWorkspace: React.FC = () => {
-  const { levelDetail, loadingLevel, skipLevel } = useGameStore();
+  const { levelDetail, loadingLevel, selectLevel, setTheoryModalOpen } = useGameStore();
 
   if (loadingLevel || !levelDetail) {
     return (
@@ -134,12 +134,9 @@ export const LevelWorkspace: React.FC = () => {
     title,
     status,
     estimatedMinutes,
-    softCapMinutes,
     story,
     stages,
     currentStageIndex,
-    canSkip,
-    remainingUntilSkip,
     reveal,
   } = levelDetail;
 
@@ -173,10 +170,54 @@ export const LevelWorkspace: React.FC = () => {
   };
 
   const isSolved = status === 'SOLVED';
-  const isSkipped = status === 'SKIPPED';
+  const nextLevel = id < 10 ? id + 1 : null;
 
   return (
     <main className="flex-1 p-3 md:p-6 overflow-y-auto space-y-6 desk-surface">
+      {/* 0. PROMINENT LEVEL RESOLUTION & ADVANCEMENT BANNER (IF SOLVED) */}
+      {isSolved && (
+        <div className="bg-gradient-to-r from-[#172b1c] via-[#213f28] to-[#172b1c] p-4 sm:p-5 rounded border-2 border-ok shadow-desk flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 text-label animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-ok/20 border-2 border-ok flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-6 h-6 text-ok" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-typewriter font-bold text-xs uppercase tracking-widest text-ok">
+                  CASE FILE #{String(id).padStart(2, '0')} RESOLVED & VERIFIED
+                </span>
+                <span className="stamp stamp-closed text-[10px]">SOLVED</span>
+              </div>
+              <p className="font-serif text-xs text-dim mt-0.5">
+                {nextLevel
+                  ? `Case file solved! Case #${String(nextLevel).padStart(2, '0')} is ready for your team.`
+                  : 'All 10 investigations completed! Formulate and submit your Final Investigation Theory.'}
+              </p>
+            </div>
+          </div>
+
+          {nextLevel ? (
+            <button
+              type="button"
+              onClick={() => selectLevel(nextLevel)}
+              className="px-6 py-2.5 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs sm:text-sm rounded shadow-lg transition-all flex items-center justify-center gap-2 shrink-0 active:translate-y-0.5"
+            >
+              <span>PROCEED TO CASE #{String(nextLevel).padStart(2, '0')}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setTheoryModalOpen(true)}
+              className="px-6 py-2.5 bg-alarm hover:bg-alarm/90 text-label font-typewriter font-bold text-xs sm:text-sm rounded shadow-lg transition-all flex items-center justify-center gap-2 shrink-0 active:translate-y-0.5"
+            >
+              <Award className="w-4 h-4" />
+              <span>SUBMIT FINAL THEORY</span>
+            </button>
+          )}
+        </div>
+      )}
+
       {/* 1. PHYSICAL MANILA DOSSIER JACKET */}
       <div className="manila-folder p-4 md:p-6 rounded-sm text-ink shadow-desk border-2 border-[#8E6C38] relative space-y-4">
         {/* Brass paperclip graphic on top-right */}
@@ -199,13 +240,10 @@ export const LevelWorkspace: React.FC = () => {
             </h2>
           </div>
 
-          {/* Rubber Status Stamps */}
-          <div className="flex items-center gap-2">
+          {/* Rubber Status Stamps & Quick Advance */}
+          <div className="flex items-center gap-2 flex-wrap">
             {isSolved && (
               <span className="stamp stamp-closed text-xs">SOLVED</span>
-            )}
-            {isSkipped && (
-              <span className="stamp stamp-skipped text-xs">SKIPPED</span>
             )}
             {status === 'OPEN' && (
               <span className="stamp stamp-open text-xs">IN PROGRESS</span>
@@ -215,6 +253,17 @@ export const LevelWorkspace: React.FC = () => {
               <Clock className="w-3.5 h-3.5 text-signal" aria-hidden="true" />
               <span>Est: {estimatedMinutes} min</span>
             </span>
+
+            {isSolved && nextLevel && (
+              <button
+                type="button"
+                onClick={() => selectLevel(nextLevel)}
+                className="px-3 py-1 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-[11px] rounded transition-all flex items-center gap-1 shadow"
+              >
+                <span>Next Case #{String(nextLevel).padStart(2, '0')}</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
 
@@ -273,40 +322,16 @@ export const LevelWorkspace: React.FC = () => {
             </div>
           </div>
         )}
-
-        {/* 5. SOFT CAP TIMER & SKIP OPTION */}
-        {status === 'OPEN' && (
-          <div className="pt-2 border-t border-ink/15 flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-ink/70">
-            <span>
-              Soft Cap Standard: {softCapMinutes} min
-              {!canSkip &&
-                remainingUntilSkip > 0 &&
-                ` \u2022 Skip unlock in ${Math.ceil(remainingUntilSkip / 60)}m`}
-            </span>
-
-            {canSkip && (
-              <button
-                type="button"
-                onClick={skipLevel}
-                className="px-3.5 py-1.5 bg-alarm hover:bg-alarm/90 text-label font-typewriter font-bold text-xs rounded shadow flex items-center gap-1.5 transition-all motion-reduce:transition-none animate-pulse motion-reduce:animate-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ink"
-                title="Soft cap elapsed. Reveal the clue card and proceed."
-              >
-                <FastForward className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>Reveal Clue Card (Mark Case Skipped)</span>
-              </button>
-            )}
-          </div>
-        )}
       </div>
 
-      {/* 6. PRIMARY INVESTIGATION TOOL WORKSPACE */}
+      {/* 5. PRIMARY INVESTIGATION TOOL WORKSPACE */}
       <section aria-label="Investigation Workspace" className="relative">
         {renderTool()}
       </section>
 
-      {/* 7. UNLOCKED EVIDENCE CLUE CARD (IF SOLVED / SKIPPED) */}
-      {(isSolved || isSkipped) && reveal && (
-        <div className="polaroid-frame text-ink shadow-desk border-2 border-signal relative space-y-3 p-5 sm:p-6">
+      {/* 6. UNLOCKED EVIDENCE CLUE CARD (IF SOLVED) */}
+      {isSolved && reveal && (
+        <div className="polaroid-frame text-ink shadow-desk border-2 border-signal relative space-y-4 p-5 sm:p-6">
           <div className="thumbtack" />
 
           <div className="flex items-center justify-between pb-2 border-b-2 border-ink/20">
@@ -325,9 +350,30 @@ export const LevelWorkspace: React.FC = () => {
             <MarkdownText text={reveal} />
           </div>
 
-          <div className="text-[10px] font-mono text-ink/60 text-right">
-            EXHIBIT RECORD ID: CR-2026-{String(id).padStart(2, '0')} &bull;
-            PERMANENT POLICE ARCHIVE
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 border-t border-ink/20">
+            <div className="text-[10px] font-mono text-ink/60">
+              EXHIBIT RECORD ID: CR-2026-{String(id).padStart(2, '0')} &bull; PERMANENT POLICE ARCHIVE
+            </div>
+
+            {nextLevel ? (
+              <button
+                type="button"
+                onClick={() => selectLevel(nextLevel)}
+                className="w-full sm:w-auto px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded shadow flex items-center justify-center gap-2 transition-all active:translate-y-0.5"
+              >
+                <span>Proceed to Case #{String(nextLevel).padStart(2, '0')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setTheoryModalOpen(true)}
+                className="w-full sm:w-auto px-5 py-2 bg-alarm hover:bg-alarm/90 text-label font-typewriter font-bold text-xs rounded shadow flex items-center justify-center gap-2"
+              >
+                <Award className="w-4 h-4" />
+                <span>Formulate Final Theory</span>
+              </button>
+            )}
           </div>
         </div>
       )}

@@ -205,11 +205,22 @@ export const useGameStore = create<GameState>((set, get) => ({
         }
         return { correct: true };
       } else {
-        // Wrong answer
+        // Wrong answer: Update wrongAttempts quietly without toggling loadingLevel or unmounting active tool
+        set((state) => {
+          if (!state.levelDetail) return state;
+          return {
+            levelDetail: {
+              ...state.levelDetail,
+              wrongAttempts: (state.levelDetail.wrongAttempts || 0) + 1
+            }
+          };
+        });
+
         if (res.nudge) {
           get().addToast(`Case Note: ${res.nudge}`, 'warning');
+        } else {
+          get().addToast('Incorrect deduction. Re-examine the case file and try again.', 'alert');
         }
-        await get().selectLevel(selectedLevelId);
         return { correct: false, nudge: res.nudge };
       }
     } catch (err: any) {
@@ -240,29 +251,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   skipLevel: async () => {
-    const { selectedLevelId, levelDetail } = get();
-    if (!levelDetail) return;
-
-    try {
-      const res = await api.skipLevel(selectedLevelId);
-      if (res.skipped) {
-        const newCard = { level: selectedLevelId, title: levelDetail.title, text: res.reveal };
-        set((state) => ({
-          evidenceBoard: [...state.evidenceBoard.filter(c => c.level !== selectedLevelId), newCard],
-          newlyUnlockedClue: newCard,
-        }));
-
-        const levelsRes = await api.getLevels();
-        set({ levels: levelsRes.levels, theoryUnlocked: !!levelsRes.theoryUnlocked });
-        await get().loadCharacters();
-        await get().loadTerms();
-        await get().loadTimeline();
-        await get().selectLevel(selectedLevelId);
-        get().addToast(`Level ${selectedLevelId} skipped. Clue card revealed.`, 'warning');
-      }
-    } catch (err: any) {
-      get().addToast(err.message || 'Cannot skip level yet', 'warning');
-    }
+    get().addToast('Level skipping is disabled for this investigation. All cases must be solved.', 'warning');
   },
 
   setNotebookText: (text: string) => {

@@ -26,7 +26,7 @@ type DossierPage =
 
 const pages: { id: DossierPage; label: string; icon: React.ElementType }[] = [
   { id: 'overview', label: 'Overview', icon: BookOpen },
-  { id: 'characters', label: 'Characters', icon: Users },
+  { id: 'characters', label: 'Characters So Far in Story', icon: Users },
   { id: 'terms', label: 'Terms', icon: Tags },
   { id: 'timeline', label: 'Timeline', icon: CalendarDays },
   { id: 'documents', label: 'Documents', icon: FileText },
@@ -128,13 +128,19 @@ export const CaseDossier: React.FC<CaseDossierProps> = ({ onClose }) => {
       case 'characters':
         return (
           <>
-            <p className="dossier-kicker">PERSONS OF INTEREST</p>
-            <h2 className="dossier-page-title">Character Files</h2>
+            <div className="flex items-center justify-between pb-1 flex-wrap gap-2">
+              <div>
+                <p className="dossier-kicker">LEVEL-BY-LEVEL UNLOCKED PROFILES</p>
+                <h2 className="dossier-page-title">Characters So Far in Story</h2>
+              </div>
+              <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-ok/15 text-ok border border-ok/30 font-bold">
+                {visibleCharacters.length} PROFILES UNLOCKED
+              </span>
+            </div>
             <div className="dossier-rule" />
 
             <p className="dossier-body">
-              Character information verified during the investigation appears
-              here.
+              Persons of interest, suspects, and witnesses discovered through your squad's progress. As each case file is solved, new character profiles and verified facts are unlocked into this archive.
             </p>
 
             {visibleCharacters.length === 0 ? (
@@ -152,7 +158,12 @@ export const CaseDossier: React.FC<CaseDossierProps> = ({ onClose }) => {
                     <Users size={21} />
 
                     <div className="min-w-0 flex-1">
-                      <h3>{character.name}</h3>
+                      <div className="flex items-center justify-between gap-2 flex-wrap">
+                        <h3>{character.name}</h3>
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-ok/15 text-ok border border-ok/30 font-bold uppercase">
+                          UNLOCKED
+                        </span>
+                      </div>
                       <p>{character.role}</p>
 
                       <p>

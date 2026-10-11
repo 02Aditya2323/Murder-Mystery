@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import path from 'node:path';
 import fs from 'node:fs';
 
-import { PORT } from './config.js';
+import { PORT, rootDir } from './config.js';
 import { initDatabase } from './db.js';
 import authRoutes from './routes/auth.js';
 import levelRoutes from './routes/levels.js';
@@ -19,7 +19,6 @@ import termRoutes from './routes/terms.js';
 import timelineRoutes from './routes/timeline.js';
 
 const app = express();
-const rootDir = path.resolve(process.cwd());
 
 // Security Headers with Helmet
 app.use(

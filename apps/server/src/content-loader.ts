@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { loadCharactersConfig, loadEventConfig } from './config.js';
-
-const rootDir = path.resolve(process.cwd(), '..', '..');
+import { loadCharactersConfig, loadEventConfig, rootDir } from './config.js';
 export interface LevelInfo {
   id: number;
   title: string;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { Search, Filter, Clock, AlertCircle, Terminal, Shield, HelpCircle } from 'lucide-react';
+import { Search, Filter, Clock, AlertCircle, Terminal, CheckCircle2, ArrowRight, ZoomIn, X } from 'lucide-react';
 
 interface LogItem {
   id: number;
@@ -11,14 +11,16 @@ interface LogItem {
 }
 
 export const LogViewer: React.FC = () => {
-  const { levelDetail, submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
   const logs: LogItem[] = levelDetail?.logs || [];
+  const isSolved = levelDetail?.status === 'SOLVED';
 
   const [filterSource, setFilterSource] = useState<string>('ALL');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [answerInput, setAnswerInput] = useState<string>('');
   const [submitting, setSubmitting] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [showClockZoom, setShowClockZoom] = useState<boolean>(false);
 
   const sources = ['ALL', 'SEC', 'DOORBELL', 'PC', 'PHONE', 'THERMO'];
 
@@ -56,55 +58,45 @@ export const LogViewer: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Visual Stopped Clock Exhibit (5 cols) */}
         <div className="md:col-span-5 bg-[#251910] p-4 rounded-sm border-2 border-signal/40 shadow-desk flex flex-col items-center justify-between relative overflow-hidden">
-          <div className="w-full flex items-center justify-between pb-1.5 border-b border-signal/20 text-[11px] font-mono text-dim">
-            <span className="font-typewriter font-bold text-signal">EXHIBIT #A: DESK CLOCK</span>
-            <span className="px-1.5 py-0.5 rounded bg-alarm/20 text-alarm font-bold">FROZEN</span>
+          <div className="w-full flex items-center justify-between pb-2 border-b border-signal/20 text-[11px] font-mono text-dim">
+            <span className="font-typewriter font-bold text-signal">EXHIBIT #A: CRIME SCENE DESK CLOCK</span>
+            <span className="px-1.5 py-0.5 rounded bg-alarm/20 text-alarm font-bold">FROZEN 22:17</span>
           </div>
 
-          {/* SVG Illustration of Staged Desk Clock stopped at 22:17 */}
-          <div className="py-3 flex flex-col items-center">
-            <div className="relative w-36 h-36 rounded-full border-4 border-[#C8A051] bg-[#140D08] shadow-[0_0_20px_rgba(200,160,81,0.25)] flex items-center justify-center">
-              {/* Dial tick marks */}
-              <div className="absolute inset-2 rounded-full border border-dashed border-[#C8A051]/30" />
-              
-              {/* Clock numerals */}
-              <span className="absolute top-2 font-mono text-[10px] text-[#C8A051] font-bold">12</span>
-              <span className="absolute right-2.5 font-mono text-[10px] text-[#C8A051] font-bold">3</span>
-              <span className="absolute bottom-2 font-mono text-[10px] text-[#C8A051] font-bold">6</span>
-              <span className="absolute left-2.5 font-mono text-[10px] text-[#C8A051] font-bold">9</span>
-
-              {/* Hour & Minute Hands stopped at 10:17 (22:17) */}
-              {/* Hour hand pointing at ~10 (approx -60 deg from 12) */}
-              <div
-                className="absolute w-1.5 h-10 bg-[#E8C071] origin-bottom rounded-full"
-                style={{ transform: 'rotate(-55deg) translateY(-50%)' }}
+          {/* Forensic Image of Staged Desk Clock */}
+          <div className="py-2.5 w-full flex flex-col items-center">
+            <div className="relative group cursor-pointer w-full max-w-[240px] aspect-square rounded overflow-hidden border-2 border-[#C8A051]/80 shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+              <img
+                src="/images/broken_desk_clock.jpg"
+                alt="Exhibit A: Smashed Brass Desk Clock Stopped at 22:17"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                onClick={() => setShowClockZoom(true)}
               />
-              {/* Minute hand pointing at 17 min (approx 102 deg from 12) */}
-              <div
-                className="absolute w-1 h-14 bg-[#FAF0D4] origin-bottom rounded-full"
-                style={{ transform: 'rotate(102deg) translateY(-50%)' }}
-              />
-              {/* Center brass pin */}
-              <div className="w-3 h-3 rounded-full bg-[#E8C071] border border-ink z-10 shadow" />
-
-              {/* Staged crack in glass */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40" viewBox="0 0 100 100">
-                <path d="M 50 50 L 72 25 L 85 32 M 50 50 L 30 75" stroke="#FFFFFF" strokeWidth="1.2" fill="none" />
-              </svg>
+              <button
+                type="button"
+                onClick={() => setShowClockZoom(true)}
+                className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-xs font-mono text-[#F5E6C8] font-bold"
+              >
+                <ZoomIn className="w-4 h-4 text-signal" />
+                <span>Click to Inspect Exhibit</span>
+              </button>
+              <div className="absolute top-2 left-2 px-1.5 py-0.5 bg-black/80 rounded text-[9px] font-mono text-amber-400 border border-amber-600/60">
+                POLICE PHOTO ARCHIVE
+              </div>
             </div>
 
-            <div className="mt-2 text-center">
-              <span className="font-typewriter text-xs font-bold text-label block">
-                HANDS FROZEN AT 22:17
+            <div className="mt-2.5 text-center">
+              <span className="font-typewriter text-xs font-bold text-label block tracking-wider">
+                HANDS FROZEN AT 22:17 (BST)
               </span>
-              <span className="text-[10px] font-mono text-alarm italic">
-                * Staging suspected by Pathologist
+              <span className="text-[11px] font-mono text-alarm italic block mt-0.5">
+                * Staged time of attack suspected by Medical Examiner
               </span>
             </div>
           </div>
 
-          <div className="w-full text-center text-[10px] font-mono text-dim/80 pt-1 border-t border-signal/20">
-            LOCATION: STUDY CARPET &bull; LETTER OPENER NEARBY
+          <div className="w-full text-center text-[10px] font-mono text-dim/80 pt-1.5 border-t border-signal/20">
+            LOCATION: STUDY CARPET &bull; EVIDENCE TENT A &bull; SIGHTED: 23 OCT 2026
           </div>
         </div>
 
@@ -140,6 +132,50 @@ export const LogViewer: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Clock Zoom Lightbox Modal */}
+      {showClockZoom && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => setShowClockZoom(false)}
+        >
+          <div
+            className="relative max-w-2xl w-full bg-[#1c140d] p-4 rounded-lg border-2 border-signal shadow-2xl space-y-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-2 border-b border-signal/30">
+              <div className="flex items-center gap-2">
+                <span className="font-typewriter font-bold text-signal text-sm">
+                  EXHIBIT #A FORENSIC BLOWUP // HEAVY BRASS CARRIAGE CLOCK
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowClockZoom(false)}
+                className="p-1 rounded text-dim hover:text-label hover:bg-ink/60 transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="w-full max-h-[70vh] overflow-hidden rounded border border-signal/40 bg-black flex items-center justify-center">
+              <img
+                src="/images/broken_desk_clock.jpg"
+                alt="Blowup of Exhibit A: Desk clock frozen at 22:17"
+                className="w-full h-auto max-h-[70vh] object-contain"
+              />
+            </div>
+
+            <div className="flex items-center justify-between text-xs font-mono text-dim pt-1">
+              <span>EVIDENCE ID: CR-2026-EX-A &bull; 14 KEATS GROVE</span>
+              <span className="text-signal font-bold">FROZEN TIME: 22:17 BST</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* CRT TELEMETRY CONSOLE */}
       <div className="crt-terminal p-4 space-y-3">
@@ -242,36 +278,65 @@ export const LogViewer: React.FC = () => {
         </div>
       </div>
 
-      {/* Answer Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border-2 border-signal/40 space-y-2.5 shadow-desk">
-        <label className="block text-xs font-serif text-label font-medium">
-          Enter the start of the Medical Examiner's window of death (4-digit 24-hr UK BST time, e.g. 2145):
-        </label>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            maxLength={5}
-            value={answerInput}
-            onChange={(e) => setAnswerInput(e.target.value)}
-            placeholder="2237"
-            className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/50 focus:border-signal focus:outline-none tracking-widest uppercase shadow-inner"
-          />
-          <button
-            type="submit"
-            disabled={submitting || !answerInput.trim()}
-            className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow-md disabled:opacity-50"
-          >
-            {submitting ? 'Verifying Chronology...' : 'Submit TOD Window'}
-          </button>
-        </div>
-
-        {errorMessage && (
-          <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 rounded bg-alarm/15 border border-alarm/30">
-            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-            <span>{errorMessage}</span>
+      {/* Answer Form or Solved / Locked State */}
+      {isSolved ? (
+        <div className="p-5 bg-gradient-to-r from-[#172b1c] to-[#122015] rounded border-2 border-ok/80 shadow-desk space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-ok/30">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-ok" />
+              <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
+                TIME OF DEATH WINDOW VERIFIED: 22:37 BST
+              </span>
+            </div>
+            <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>
           </div>
-        )}
-      </form>
+
+          <p className="font-serif text-xs text-dim leading-relaxed">
+            Forensic discrepancy identified: The 22:17 clock was deliberately staged. Correcting for panel skew, Elias was active until 21:52 BST, establishing the genuine Medical Examiner window starting at <strong>22:37</strong>. Submission field is locked.
+          </p>
+
+          <div className="pt-1 flex justify-end">
+            <button
+              type="button"
+              onClick={() => selectLevel(2)}
+              className="px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow flex items-center gap-2"
+            >
+              <span>Proceed to Case #02: Tape Reel 07</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border-2 border-signal/40 space-y-2.5 shadow-desk">
+          <label className="block text-xs font-serif text-label font-medium">
+            Enter the start of the Medical Examiner's window of death (4-digit 24-hr UK BST time, e.g. 2145):
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              maxLength={5}
+              value={answerInput}
+              onChange={(e) => setAnswerInput(e.target.value)}
+              placeholder="2237"
+              className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/50 focus:border-signal focus:outline-none tracking-widest uppercase shadow-inner"
+            />
+            <button
+              type="submit"
+              disabled={submitting || !answerInput.trim()}
+              className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow-md disabled:opacity-50"
+            >
+              {submitting ? 'Verifying Chronology...' : 'Submit TOD Window'}
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 rounded bg-alarm/15 border border-alarm/30">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+        </form>
+      )}
     </div>
   );
 };

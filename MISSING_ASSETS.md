@@ -5,8 +5,8 @@ Placeholders have been created and paths are fully wired into the platform.
 
 | Asset / Action | Target Path / Location | Level | Notes | Status |
 |---|---|---|---|---|
-| **Morse Audio Recording** | `content/assets-private/audio/l2_morse.mp3` | Level 2 | Audio recording of chair taps decoding to "NOT ME JULIAN". Fallback Web Audio oscillator is implemented in `MorsePlayer`. | Placeholder created |
-| **Alibi Photograph** | `content/assets-private/images/l7_geo_photo.jpg` | Level 7 | EXIF-stripped photo taken at the family hometown (e.g. West Cliff, Whitby). | Placeholder created |
+| **Morse Audio Recording** | `content/assets-private/audio/l2_morse.mp3` & `apps/web/public/assets/audio/recording-seven.mp3` | Level 2 | Audio recording of chair taps decoding to "NOT ME JULIAN". Exported 192kbps MP3 generated and wired into `MorsePlayer`. | Exported & Active |
+| **Alibi Photograph** | `content/assets-private/images/l7_geo_photo.jpg` & `apps/web/public/images/l7_geo_photo.jpg` | Level 7 | Authentic Whitby Whalebone Arch photograph overlooking West Cliff and Abbey. Wired into `PhotoViewer`. | Supplied & Active |
 | **Geolocation Config** | `content/assets-private/l7_geo_config.json` | Level 7 | Coordinates, accepted names, radius, town, and display place. Default Whitby config provided. | Seeded with Whitby defaults |
 | **Physical DE Kits & Printed Task Sheets** | Offline (tables) | Level 8 | Digital electronics kits and physical task sheets handed to teams. | Offline owner responsibility |
 | **Kit Answers** | Admin panel (`/hq` -> Kits) | Level 8 | Set real answer for each Kit #N in the admin screen. Seeded with `CHANGE_ME_X` placeholders. | Seeded with placeholders |

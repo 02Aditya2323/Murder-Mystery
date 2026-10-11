@@ -2,9 +2,9 @@ import Database from 'better-sqlite3';
 import path from 'node:path';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { ANSWER_SECRET } from './config.js';
+import { ANSWER_SECRET, rootDir } from './config.js';
 
-const dataDir = path.resolve(process.cwd(), 'data');
+const dataDir = path.resolve(rootDir, 'apps/server/data');
 fs.mkdirSync(dataDir, { recursive: true });
 const dbPath = path.join(dataDir, 'app.db');
 

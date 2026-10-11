@@ -1,6 +1,7 @@
-﻿@import "@fontsource/special-elite";
+@import "@fontsource/special-elite";
 @import "@fontsource/source-serif-4";
 @import "@fontsource/ibm-plex-mono";
+@import "@fontsource/caveat";
 @import "@fontsource/reenie-beanie";
 
 @tailwind base;

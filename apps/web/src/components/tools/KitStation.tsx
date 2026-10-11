@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { Cpu, Printer, AlertCircle, CheckCircle2, Zap, Activity, Wrench, ShieldAlert } from 'lucide-react';
+import { Cpu, Printer, AlertCircle, CheckCircle2, Zap, Activity, Wrench, ShieldAlert, ArrowRight } from 'lucide-react';
 
 export const KitStation: React.FC = () => {
-  const { team, levelDetail, submitAnswer } = useGameStore();
+  const { team, levelDetail, submitAnswer, selectLevel } = useGameStore();
 
   const [answerInput, setAnswerInput] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -12,16 +12,21 @@ export const KitStation: React.FC = () => {
 
   const kitNo = team?.kitNo || levelDetail?.kitNo || 1;
 
+  const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!answerInput.trim()) return;
+    if (!answerInput.trim() || isSolved) return;
 
     setSubmitting(true);
     setErrorMessage(null);
 
     const res = await submitAnswer(answerInput.trim());
     if (!res.correct) {
-      setErrorMessage('Hardware register output does not reconcile with Kit #' + kitNo + '. Inspect truth table connections.');
+      setErrorMessage(
+        res.nudge ||
+          'Hardware register output does not reconcile with Kit #' + kitNo + '. Inspect truth table connections.'
+      );
     } else {
       setAnswerInput('');
     }
@@ -112,36 +117,60 @@ export const KitStation: React.FC = () => {
         </div>
       </div>
 
-      {/* Answer Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
-        <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
-          <Wrench className="w-4 h-4 text-signal" />
-          <span>Enter the calculated register value verified from your physical Kit #{kitNo}:</span>
-        </label>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            value={answerInput}
-            onChange={(e) => setAnswerInput(e.target.value)}
-            placeholder="e.g. 67"
-            className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
-          />
+      {/* Answer Form or Solved Banner */}
+      {!isSolved ? (
+        <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
+          <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
+            <Wrench className="w-4 h-4 text-signal" />
+            <span>Enter the calculated register value verified from your physical Kit #{kitNo}:</span>
+          </label>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              type="text"
+              value={answerInput}
+              onChange={(e) => setAnswerInput(e.target.value)}
+              placeholder="e.g. 67"
+              className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
+            />
+            <button
+              type="submit"
+              disabled={submitting || !answerInput.trim()}
+              className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            >
+              {submitting ? 'Verifying Hardware...' : 'Submit Kit Value'}
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 bg-red-950/60 rounded border border-red-800">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+        </form>
+      ) : (
+        <div className="p-5 bg-gradient-to-r from-[#172314] via-[#1f301b] to-[#172314] rounded-lg border-2 border-emerald-600/70 shadow-desk flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-typewriter text-sm text-emerald-200 font-bold block uppercase tracking-wider">
+                HARDWARE REGISTER CONFIRMED // CASE #08 SOLVED
+              </span>
+              <span className="text-xs font-serif text-emerald-100/80">
+                Garage relay logic decoded for Kit #{kitNo}. Relay switch sequence and timestamp bypass extracted.
+              </span>
+            </div>
+          </div>
+
           <button
-            type="submit"
-            disabled={submitting || !answerInput.trim()}
-            className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            onClick={() => selectLevel(9)}
+            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
           >
-            {submitting ? 'Verifying Hardware...' : 'Submit Kit Value'}
+            <span>Proceed to Case #09</span>
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
-
-        {errorMessage && (
-          <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1 p-2 bg-red-950/60 rounded border border-red-800">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{errorMessage}</span>
-          </div>
-        )}
-      </form>
+      )}
 
       {/* Printable Task Sheet Modal */}
       {showPrintModal && (

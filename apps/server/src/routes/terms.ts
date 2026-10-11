@@ -3,9 +3,9 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { db } from '../db.js';
 import { requireTeamAuth, AuthenticatedRequest } from '../auth.js';
+import { rootDir } from '../config.js';
 
 const router = Router();
-const rootDir = path.resolve(process.cwd(), '..', '..');
 
 interface TermEntry {
   id: string;

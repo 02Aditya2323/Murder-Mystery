@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { Users, FileText, AlertCircle, CheckCircle2, Pin, Link as LinkIcon, User } from 'lucide-react';
+import { Users, FileText, AlertCircle, CheckCircle2, Pin, Link as LinkIcon, X, ArrowRight } from 'lucide-react';
 
 interface Suspect {
   id: string;
@@ -16,10 +16,11 @@ interface EvidenceCard {
 }
 
 export const MatchBoard: React.FC = () => {
-  const { levelDetail, submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
 
   const suspects: Suspect[] = levelDetail?.suspects || [];
   const evidenceCards: EvidenceCard[] = levelDetail?.evidenceCards || [];
+  const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
 
   const [matches, setMatches] = useState<Record<string, string>>({
     lena: '',
@@ -33,12 +34,34 @@ export const MatchBoard: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ correctCount?: number; error?: string } | null>(null);
 
+  useEffect(() => {
+    if (isSolved) {
+      setMatches({
+        lena: 'E3',
+        daniel: 'E5',
+        clara: 'E2',
+        noah: 'E7',
+        adrian: 'none',
+        mira: 'none'
+      });
+    }
+  }, [isSolved]);
+
   const handleSelect = (suspectId: string, evidenceId: string) => {
+    if (isSolved) return;
     setMatches((prev) => ({ ...prev, [suspectId]: evidenceId }));
+    setFeedback(null);
+  };
+
+  const handleClear = (suspectId: string) => {
+    if (isSolved) return;
+    setMatches((prev) => ({ ...prev, [suspectId]: '' }));
+    setFeedback(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSolved) return;
     setSubmitting(true);
     setFeedback(null);
 
@@ -65,13 +88,15 @@ export const MatchBoard: React.FC = () => {
           correctCount++;
         }
       });
-      setFeedback({ correctCount, error: `${correctCount} of 6 statements correctly matched.` });
+      setFeedback({
+        correctCount,
+        error: res.nudge
+          ? `Incorrect Corroboration: ${res.nudge}`
+          : `Incorrect Corroboration: ${correctCount} of 6 suspect statements correctly matched. One or more alibis contradict the evidence archive.`
+      });
     }
     setSubmitting(false);
   };
-
-  // Get active linked evidence IDs
-  const activeLinkedEvidences = Object.values(matches).filter((v) => v && v !== 'none');
 
   return (
     <div className="space-y-5">
@@ -80,7 +105,9 @@ export const MatchBoard: React.FC = () => {
         <p className="max-w-xl leading-relaxed">
           Cross-examine each suspect's recorded alibi against physical evidence retrieved from 8 Park Terrace. Identify which evidence document directly refutes their testimony, or declare <strong className="text-red-900 font-bold">No Contradiction</strong> if current evidence does not break their statement.
         </p>
-        <span className="stamp stamp-open text-[10px]">CORROBORATION BOARD</span>
+        <span className={`stamp text-[10px] ${isSolved ? 'stamp-closed text-emerald-800 border-emerald-800' : 'stamp-open'}`}>
+          {isSolved ? 'VERIFIED MATCH MATRIX' : 'CORROBORATION BOARD'}
+        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
@@ -97,12 +124,30 @@ export const MatchBoard: React.FC = () => {
           <div className="space-y-3">
             {suspects.map((s) => {
               const matchedEv = matches[s.id];
+
+              // Filter evidence options: remove cards already selected by other suspects
+              const availableEvidenceForSuspect = evidenceCards.filter((e) => {
+                // If it's already selected by this suspect, keep it so it stays selected in dropdown
+                if (matches[s.id] === e.id) return true;
+                // Exclude if already matched to another suspect
+                const isSelectedByOther = Object.entries(matches).some(
+                  ([otherId, matchedEvId]) => otherId !== s.id && matchedEvId === e.id
+                );
+                return !isSelectedByOther;
+              });
+
               return (
                 <div
                   key={s.id}
-                  className="relative p-4 rounded-lg bg-gradient-to-r from-[#241e19] to-[#1c1814] border-2 border-[#5c4631] text-xs space-y-2 shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all hover:border-amber-600/60"
+                  className={`relative p-4 rounded-lg bg-gradient-to-r from-[#241e19] to-[#1c1814] border-2 text-xs space-y-2.5 shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all ${
+                    matchedEv && matchedEv !== 'none'
+                      ? 'border-red-700/80 shadow-[0_0_15px_rgba(185,28,28,0.25)]'
+                      : matchedEv === 'none'
+                      ? 'border-emerald-700/60'
+                      : 'border-[#5c4631] hover:border-amber-600/60'
+                  }`}
                 >
-                  {/* Subtle red thumbtack top-left */}
+                  {/* Pushpin indicator */}
                   <div className="thumbtack absolute -top-2 left-3 z-10" />
 
                   {/* Header info */}
@@ -122,21 +167,40 @@ export const MatchBoard: React.FC = () => {
                       </div>
                     </div>
 
-                    {/* Match Selection Dropdown */}
+                    {/* Match Selection Dropdown & Clear Button */}
                     <div className="flex items-center gap-1.5">
                       <select
                         value={matches[s.id] || ''}
+                        disabled={isSolved}
                         onChange={(e) => handleSelect(s.id, e.target.value)}
-                        className="bg-[#0f0d0b] text-[#e6d8c3] text-xs font-mono py-1.5 px-2.5 rounded border border-[#5c4631] focus:border-amber-500 focus:outline-none shadow-inner"
+                        className={`bg-[#0f0d0b] text-[#e6d8c3] text-xs font-mono py-1.5 px-2.5 rounded border focus:outline-none shadow-inner transition-colors disabled:opacity-80 ${
+                          matchedEv && matchedEv !== 'none'
+                            ? 'border-red-600 focus:border-red-500'
+                            : matchedEv === 'none'
+                            ? 'border-emerald-600 focus:border-emerald-500'
+                            : 'border-[#5c4631] focus:border-amber-500'
+                        }`}
                       >
                         <option value="">-- Match Evidence --</option>
                         <option value="none">No Contradiction</option>
-                        {evidenceCards.map((e) => (
+                        {availableEvidenceForSuspect.map((e) => (
                           <option key={e.id} value={e.id}>
                             {e.id}: {e.title.slice(0, 24)}...
                           </option>
                         ))}
                       </select>
+
+                      {matchedEv && !isSolved && (
+                        <button
+                          type="button"
+                          onClick={() => handleClear(s.id)}
+                          className="p-1.5 rounded bg-red-950/60 hover:bg-red-900 text-red-300 border border-red-800/60 transition-colors"
+                          title="Remove match"
+                          aria-label={`Clear match for ${s.name}`}
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -148,8 +212,8 @@ export const MatchBoard: React.FC = () => {
                   {/* Red string connection badge */}
                   {matchedEv && (
                     <div className="flex items-center justify-between pt-1 border-t border-[#3d2e20] text-[11px] font-mono">
-                      <span className="flex items-center gap-1.5 text-red-400 font-bold">
-                        <LinkIcon className="w-3 h-3 text-red-500" />
+                      <span className={`flex items-center gap-1.5 font-bold ${matchedEv === 'none' ? 'text-emerald-400' : 'text-red-400'}`}>
+                        <LinkIcon className={`w-3 h-3 ${matchedEv === 'none' ? 'text-emerald-500' : 'text-red-500'}`} />
                         {matchedEv === 'none' ? 'DECLARED UNCONTRADICTED' : `THREAD LINKED TO EVIDENCE ${matchedEv}`}
                       </span>
                       <span className="text-[10px] text-zinc-500">EXHIBIT CONNECTION TAG</span>
@@ -171,14 +235,17 @@ export const MatchBoard: React.FC = () => {
             <span className="text-[11px] font-mono text-dim">9 EXHIBITS</span>
           </div>
 
-          <div className="cork-board p-3 rounded-lg border-2 border-[#5c4631] max-h-[580px] overflow-y-auto space-y-2.5 shadow-inner">
+          <div className="cork-board p-3 rounded-lg border-2 border-[#5c4631] max-h-[620px] overflow-y-auto space-y-2.5 shadow-inner">
             {evidenceCards.map((e) => {
-              const isLinked = activeLinkedEvidences.includes(e.id);
+              // Check if any suspect has linked this evidence
+              const matchedEntry = Object.entries(matches).find(([_, evId]) => evId === e.id);
+              const linkedSuspect = matchedEntry ? suspects.find((s) => s.id === matchedEntry[0]) : null;
+
               return (
                 <div
                   key={e.id}
                   className={`paper-sheet p-3.5 rounded border transition-all relative ${
-                    isLinked
+                    linkedSuspect
                       ? 'border-red-700 bg-[#fff9ee] shadow-[0_0_12px_rgba(185,28,28,0.4)] scale-[1.01]'
                       : 'border-amber-900/30 hover:border-amber-900/60'
                   }`}
@@ -200,10 +267,19 @@ export const MatchBoard: React.FC = () => {
                     {e.description}
                   </p>
 
-                  {isLinked && (
-                    <div className="mt-2 pt-1 border-t border-dashed border-red-400 text-[10px] font-mono font-bold text-red-700 flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-red-600 animate-ping inline-block mr-1" />
-                      CROSS-EXAMINATION PINNED TO WITNESS
+                  {linkedSuspect ? (
+                    <div className="mt-2 pt-1 border-t border-dashed border-red-400 text-[10px] font-mono font-bold text-red-700 flex items-center justify-between">
+                      <span className="flex items-center gap-1">
+                        <span className="w-2 h-2 rounded-full bg-red-600 animate-ping inline-block mr-1" />
+                        CROSS-EXAMINED WITH:
+                      </span>
+                      <span className="uppercase text-red-900 bg-red-100 px-1.5 py-0.5 rounded border border-red-300">
+                        {linkedSuspect.name}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="mt-2 pt-1 border-t border-dashed border-amber-900/20 text-[10px] font-mono text-zinc-500">
+                      AVAILABLE FOR CORROBORATION
                     </div>
                   )}
                 </div>
@@ -213,30 +289,60 @@ export const MatchBoard: React.FC = () => {
         </div>
       </div>
 
-      {/* Submit Action Box */}
-      <div className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <span className="font-typewriter text-xs text-label font-bold block tracking-wider">
-            CONTRADICTION VERIFICATION MATRIX
-          </span>
-          <span className="text-[11px] font-mono text-dim">
-            Select an evidence item (or 'No Contradiction') for each individual to verify findings.
-          </span>
+      {/* Submit / Solved Action Box */}
+      {!isSolved ? (
+        <div className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span className="font-typewriter text-xs text-label font-bold block tracking-wider">
+              CONTRADICTION VERIFICATION MATRIX
+            </span>
+            <span className="text-[11px] font-mono text-dim">
+              Select an evidence item (or 'No Contradiction') for each individual to verify findings.
+            </span>
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            disabled={submitting || Object.values(matches).some((v) => !v)}
+            className="px-7 py-2.5 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow-md disabled:opacity-50"
+          >
+            {submitting ? 'Verifying Statements...' : 'Verify Contradictions'}
+          </button>
         </div>
+      ) : (
+        <div className="p-5 bg-gradient-to-r from-[#172314] via-[#1f301b] to-[#172314] rounded-lg border-2 border-emerald-600/70 shadow-desk flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <CheckCircle2 className="w-6 h-6 text-emerald-400 shrink-0" />
+            <div>
+              <span className="font-typewriter text-sm text-emerald-200 font-bold block uppercase tracking-wider">
+                CONTRADICTIONS ESTABLISHED // CASE #05 SOLVED
+              </span>
+              <span className="text-xs font-serif text-emerald-100/80">
+                The suspect depositions have been corroborated against physical exhibits. Code: 3527 confirmed.
+              </span>
+            </div>
+          </div>
 
-        <button
-          onClick={handleSubmit}
-          disabled={submitting || Object.values(matches).some((v) => !v)}
-          className="px-7 py-2.5 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow-md disabled:opacity-50"
-        >
-          {submitting ? 'Verifying Statements...' : 'Verify Contradictions'}
-        </button>
-      </div>
+          <button
+            onClick={() => selectLevel(6)}
+            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
+          >
+            <span>Proceed to Case #06</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
+      {/* Clear, Persistent Wrong Answer Feedback Banner */}
       {feedback?.error && (
-        <div className="p-3 bg-red-950/80 rounded-lg border-2 border-red-800 text-xs font-serif text-red-200 flex items-center gap-2.5 shadow">
-          <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
-          <span>{feedback.error}</span>
+        <div className="p-4 bg-red-950/90 rounded-lg border-2 border-red-700 text-xs font-serif text-red-200 flex items-start gap-3 shadow-lg animate-in fade-in">
+          <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <div className="font-typewriter font-bold text-red-300 uppercase tracking-wide">
+              CORROBORATION MISMATCH DETECTED
+            </div>
+            <div>{feedback.error}</div>
+          </div>
         </div>
       )}
     </div>

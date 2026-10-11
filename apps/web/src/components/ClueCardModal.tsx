@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useGameStore } from '../store/gameStore.js';
-import { Award, Check, X } from 'lucide-react';
+import { Award, Check, X, ArrowRight } from 'lucide-react';
+import { MarkdownText } from './LevelWorkspace.js';
 
 export const ClueCardModal: React.FC = () => {
-  const { newlyUnlockedClue, closeClueModal } = useGameStore();
+  const { newlyUnlockedClue, closeClueModal, selectLevel } = useGameStore();
   const [wipingDone, setWipingDone] = useState(false);
 
   useEffect(() => {
@@ -29,6 +30,15 @@ export const ClueCardModal: React.FC = () => {
   }, [newlyUnlockedClue, handleKeyDown]);
 
   if (!newlyUnlockedClue) return null;
+
+  const nextLevel = newlyUnlockedClue.level < 10 ? newlyUnlockedClue.level + 1 : null;
+
+  const handleProceedNext = () => {
+    closeClueModal();
+    if (nextLevel) {
+      selectLevel(nextLevel);
+    }
+  };
 
   return (
     // Backdrop: full-screen, scrollable vertically so tall content is accessible
@@ -75,7 +85,7 @@ export const ClueCardModal: React.FC = () => {
             </h2>
 
             {/* Clue Body with Redaction Wipe Reveal */}
-            <div className="relative font-serif text-sm sm:text-base leading-relaxed bg-manila/60 p-5 rounded-lg border border-ink/20 whitespace-pre-wrap min-h-[130px] shadow-inner">
+            <div className="relative font-serif text-sm sm:text-base leading-relaxed bg-manila/60 p-5 rounded-lg border border-ink/20 min-h-[130px] shadow-inner">
               {!wipingDone && (
                 <div
                   className="absolute inset-0 bg-[#120f0d] text-amber-400 font-mono flex items-center justify-center text-xs tracking-widest uppercase overflow-hidden animate-redact-wipe select-none z-10 p-4 text-center rounded-lg border border-amber-900/60"
@@ -85,22 +95,37 @@ export const ClueCardModal: React.FC = () => {
                 </div>
               )}
               <div className="text-zinc-950 font-medium">
-                {newlyUnlockedClue.text}
+                <MarkdownText text={newlyUnlockedClue.text} />
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="pt-4 border-t border-ink/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <span className="text-xs text-zinc-600 font-mono italic">
-                This exhibit has been permanently pinned to your squad's Evidence Corkboard.
-              </span>
+            {/* Footer with Next Level and Dismiss buttons */}
+            <div className="pt-4 border-t border-ink/20 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <button
                 onClick={closeClueModal}
-                className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-b from-[#8b261e] to-[#6d1b14] hover:from-[#a02c23] hover:to-[#7c1f17] text-[#fdfbf7] font-serif font-bold text-sm rounded-lg shadow-md transition-all flex items-center justify-center gap-2 shrink-0 active:translate-y-0.5"
+                className="px-4 py-2 bg-zinc-200 hover:bg-zinc-300 text-zinc-900 font-serif text-xs rounded border border-zinc-400/80 transition-colors flex items-center justify-center gap-1.5"
               >
-                <Check className="w-4 h-4" />
-                <span>Examine Evidence Board</span>
+                <Check className="w-4 h-4 text-zinc-700" />
+                <span>Keep Reviewing Case</span>
               </button>
+
+              {nextLevel ? (
+                <button
+                  onClick={handleProceedNext}
+                  className="px-6 py-2.5 bg-gradient-to-b from-[#8b261e] to-[#6d1b14] hover:from-[#a02c23] hover:to-[#7c1f17] text-[#fdfbf7] font-serif font-bold text-sm rounded-lg shadow-md transition-all flex items-center justify-center gap-2 shrink-0 active:translate-y-0.5"
+                >
+                  <span>Proceed to Case #{String(nextLevel).padStart(2, '0')}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              ) : (
+                <button
+                  onClick={closeClueModal}
+                  className="px-6 py-2.5 bg-signal text-ink font-typewriter font-bold text-sm rounded shadow-md transition-all flex items-center justify-center gap-2"
+                >
+                  <Award className="w-4 h-4" />
+                  <span>All 10 Cases Solved!</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

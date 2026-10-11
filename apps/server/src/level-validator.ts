@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { ANSWER_SECRET } from './config.js';
+import { ANSWER_SECRET, rootDir } from './config.js';
 import { getHashedAnswers } from './content-loader.js';
 import { db } from './db.js';
 
@@ -44,7 +44,7 @@ export function validateAnswer(params: {
 
   // Level 7: Special Geolocation Check (Names or Lat/Lng)
   if (level === 7) {
-    const geoConfigPath = path.resolve(process.cwd(), 'content/assets-private/l7_geo_config.json');
+    const geoConfigPath = path.resolve(rootDir, 'content/assets-private/l7_geo_config.json');
     if (fs.existsSync(geoConfigPath)) {
       try {
         const geoConfig = JSON.parse(fs.readFileSync(geoConfigPath, 'utf8'));

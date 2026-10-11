@@ -21,7 +21,7 @@ export default {
         typewriter: ["'Special Elite'", "monospace"],
         serif: ["'Source Serif 4'", "serif"],
         mono: ["'IBM Plex Mono'", "monospace"],
-        handwriting: ["'Reenie Beanie'", "cursive"],
+        handwriting: ["'Caveat'", "'Reenie Beanie'", "cursive"],
       },
       boxShadow: {
         paper: "2px 3px 8px rgba(17, 12, 8, 0.4)",

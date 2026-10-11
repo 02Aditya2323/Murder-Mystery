@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
 import { api } from '../../api/client.js';
-import { Play, RotateCcw, Volume2, AlertCircle, FileText, Disc, Radio, Sliders } from 'lucide-react';
+import { Play, RotateCcw, Volume2, AlertCircle, FileText, Disc, Radio, Sliders, Download, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const MorsePlayer: React.FC = () => {
-  const { levelDetail, submitAnswer } = useGameStore();
+  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [pulseActive, setPulseActive] = useState(false);
@@ -184,9 +184,9 @@ export const MorsePlayer: React.FC = () => {
     setSubmitting(false);
   };
 
-  // Morse reference chart appears after Hint 1 is revealed
-  const isHint1Revealed = (levelDetail?.hintsUsed || 0) >= 1;
-  const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
+  // Complete Morse reference chart appears after Hint 3 is revealed
+  const isHint3Revealed = (levelDetail?.hintsUsed || 0) >= 3;
+  const isSolved = levelDetail?.status === 'SOLVED';
 
   return (
     <div className="space-y-5">
@@ -337,7 +337,8 @@ export const MorsePlayer: React.FC = () => {
         {/* Tactile Deck Controls */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2 bg-[#171412] p-3 rounded border border-[#3d2e20]">
           {/* Main Transport Buttons */}
-          <div className="flex items-center gap-2">
+          {/* Main Transport Buttons */}
+          <div className="flex items-center gap-2 flex-wrap">
             <button
               onClick={playMorseSound}
               disabled={isPlaying}
@@ -355,6 +356,17 @@ export const MorsePlayer: React.FC = () => {
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Stop / Rewind</span>
             </button>
+
+            {/* Direct MP3 File Export */}
+            <a
+              href="/assets/audio/recording-seven.mp3"
+              download="Recording_Seven_Tape07.mp3"
+              className="px-3.5 py-2 bg-gradient-to-b from-[#2a3826] to-[#182416] hover:from-[#384d32] hover:to-[#22331f] text-[#c8e6c9] font-serif text-xs rounded border border-[#3b5e34] transition-all flex items-center gap-1.5 shadow active:translate-y-0.5"
+              title="Export and download master audio file as MP3"
+            >
+              <Download className="w-3.5 h-3.5 text-ok" />
+              <span>Export MP3 File</span>
+            </a>
           </div>
 
           {/* Speed Controls (0.5x, 0.75x, 1.0x) */}
@@ -380,27 +392,69 @@ export const MorsePlayer: React.FC = () => {
         </div>
       </div>
 
-      {/* Morse Reference Chart (Unlocked only after Hint 1) */}
-      {isHint1Revealed && (
-        <div className="paper-sheet p-4 rounded text-xs text-ink font-mono border-2 border-signal/50 shadow-paper space-y-2">
-          <div className="font-typewriter font-bold text-ink pb-1 border-b border-ink/20 flex items-center justify-between">
+      {/* Complete Morse Reference Chart (Unlocked only after Hint 3) */}
+      {isHint3Revealed && (
+        <div className="paper-sheet p-5 rounded text-xs text-ink font-mono border-2 border-signal/50 shadow-paper space-y-3">
+          <div className="font-typewriter font-bold text-ink pb-2 border-b border-ink/20 flex items-center justify-between">
             <span className="flex items-center gap-1.5">
-              <Disc className="w-3.5 h-3.5 text-signal" />
-              METROPOLITAN POLICE // OFFICIAL TELEGRAPHIC SIGNAL CODE CHART
+              <Disc className="w-4 h-4 text-signal" />
+              METROPOLITAN POLICE // COMPLETE TELEGRAPHIC SIGNAL CODE REFERENCE
             </span>
-            <span className="stamp stamp-open text-[9px]">HINT 1 ATTACHMENT</span>
+            <span className="stamp stamp-open text-[9px]">HINT 3 ATTACHMENT</span>
           </div>
-          <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 text-center text-xs font-bold text-ink/90 pt-1">
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">A: · —</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">E: ·</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">I: · ·</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">J: · — — —</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">L: · — · ·</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">M: — —</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">N: — ·</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">O: — — —</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">T: —</div>
-            <div className="p-1 bg-manila/50 rounded border border-ink/10">U: · · —</div>
+
+          {/* Complete Alphabet (A-Z) */}
+          <div>
+            <span className="text-[10px] font-mono font-bold text-ink/70 uppercase tracking-wider block mb-1.5">
+              ALPHABETIC CODES (A — Z):
+            </span>
+            <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-9 gap-1.5 text-center text-xs font-bold text-ink/90">
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">A: · —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">B: — · · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">C: — · — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">D: — · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">E: ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">F: · · — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">G: — — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">H: · · · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">I: · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">J: · — — —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">K: — · —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">L: · — · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">M: — —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">N: — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">O: — — —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">P: · — — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">Q: — — · —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">R: · — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">S: · · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">T: —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">U: · · —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">V: · · · —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">W: · — —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">X: — · · —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">Y: — · — —</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">Z: — — · ·</div>
+            </div>
+          </div>
+
+          {/* Numeric Digits (0-9) */}
+          <div className="pt-1 border-t border-ink/15">
+            <span className="text-[10px] font-mono font-bold text-ink/70 uppercase tracking-wider block mb-1.5">
+              NUMERICAL CODES (0 — 9):
+            </span>
+            <div className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-10 gap-1.5 text-center text-xs font-bold text-ink/90">
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">0: —————</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">1: ·————</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">2: ··———</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">3: ···——</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">4: ····—</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">5: ·····</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">6: —····</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">7: ——···</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">8: ———··</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">9: ————·</div>
+            </div>
           </div>
         </div>
       )}
@@ -421,35 +475,64 @@ export const MorsePlayer: React.FC = () => {
         </div>
       )}
 
-      {/* Answer Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border border-signal/40 shadow-desk space-y-3">
-        <label className="block text-xs font-serif text-label font-medium">
-          Enter the decoded message tapped by Mira (e.g. JULIAN or NOT ME JULIAN):
-        </label>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            value={answerInput}
-            onChange={(e) => setAnswerInput(e.target.value)}
-            placeholder="NOT ME JULIAN"
-            className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none tracking-widest uppercase shadow-inner"
-          />
-          <button
-            type="submit"
-            disabled={submitting || !answerInput.trim()}
-            className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
-          >
-            {submitting ? 'Verifying...' : 'Submit Message'}
-          </button>
-        </div>
-
-        {errorMessage && (
-          <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1">
-            <AlertCircle className="w-3.5 h-3.5 shrink-0" />
-            <span>{errorMessage}</span>
+      {/* Answer Form or Solved / Locked State */}
+      {isSolved ? (
+        <div className="p-5 bg-gradient-to-r from-[#172b1c] to-[#122015] rounded border-2 border-ok/80 shadow-desk space-y-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-ok/30">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-5 h-5 text-ok" />
+              <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
+                DECODED MESSAGE VERIFIED: NOT ME JULIAN
+              </span>
+            </div>
+            <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>
           </div>
-        )}
-      </form>
+
+          <p className="font-serif text-xs text-dim leading-relaxed">
+            Acoustic tapping decoded: Mira Vane communicated that she was innocent and pointed to Julian Marsh. The transcript is permanently logged. Submission field is locked.
+          </p>
+
+          <div className="pt-1 flex justify-end">
+            <button
+              type="button"
+              onClick={() => selectLevel(3)}
+              className="px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow flex items-center gap-2"
+            >
+              <span>Proceed to Case #03: The Autopsy Inconsistency</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border border-signal/40 shadow-desk space-y-3">
+          <label className="block text-xs font-serif text-label font-medium">
+            Enter the decoded message tapped by Mira (e.g. JULIAN or NOT ME JULIAN):
+          </label>
+          <div className="flex flex-col sm:flex-row gap-2">
+            <input
+              type="text"
+              value={answerInput}
+              onChange={(e) => setAnswerInput(e.target.value)}
+              placeholder="NOT ME JULIAN"
+              className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none tracking-widest uppercase shadow-inner"
+            />
+            <button
+              type="submit"
+              disabled={submitting || !answerInput.trim()}
+              className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-serif font-bold text-xs rounded transition-colors shadow disabled:opacity-50"
+            >
+              {submitting ? 'Verifying...' : 'Submit Message'}
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div className="flex items-center gap-1.5 text-xs text-alarm font-serif mt-1">
+              <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+        </form>
+      )}
     </div>
   );
 };
