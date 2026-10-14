@@ -318,7 +318,7 @@ export const LevelWorkspace: React.FC = () => {
 
             {/* Handwritten marginal note */}
             <div className="shrink-0 font-handwriting text-base text-alarm -rotate-1 self-end sm:self-center pr-1 select-none">
-              — Check all angles!
+              Check all angles!
             </div>
           </div>
         )}

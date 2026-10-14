@@ -13,6 +13,6 @@ Adrian looks at the detective for a long moment, understands exactly what is abo
 The liaison account is real and it belongs to somebody. The force does not publish its internal account register, but the officers attached to the Ridge Road investigation all have public profiles, and one of them has been careless.
 
 **Your Objective:**
-Find the officer behind `LIAISON_4417`. The trail runs through their public profile and out again — follow it to the end and bring back what is waiting there.
+Find the officer behind `LIAISON_4417`. The trail runs through their public profile and out again, so follow it to the end and bring back what is waiting there.
 
 Submit the case flag in the form `FLAG{...}`.

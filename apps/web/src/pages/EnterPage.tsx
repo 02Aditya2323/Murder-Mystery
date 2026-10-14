@@ -40,7 +40,7 @@ export const EnterPage: React.FC = () => {
         <header>
           <span className="eyebrow">Mumbai Police · Crime Branch</span>
           <h1>Investigator sign-in</h1>
-          <p>Case MUM/HOM/2026/2310 — Vane, E.</p>
+          <p>Case MUM/HOM/2026/2310 (Vane, E.)</p>
         </header>
 
         <form className="gate-body" onSubmit={onSubmit}>

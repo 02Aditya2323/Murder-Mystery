@@ -57,7 +57,7 @@ export const CaseRoom: React.FC = () => {
   }, [navigate]);
 
   // Per-team clock. Starts at this squad's own sign-in, and is allowed to run
-  // past zero — batches overlap and teams are permitted to overrun.
+  // past zero: batches overlap and teams are permitted to overrun.
   useEffect(() => {
     const id = setInterval(() => setTick((n) => n + 1), 1000);
     return () => clearInterval(id);

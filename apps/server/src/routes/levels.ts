@@ -19,7 +19,7 @@ import { rootDir } from '../config.js';
 const router = Router();
 
 /** Minutes added to a team's elapsed time per hint tier. Ranking is on elapsed
- *  time, so this is the whole scoring layer — no separate point system needed. */
+ *  time, so this is the whole scoring layer: no separate point system needed. */
 const HINT_COST_SECONDS = [120, 240, 420];
 
 
@@ -29,7 +29,7 @@ const HINT_COST_SECONDS = [120, 240, 420];
  * no ordering information.
  */
 const DIARY_PAGES = [
-  { canonical: 'P1', token: 'MV-73', text: 'The night after it happened. Julian was on the phone around quarter past nine, shouting Elias’s name. Alive. Much later I heard the side door open and a police radio—two quick chirps and a click—before any sirens or emergency call were logged. Nobody believes what I heard.' },
+  { canonical: 'P1', token: 'MV-73', text: 'The night after it happened. Julian was on the phone around quarter past nine, shouting Elias’s name. Alive. Much later I heard the side door open and a police radio, two quick chirps and a click, before any sirens or emergency call were logged. Nobody believes what I heard.' },
   { canonical: 'P2', token: 'MV-18', text: 'The morning of the funeral. The police report came out in the papers. It claims Julian was gone before nine o’clock. I keep shouting that the time is impossible, that he was talking to Elias, but my words sound hollow even to my own ears.' },
   { canonical: 'P3', token: 'MV-41', text: 'Three days after the funeral. Dr. Vane sat beside my chair. He said grief does violent things to perception, that my memories are mixing up the sequence. He spoke so calmly, like a physician prescribing certainty, telling me the clock in my mind is broken.' },
   { canonical: 'P4', token: 'MV-66', text: 'The Sunday after our session. Dr. Vane visited the flat again. He looked at my notebook on the table and gently asked me to stop writing things down. He said committing these fractured impressions to paper only cements false trauma.' },
@@ -216,7 +216,7 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
   } else if (levelNum === 9) {
     // Code READING, not fill-in-the-blank. The team is given the script that
     // cleaned the export and the export it produced, and reasons backwards.
-    // SHIFT_MIN is 58, not 42, so the forged row reads 22:10 — BEFORE the
+    // SHIFT_MIN is 58, not 42, so the forged row reads 22:10, BEFORE the
     // staged 22:17 attack. At 42 the cover story contradicted itself: the
     // study would have been bolted from inside after Vane was already dead.
     payload.script = {

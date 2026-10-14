@@ -42,7 +42,7 @@ function readJson<T>(rel: string): T {
  * GET /api/case
  *
  * The whole investigation state in one call, filtered by what this team has
- * actually earned. A beat that is still sealed contributes nothing — not its
+ * actually earned. A beat that is still sealed contributes nothing: not its
  * title, not its board changes, not the people it would introduce.
  *
  * Gating rules:

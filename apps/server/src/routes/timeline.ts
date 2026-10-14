@@ -25,7 +25,7 @@ function loadEvents(): TimelineEvent[] {
   return cache;
 }
 
-// GET /api/timeline — events discovered so far.
+// GET /api/timeline: events discovered so far.
 // An event is returned only once its level is SOLVED or SKIPPED (the same
 // moment the level's reveal is shown), so future events are never sent.
 router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {

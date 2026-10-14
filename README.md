@@ -7,7 +7,7 @@ A web platform for a 3.5-hour team murder mystery competition set on 23 October 
 ## 1. System Architecture & Constraints
 
 - **Zero Runtime CDN Dependencies**: Fully self-hosted fonts (`@fontsource`), images, and WASM binaries. Operates reliably on constrained venue Wi-Fi.
-- **Client Runtimes**: Ships strictly one heavy runtime—`sql.js` (SQLite WASM) for Level 4. No client-side code execution, interpreters, or compilers.
+- **Client Runtimes**: Ships strictly one heavy runtime: `sql.js` (SQLite WASM) for Level 4. No client-side code execution, interpreters, or compilers.
 - **Server-Side Validation**: All solutions are validated on the server using HMAC-SHA256 salted hashes (`answers.hashed.json`). Answers and sealed case assets are never transmitted to the client before being earned.
 - **Dynamic In-World Templating**: Characters (`content/characters.json`) and event tokens (`content/event.config.json`) are injected at render time. Renaming any character or location automatically updates all story briefs.
 - **Progress-Gated Story Content**: Characters, important terms and timeline events are served by team-authenticated endpoints and are filtered on the server by the squad's own progress. Nothing from an unsolved level is sent to the browser.
@@ -194,7 +194,7 @@ Story content lives in three places:
 | `content/levels/NN/` | The puzzle itself: brief, hints, and the evidence note filed on solving |
 
 `GET /api/case` assembles all three and filters by the team's own progress. A sealed beat
-contributes nothing — not its title, not the people it would introduce, not its board changes.
+contributes nothing: not its title, not the people it would introduce, not its board changes.
 
 ---
 

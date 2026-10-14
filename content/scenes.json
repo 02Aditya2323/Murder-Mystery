@@ -1,5 +1,5 @@
 {
-  "_comment": "The narrative spine. One entry per beat. 'arrive' is served when the beat OPENS, 'depart'/'board'/'belief' only once it CLOSES. A beat is not a level: it is a place the case has moved to. The board changes are the point — suspicion must visibly travel from Lena to Adrian to Rowan.",
+  "_comment": "The narrative spine. One entry per beat. 'arrive' is served when the beat OPENS, 'depart'/'board'/'belief' only once it CLOSES. A beat is not a level: it is a place the case has moved to. The board changes are the point: suspicion must visibly travel from Lena to Adrian to Rowan.",
 
   "opening": {
     "title": "The study was locked from the inside",
@@ -16,7 +16,7 @@
       "place": "The study",
       "time": "Night of 23 October",
       "arrive": "Hale hands you a bundle of logs pulled off five systems in the house and tells you they confirm his timeline. He has not read them closely. They are in three different time formats and one of the clocks is wrong.",
-      "depart": "The clock on the floor was set by hand. Vane was alive at his desk at 9:52, which puts death between 10:37 and 11:07 — twenty minutes *after* the time Hale wrote down, not before it. Someone wanted the investigation looking at 10:17.\n\nBehind the rear casing of the grandfather clock in the corner, an electronic latch has released.",
+      "depart": "The clock on the floor was set by hand. Vane was alive at his desk at 9:52, which puts death between 10:37 and 11:07, twenty minutes *after* the time Hale wrote down, not before it. Someone wanted the investigation looking at 10:17.\n\nBehind the rear casing of the grandfather clock in the corner, an electronic latch has released.",
       "belief": "The timeline everyone accepted is a forgery. Whoever made it had the run of the house.",
       "openQuestion": "What was worth hiding behind a clock?",
       "board": []
@@ -26,7 +26,7 @@
       "title": "Recording Seven",
       "place": "The hidden archive",
       "time": "Tape dated 14 January 2024",
-      "arrive": "The compartment holds a cassette vault. There were twelve reels. Nine have been wiped with a demagnetising pulse — recently, and by someone who knew the order they were in. Three survive.\n\nRecording Seven is a session with a patient who does not speak. She answers by tapping the arm of the chair.",
+      "arrive": "The compartment holds a cassette vault. There were twelve reels. Nine have been wiped with a demagnetising pulse. Recently, and by someone who knew the order they were in. Three survive.\n\nRecording Seven is a session with a patient who does not speak. She answers by tapping the arm of the chair.",
       "depart": "The taps carry a name. Vane's reply to her is on the tape: *you weren't the one who killed him.*\n\nHe knew. For three years he sat opposite this woman knowing she had not done it, and told her instead that her memory could not be trusted.",
       "belief": "This death is not about this death. Something happened three years ago and Vane was holding it.",
       "openQuestion": "Who closed the file on Julian Marsh, and how quickly?",
@@ -40,9 +40,9 @@
       "title": "The Old Case",
       "place": "Records, Crime Branch",
       "time": "2 December 2023",
-      "arrive": "Julian Marsh's file is sealed. Vane's own session notes for Mira name the key to it — a reading assignment, described by its plot and not its title, about a man who dims the lights in his house and tells his wife she imagined it.",
-      "depart": "The report puts Julian's death at 8:40 PM. The telephone company puts a 47-second call from Julian to Elias Vane at 9:12. A dead man did not make that call.\n\nAnd the first officer on the scene logged his arrival at 10:05 PM — fifteen minutes before anyone called 112.",
-      "belief": "Julian's death was backdated by an hour to cover somebody with an alibi for the earlier time. A police officer signed it. Mira was never confused — she was discredited.",
+      "arrive": "Julian Marsh's file is sealed. Vane's own session notes for Mira name the key to it: a reading assignment, described by its plot and not its title, about a man who dims the lights in his house and tells his wife she imagined it.",
+      "depart": "The report puts Julian's death at 8:40 PM. The telephone company puts a 47-second call from Julian to Elias Vane at 9:12. A dead man did not make that call.\n\nAnd the first officer on the scene logged his arrival at 10:05 PM, fifteen minutes before anyone called 112.",
+      "belief": "Julian's death was backdated by an hour to cover somebody with an alibi for the earlier time. A police officer signed it. Mira was never confused. She was discredited.",
       "openQuestion": "Vane kept everything on tape. What is in the archive he didn't want found?",
       "board": [
         { "who": "rowan", "to": "unknown", "why": "Badge 4417 arrived before the emergency call and signed the altered report. The badge has no face yet." }
@@ -54,7 +54,7 @@
       "place": "Vane's clinical database",
       "time": "The night of the murder",
       "arrive": "The archive was indexed. Every reel has a row, every row an audit trail. Whoever wiped the tapes did not think to wipe the log of having done it.",
-      "depart": "At 11:52 PM — long after the window of death had closed — a tablet signed in as the victim's wife and deleted Recording Three.\n\nAnd one patient file has had the name scrubbed off it. Patient P-0912 was edited and locked by Vane himself, three days after Julian Marsh died.",
+      "depart": "At 11:52 PM, long after the window of death had closed, a tablet signed in as the victim's wife and deleted Recording Three.\n\nAnd one patient file has had the name scrubbed off it. Patient P-0912 was edited and locked by Vane himself, three days after Julian Marsh died.",
       "belief": "Lena Vane was in this house that night, and she destroyed evidence. She is the obvious answer.",
       "openQuestion": "Five people gave statements. How many of them are true?",
       "board": [
@@ -67,7 +67,7 @@
       "place": "Interview room",
       "time": "The morning after",
       "arrive": "Hale hands over five statements and an evidence board and tells you one of them is lying. He is wrong about the number.",
-      "depart": "Four of the five are lying, and three of the lies are about nothing — an old grudge, a secret kept out of fear, a story nobody cleared. Only one lie is about that night.\n\nThe assistant's account is the only one the evidence does not touch. His photograph holds.",
+      "depart": "Four of the five are lying, and three of the lies are about nothing: an old grudge, a secret kept out of fear, a story nobody cleared. Only one lie is about that night.\n\nThe assistant's account is the only one the evidence does not touch. His photograph holds.",
       "belief": "Everyone has something to hide and only Lena's matters. The case is closing around her.",
       "openQuestion": "The only person who ever saw what happened to Julian has not spoken in three years.",
       "board": [
@@ -82,9 +82,9 @@
       "title": "Mira's Silence",
       "place": "Mira's flat",
       "time": "Afternoon",
-      "arrive": "She will not talk to police. She will look at her own diary, if you can put it back the way she wrote it — the pages were seized, shuffled and handed back to her out of order, and she has been told for three years that the disorder was in her head.",
+      "arrive": "She will not talk to police. She will look at her own diary, if you can put it back the way she wrote it. The pages were seized, shuffled and handed back to her out of order, and she has been told for three years that the disorder was in her head.",
       "depart": "The pages were always in order. Every one of them. She reads them back and says the first words she has said out loud in three years:\n\n**\"Lena didn't kill him.\"**\n\nShe is right. Lena arrived at 11:40, half an hour after the window closed, found her husband dead and panicked. What she destroyed was her own session tape, not the evidence of a murder.\n\nAnd there is a music box on the shelf that Vane returned the day before he died, saying he'd had it repaired. It doesn't play. Under the false base is a micro-cassette: *I should have known Helen's son by his eyes the day he walked in.*",
-      "belief": "The case has been pointing the wrong way all afternoon. Someone inside the practice has been using a false name for four years — and he is the one person nothing has touched.",
+      "belief": "The case has been pointing the wrong way all afternoon. Someone inside the practice has been using a false name for four years, and he is the one person nothing has touched.",
       "openQuestion": "He says he was across the city at 10:21. Was he?",
       "board": [
         { "who": "lena", "to": "cleared", "why": "Arrived at 11:40, after the window. She covered up a tape of her own, not a killing." },
@@ -98,8 +98,8 @@
       "title": "The Perfect Alibi",
       "place": "The photograph",
       "time": "Posted 10:21 PM",
-      "arrive": "His alibi is a picture of the sea, posted four minutes after the time on the broken clock, captioned from a place on the far side of the city — ninety minutes away in either direction, which would cover the whole window of death.\n\nIf the picture is real, he cannot have done it. There is no metadata.",
-      "depart": "The coastline is wrong. It is not the city at all — it is the coast his family comes from, and the photograph is years old.\n\nThe municipal memorial registry for that stretch of shore lists one plaque: *In memory of Julian Marsh, placed by his mother Helen and his brother Adrian.*",
+      "arrive": "His alibi is a picture of the sea, posted four minutes after the time on the broken clock, captioned from a place on the far side of the city, ninety minutes away in either direction, which would cover the whole window of death.\n\nIf the picture is real, he cannot have done it. There is no metadata.",
+      "depart": "The coastline is wrong. It is not the city at all. It is the coast his family comes from, and the photograph is years old.\n\nThe municipal memorial registry for that stretch of shore lists one plaque: *In memory of Julian Marsh, placed by his mother Helen and his brother Adrian.*",
       "belief": "The alibi was manufactured to sit just after a clock he set himself. He is Julian's brother, and he has been inside this house for four years.",
       "openQuestion": "The front door logged him out at 9:18 and logged nobody back in. So how did he get in?",
       "board": [
@@ -112,9 +112,9 @@
       "title": "The Garage Panel",
       "place": "The side garage",
       "time": "9:31 PM",
-      "arrive": "The front door runs off the main security panel, and the main panel went quiet at 9:20 — access events and alarm dispatch suppressed under a maintenance window somebody scheduled that afternoon.\n\nThe garage keypad is older. It runs its own relay logic on its own board and keeps its own memory, and nobody thought about it.",
+      "arrive": "The front door runs off the main security panel, and the main panel went quiet at 9:20: access events and alarm dispatch suppressed under a maintenance window somebody scheduled that afternoon.\n\nThe garage keypad is older. It runs its own relay logic on its own board and keeps its own memory, and nobody thought about it.",
       "depart": "Thirteen minutes after badging out of the front door, a service override was entered at the garage keypad under the name A. Cross. The panel stayed in bypass the whole time because the maintenance window was already running.\n\nHe never left. He walked out of the front door and back in through the side.",
-      "belief": "Means, motive and opportunity are all his. What is left is the door — the study was bolted from the inside and that still makes no sense.",
+      "belief": "Means, motive and opportunity are all his. What is left is the door. The study was bolted from the inside and that still makes no sense.",
       "openQuestion": "Who schedules a maintenance window on a private house, and how did they have the authority?",
       "board": [
         { "who": "adrian", "to": "suspected", "why": "Re-entered at 9:31 PM on a service override in his own name, during a window that recorded nothing." }
@@ -125,9 +125,9 @@
       "title": "The Locked Room",
       "place": "Adrian's work laptop",
       "time": "Seized at the archive",
-      "arrive": "Hale finally releases the lock export. It shows the study bolted from the interior panel at 10:10 PM — before the attack the clock describes, which would make the room impossible to enter and the murder impossible to commit.\n\nOn the assistant's laptop there is a short script. It ran over that export before anybody in the department saw it.",
+      "arrive": "Hale finally releases the lock export. It shows the study bolted from the interior panel at 10:10 PM, before the attack the clock describes, which would make the room impossible to enter and the murder impossible to commit.\n\nOn the assistant's laptop there is a short script. It ran over that export before anybody in the department saw it.",
       "depart": "The script did two things. It rewrote every remote lock as an interior one, shifting the time back to sit before the staged attack. And it deleted every row belonging to one account.\n\nThe study was locked at 11:08 PM, remotely, from the victim's own tablet, by a man walking out of the house. It was never a locked room.\n\nThe account the script erased was LIAISON_4417.",
-      "belief": "He did it, and he is caught. But the account he scrubbed is not his — he never had police access. Somebody opened the window in the security system for him.",
+      "belief": "He did it, and he is caught. But the account he scrubbed is not his. He never had police access. Somebody opened the window in the security system for him.",
       "openQuestion": "4417 again. Who is it?",
       "board": [
         { "who": "adrian", "to": "charged", "why": "Forged the lock export and locked the study remotely at 11:08 PM on his way out. Arrested leaving the archive." }
@@ -138,7 +138,7 @@
       "title": "The Accomplice",
       "place": "Interrogation",
       "time": "Now",
-      "arrive": "Hale takes him in and asks to question him alone. You insist on being in the room.\n\nAdrian looks at the detective for a long moment, understands exactly what is about to happen to him, and starts talking.\n\n*\"I'm not a network administrator. I didn't schedule a maintenance window on a police vendor's system. I didn't delete my own name from an export — ask who requested that liaison account. And ask who signed Julian's report.\"*",
+      "arrive": "Hale takes him in and asks to question him alone. You insist on being in the room.\n\nAdrian looks at the detective for a long moment, understands exactly what is about to happen to him, and starts talking.\n\n*\"I'm not a network administrator. I didn't schedule a maintenance window on a police vendor's system. I didn't delete my own name from an export. Ask who requested that liaison account. And ask who signed Julian's report.\"*",
       "depart": "Badge 4417, LIAISON_4417, the officer first on the scene in 2023, and the detective who has been handing you evidence all afternoon are the same man.\n\nRowan Hale was Elias Vane's patient. In a session years ago he admitted planting evidence in an earlier case, and Vane recorded it and kept it. That tape bought Rowan's help in 2023. Six months ago Adrian found the same tape and bought Rowan a second time.\n\nVane's last note was written the day after Rowan walked out of his final session. It is filed, in the archive, under Rowan's own name:\n\n> *\"The person investigating my death already knows who killed me.\"*",
       "belief": "You were handed this case by one of the two men who did it.",
       "openQuestion": "Now write it down. All of it.",
@@ -151,6 +151,6 @@
 
   "closing": {
     "title": "The theory of the case",
-    "text": "Ten files are closed. Two men are in custody and a third has been dead for three years with his name still on a report nobody reopened.\n\nWrite the case as you would hand it to a prosecutor. Not a name — the whole of it."
+    "text": "Ten files are closed. Two men are in custody and a third has been dead for three years with his name still on a report nobody reopened.\n\nWrite the case as you would hand it to a prosecutor. Not a name. The whole of it."
   }
 }

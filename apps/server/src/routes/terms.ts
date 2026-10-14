@@ -25,7 +25,7 @@ function loadTerms(): TermEntry[] {
   return cache;
 }
 
-// GET /api/terms — important terms found so far.
+// GET /api/terms: important terms found so far.
 // A term is returned only once its level is SOLVED or SKIPPED (the same
 // moment the level's reveal is shown), so future terms are never sent.
 router.get('/', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {

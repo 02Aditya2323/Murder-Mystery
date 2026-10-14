@@ -826,7 +826,7 @@ export const AdminDashboard: React.FC = () => {
                     </div>
                     <div className="p-3 rounded bg-manila/50 border border-ink/10">
                       <p className="text-[10px] font-typewriter font-bold">ESTIMATED TIME</p>
-                      <p className="text-sm">{previewData.estimatedMinutes ?? '—'} minutes</p>
+                      <p className="text-sm">{previewData.estimatedMinutes ?? '?'} minutes</p>
                     </div>
                   </div>
 
@@ -856,7 +856,7 @@ export const AdminDashboard: React.FC = () => {
                   </section>
 
                   <p className="text-[10px] font-mono border-t border-ink/20 pt-3">
-                    PREVIEW ONLY — answer submission, hints, reveals, and game-state changes are disabled.
+                    PREVIEW ONLY: answer submission, hints, reveals, and game-state changes are disabled.
                   </p>
                 </div>
               )}

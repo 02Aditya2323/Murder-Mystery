@@ -3,9 +3,9 @@
 **This repository is public.** A participant who finds
 `github.com/02Aditya2323/Murder-Mystery` and runs one `git clone` can currently read:
 
-- all ten `content/levels/NN/reveal.md` files — every reveal, including the culprit
-- `content/scenes.json` — the full narrative arc and every board change
-- `content/cast.json` — every character's secret
+- all ten `content/levels/NN/reveal.md` files: every reveal, including the culprit
+- `content/scenes.json`: the full narrative arc and every board change
+- `content/cast.json`: every character's secret
 - `content/terms.json` and `content/timeline.json`
 
 None of the server-side gating helps against that. `GET /api/case` refusing to send
@@ -18,7 +18,7 @@ repository the whole time.
 closes it, and it takes thirty seconds in GitHub settings. Everything else below is a
 mitigation, not a solution.
 
-If it has to stay public, the story content has to move out — a private submodule, or a
+If it has to stay public, the story content has to move out: a private submodule, or a
 tarball dropped onto the server at deploy time and git-ignored here.
 
 ## Files kept out of git in the meantime

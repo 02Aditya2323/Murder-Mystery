@@ -374,7 +374,7 @@ export const SqlConsole: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
             <span className="text-[11px] font-mono text-dim">
-              COMBINED FORMAT: [DEVICE]-[PATIENT_CODE] — as the audit log spells them, joined by a hyphen
+              COMBINED FORMAT: [DEVICE]-[PATIENT_CODE]: as the audit log spells them, joined by a hyphen
             </span>
             <button
               type="submit"

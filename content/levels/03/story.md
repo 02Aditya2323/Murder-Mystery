@@ -21,4 +21,4 @@ Calculate:
 1. The difference in minutes between the official **estimated time of death** on the police report and **Julian's recorded outgoing call** to Dr. Elias Vane.
 2. The **badge number** of the first responding police officer on scene.
 
-Submit as `[Minutes]-[BadgeNumber]` — the number of minutes, a hyphen, then the four-digit badge. No spaces.
+Submit as `[Minutes]-[BadgeNumber]`: the number of minutes, a hyphen, then the four-digit badge. No spaces.

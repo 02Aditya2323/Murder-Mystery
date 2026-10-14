@@ -2,7 +2,7 @@
 
 **Restored Telemetry:**
 
-Only one row in the export carries the label `INTERIOR_PANEL`, and that label is the script's own invention — it is written onto any row whose real source was `TABLET_API`. The same rule moves the clock back 58 minutes.
+Only one row in the export carries the label `INTERIOR_PANEL`, and that label is the script's own invention. It is written onto any row whose real source was `TABLET_API`. The same rule moves the clock back 58 minutes.
 
 Undo it: **22:10 + 58 = 23:08**.
 

@@ -2,7 +2,7 @@
 
 During questioning, {{killer.full}} produced what looks like an airtight alibi.
 
-At 22:21 on the night of the murder — four minutes after the time frozen on the smashed desk clock, and squarely inside the medical window of death — Adrian posted a seaside photograph to his personal feed, captioned:
+At 22:21 on the night of the murder, four minutes after the time frozen on the smashed desk clock, and squarely inside the medical window of death, Adrian posted a seaside photograph to his personal feed, captioned:
 
 > *"Clear October night, watching the tide come in at {{geo.claimed_place}}."*
 

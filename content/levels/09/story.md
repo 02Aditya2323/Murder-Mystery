@@ -14,4 +14,4 @@ Read the script. Work out what it did to each row, then undo it.
 1. What time was the study **really** locked?
 2. Which log source did the script erase from the export entirely?
 
-Submit as `HHMM-XXXX` — the true lock time in 24-hour IST, a hyphen, then the last four characters of the erased account.
+Submit as `HHMM-XXXX`: the true lock time in 24-hour IST, a hyphen, then the last four characters of the erased account.

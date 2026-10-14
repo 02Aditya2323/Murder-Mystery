@@ -123,7 +123,7 @@ export const KitStation: React.FC = () => {
         <section className="rounded border-2 border-[#8E6C38] bg-[#DCCCA6] text-[#1A1510] p-4 sm:p-5 space-y-4 shadow-desk">
           <header className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[rgba(26,21,16,.25)]">
             <span className="font-typewriter text-xs tracking-widest uppercase">
-              Maintenance sheet &mdash; garage keypad controller
+              Maintenance sheet: garage keypad controller
             </span>
             <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-[rgba(26,21,16,.1)]">
               KIT #{kitSpec.kit_no}
@@ -133,7 +133,7 @@ export const KitStation: React.FC = () => {
           {/* input switches, already set */}
           <div>
             <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
-              Input switches &mdash; already set, do not change them
+              Input switches: already set, do not change them
             </p>
             <div className="flex gap-2 flex-wrap">
               {['A', 'B', 'C', 'D'].map((k) => (
@@ -165,7 +165,7 @@ export const KitStation: React.FC = () => {
                       <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5 font-bold">{g.out}</td>
                       <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5">{g.inputs}</td>
                       <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5">
-                        {gap ? <em className="text-[#8C281E] not-italic font-bold">— jumper missing —</em> : g.gate}
+                        {gap ? <em className="text-[#8C281E] not-italic font-bold">[ jumper missing ]</em> : g.gate}
                       </td>
                       <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5 text-[#5A4D38]">{g.ic}</td>
                     </tr>
@@ -178,7 +178,7 @@ export const KitStation: React.FC = () => {
           {/* the fragment that identifies the missing gate */}
           <div>
             <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
-              Recovered from the manual &mdash; behaviour of the missing stage ({kitSpec.missingOutput})
+              Recovered from the manual: behaviour of the missing stage ({kitSpec.missingOutput})
             </p>
             <table className="border-collapse font-mono text-[13px]">
               <thead>

@@ -4,7 +4,7 @@ import { Check, Save } from 'lucide-react';
 
 type Tab = 'log' | 'hints' | 'notes' | 'standings';
 
-/** Fallback only — the server is authoritative and sends hintCostsSeconds. */
+/** Fallback only: the server is authoritative and sends hintCostsSeconds. */
 const FALLBACK_COSTS = [120, 240, 420];
 
 export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats }) => {

@@ -10,7 +10,7 @@
     "houseShort": "Ridge Road",
     "incidentDate": "Friday 23 October 2026",
     "oldDate": "Saturday 2 December 2023",
-    "force": "Mumbai Police — Crime Branch, Homicide",
+    "force": "Mumbai Police, Crime Branch, Homicide",
     "emergencyLine": "112",
     "telco": "MTNL landline toll record",
     "press": "The Peninsula Gazette"
@@ -41,10 +41,10 @@
         { "k": "Build", "v": "5'10\", right-handed, greying at the temples. Wore a signet ring on the left hand. It was not on the body.", "at": 0 },
         { "k": "Residence", "v": "Ridge Road, Malabar Hill. Ground-floor consulting room, first-floor private study. The study has one door and a deadbolt on the inside.", "at": 0 },
         { "k": "Found", "v": "11:58 PM, slumped at the study desk. Single penetrating wound, upper chest. Door bolted from within.", "at": 0 },
-        { "k": "Effects", "v": "Reading glasses with one arm bent, a tumbler of water, the appointment diary open at the following week, and a brass letter-opener stand — empty.", "at": 0 },
+        { "k": "Effects", "v": "Reading glasses with one arm bent, a tumbler of water, the appointment diary open at the following week, and a brass letter-opener stand, empty.", "at": 0 },
         { "k": "Manner", "v": "Precise, unhurried, widely respected. Three colleagues used the word \"careful\" without being asked. None of them used the word \"warm\".", "at": 0 },
         { "k": "Last confirmed alive", "v": "9:52 PM, at his own desk. Keyboard entry and study motion agree to within three seconds once the panel's error is corrected.", "at": 1 },
-        { "k": "Knew about Julian", "v": "Told Mira outright that she had not killed Julian — and then spent three years persuading her that her memory could not be trusted.", "at": 2 },
+        { "k": "Knew about Julian", "v": "Told Mira outright that she had not killed Julian, and then spent three years persuading her that her memory could not be trusted.", "at": 2 },
         { "k": "Practice, the truth of it", "v": "Falsified patient records and used recorded sessions to hold patients in place. The archive was not sentiment. It was leverage.", "at": 4 },
         { "k": "P-0912", "v": "Three days after Julian died, Elias personally edited and locked one patient file and scrubbed the name off it.", "at": 4 },
         { "k": "Last visit", "v": "Went to Mira's flat the afternoon before he died and returned her music box, saying he'd had it repaired. It does not play.", "at": 6 },
@@ -66,7 +66,7 @@
       "fields": [
         { "k": "Manner", "v": "Helpful. Answers questions before they are finished. Has twice described the case as straightforward.", "at": 0 },
         { "k": "What he gave you", "v": "The system logs, unprompted. He has not given you the lock export.", "at": 0 },
-        { "k": "Badge 4417", "v": "First officer on scene at Julian Marsh's death in 2023. Logged his arrival at 10:05 PM — fifteen minutes before the emergency call reached the switchboard at 10:20 PM.", "at": 3 },
+        { "k": "Badge 4417", "v": "First officer on scene at Julian Marsh's death in 2023. Logged his arrival at 10:05 PM, fifteen minutes before the emergency call reached the switchboard at 10:20 PM.", "at": 3 },
         { "k": "The altered report", "v": "Badge 4417 signed the incident report that put Julian's death at 8:40 PM, an hour before Julian made a phone call.", "at": 3 },
         { "k": "LIAISON_4417", "v": "An account by that name was erased from the lock export before it reached the file. Someone with police-level access was in the system that night.", "at": 9 },
         { "k": "P-0912", "v": "Elias's redacted patient was Rowan himself. In an old session he admitted planting evidence in an earlier case. Elias recorded it and kept it.", "at": 10 },
@@ -87,9 +87,9 @@
       "portraitKey": "MV",
       "summary": "Has not spoken aloud for three years. She was in the house the night Julian died and was found beside him. She was never charged, and never believed.",
       "fields": [
-        { "k": "Patient code", "v": "P-0101. Referred to Dr. Vane within weeks of Julian's death — by the investigating officer.", "at": 2 },
+        { "k": "Patient code", "v": "P-0101. Referred to Dr. Vane within weeks of Julian's death, by the investigating officer.", "at": 2 },
         { "k": "Why she stopped", "v": "Every account she gave was treated as confusion. Eventually she stopped giving them. She answers in writing, or by tapping.", "at": 2 },
-        { "k": "What she heard", "v": "Julian on the phone, alive and shouting, at about 9:15 PM. Later a door, and two short chirps and a click — she described it as a radio.", "at": 2 },
+        { "k": "What she heard", "v": "Julian on the phone, alive and shouting, at about 9:15 PM. Later a door, and two short chirps and a click. She described it as a radio.", "at": 2 },
         { "k": "Engagement", "v": "She and Julian were to be married in the spring of 2024. He wound her music box for her every night; it was a gift for her birthday.", "at": 6 },
         { "k": "The diary", "v": "Written in order, every page, exactly as it happened. Elias told her for three years that she had it jumbled. She did not.", "at": 6 },
         { "k": "What she says", "v": "Her first words in three years, once the team reads her pages back to her in the right order: \"Lena didn't kill him.\"", "at": 6 }
@@ -108,7 +108,7 @@
       "summary": "Engaged to Mira Vale. Died at the house on the night of 2 December 2023. The file was closed quickly and has never been reopened.",
       "fields": [
         { "k": "Official record", "v": "Time of death 8:40 PM. First officer on scene, badge 4417.", "at": 2 },
-        { "k": "The call", "v": "An MTNL toll record shows an outgoing call from Julian to Dr. Vane at 9:12 PM lasting 47 seconds — thirty-two minutes after he was officially already dead.", "at": 3 },
+        { "k": "The call", "v": "An MTNL toll record shows an outgoing call from Julian to Dr. Vane at 9:12 PM lasting 47 seconds, thirty-two minutes after he was officially already dead.", "at": 3 },
         { "k": "Why", "v": "He had found proof that Elias was falsifying records and using session tapes to hold patients in place. He called to say he was going to the authorities.", "at": 10 },
         { "k": "Family", "v": "Mother, Helen Marsh. A younger half-brother who took his father's surname.", "at": 6 },
         { "k": "Memorial", "v": "A plaque above the sea, placed by his mother and his brother. \"Seeking the truth that was taken from him.\"", "at": 7 }
@@ -127,10 +127,10 @@
       "summary": "Co-signatory on her husband's clinical certifications for eleven years. Says she was at a charity dinner until midnight and then went straight home.",
       "fields": [
         { "k": "Statement", "v": "\"I was at the dinner until midnight, then straight home.\"", "at": 4 },
-        { "k": "The deletion", "v": "At 11:52 PM, device LENA_IPAD signed into the clinical archive as lena.v and deleted record R-0003 — Recording Three.", "at": 4 },
+        { "k": "The deletion", "v": "At 11:52 PM, device LENA_IPAD signed into the clinical archive as lena.v and deleted record R-0003, Recording Three.", "at": 4 },
         { "k": "Contradicted", "v": "A parking exit receipt puts her out of the dinner garage at 10:58 PM, and a neighbour's doorbell camera has her car on Ridge Road at 11:38 PM. She was never at the dinner until midnight.", "at": 5 },
         { "k": "Recording Three", "v": "Her own session. In it she discusses a clinical certification she co-signed knowing it was false. Elias kept the tape. That is what she came back for.", "at": 5 },
-        { "k": "What she actually did", "v": "Let herself in at 11:40 PM with her spare key, found her husband dead, deleted the tape, wiped the surfaces, bolted the study and left. She did not kill him — she arrived more than half an hour after the window closed.", "at": 6 }
+        { "k": "What she actually did", "v": "Let herself in at 11:40 PM with her spare key, found her husband dead, deleted the tape, wiped the surfaces, bolted the study and left. She did not kill him. She arrived more than half an hour after the window closed.", "at": 6 }
       ]
     },
 
@@ -169,7 +169,7 @@
       "fields": [
         { "k": "Statement", "v": "\"We barely spoke for months.\"", "at": 5 },
         { "k": "Contradicted", "v": "Café bills and card records show four separate meetings in the previous eight weeks.", "at": 5 },
-        { "k": "Why she lied", "v": "She was not estranged from him — she was frightened of what he was doing. He had begun handing her things to keep. She still has them, and did not want to be asked.", "at": 6 }
+        { "k": "Why she lied", "v": "She was not estranged from him. She was frightened of what he was doing. He had begun handing her things to keep. She still has them, and did not want to be asked.", "at": 6 }
       ]
     },
 
@@ -218,7 +218,7 @@
       "portraitKey": "HM",
       "summary": "Buried one son in 2023 and has not been told what the other has been doing for four years.",
       "fields": [
-        { "k": "Two sons", "v": "Julian Marsh, and a younger son who took his father's surname — Cross.", "at": 6 },
+        { "k": "Two sons", "v": "Julian Marsh, and a younger son who took his father's surname, Cross.", "at": 6 },
         { "k": "The memorial", "v": "She placed the plaque above the sea herself. The registry records both names: hers, and her surviving son's.", "at": 7 }
       ]
     }

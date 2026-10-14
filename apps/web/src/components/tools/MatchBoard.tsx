@@ -35,7 +35,7 @@ export const MatchBoard: React.FC = () => {
   const [feedback, setFeedback] = useState<{ error?: string } | null>(null);
 
   // Nothing here repopulates the board on solve. A team that has just solved it
-  // is already looking at the correct board — their own selections. Writing the
+  // is already looking at the correct board, their own selections. Writing the
   // canonical mapping here only put the answer key into the bundle.
 
   const handleSelect = (suspectId: string, evidenceId: string) => {
@@ -70,7 +70,7 @@ export const MatchBoard: React.FC = () => {
       setFeedback({
         error:
           res.nudge ||
-          'The board does not reconcile. At least one statement is matched to evidence that does not actually refute it — and remember that not everyone here is lying.'
+          'The board does not reconcile. At least one statement is matched to evidence that does not actually refute it, and remember that not everyone here is lying.'
       });
     }
     setSubmitting(false);

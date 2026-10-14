@@ -406,54 +406,54 @@ export const MorsePlayer: React.FC = () => {
           {/* Complete Alphabet (A-Z) */}
           <div>
             <span className="text-[10px] font-mono font-bold text-ink/70 uppercase tracking-wider block mb-1.5">
-              ALPHABETIC CODES (A — Z):
+              ALPHABETIC CODES (A to Z):
             </span>
             <div className="grid grid-cols-3 sm:grid-cols-6 md:grid-cols-9 gap-1.5 text-center text-xs font-bold text-ink/90">
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">A: · —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">B: — · · ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">C: — · — ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">D: — · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">A: · -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">B: - · · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">C: - · - ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">D: - · ·</div>
               <div className="p-1 bg-manila/60 rounded border border-ink/15">E: ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">F: · · — ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">G: — — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">F: · · - ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">G: - - ·</div>
               <div className="p-1 bg-manila/60 rounded border border-ink/15">H: · · · ·</div>
               <div className="p-1 bg-manila/60 rounded border border-ink/15">I: · ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">J: · — — —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">K: — · —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">L: · — · ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">M: — —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">N: — ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">O: — — —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">P: · — — ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">Q: — — · —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">R: · — ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">J: · - - -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">K: - · -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">L: · - · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">M: - -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">N: - ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">O: - - -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">P: · - - ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">Q: - - · -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">R: · - ·</div>
               <div className="p-1 bg-manila/60 rounded border border-ink/15">S: · · ·</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">T: —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">U: · · —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">V: · · · —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">W: · — —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">X: — · · —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">Y: — · — —</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">Z: — — · ·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">T: -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">U: · · -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">V: · · · -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">W: · - -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">X: - · · -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">Y: - · - -</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">Z: - - · ·</div>
             </div>
           </div>
 
           {/* Numeric Digits (0-9) */}
           <div className="pt-1 border-t border-ink/15">
             <span className="text-[10px] font-mono font-bold text-ink/70 uppercase tracking-wider block mb-1.5">
-              NUMERICAL CODES (0 — 9):
+              NUMERICAL CODES (0 to 9):
             </span>
             <div className="grid grid-cols-2 sm:grid-cols-5 md:grid-cols-10 gap-1.5 text-center text-xs font-bold text-ink/90">
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">0: —————</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">1: ·————</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">2: ··———</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">3: ···——</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">4: ····—</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">0: -----</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">1: ·----</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">2: ··---</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">3: ···--</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">4: ····-</div>
               <div className="p-1 bg-manila/60 rounded border border-ink/15">5: ·····</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">6: —····</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">7: ——···</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">8: ———··</div>
-              <div className="p-1 bg-manila/60 rounded border border-ink/15">9: ————·</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">6: -····</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">7: --···</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">8: ---··</div>
+              <div className="p-1 bg-manila/60 rounded border border-ink/15">9: ----·</div>
             </div>
           </div>
         </div>
@@ -482,7 +482,7 @@ export const MorsePlayer: React.FC = () => {
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-ok" />
               <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
-                TAPS DECODED — SEE THE EXHIBIT RECORD BELOW
+                TAPS DECODED: SEE THE EXHIBIT RECORD BELOW
               </span>
             </div>
             <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>

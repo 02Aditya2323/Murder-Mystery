@@ -17,7 +17,7 @@ The officer behind `LIAISON_4417`, badge 4417, and the 2023 cover-up is **Detect
 ### Dr. Elias Vane's Final Unsealed Note
 Found hidden inside Dr. Vane's personal lockbox:
 > *"The person investigating my death already knows who killed me."*  
-> — Dr. Elias Vane
+> Dr. Elias Vane
 
 ---
 

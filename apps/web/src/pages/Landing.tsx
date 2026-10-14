@@ -21,7 +21,7 @@ const RULES: Array<[string, string]> = [
   ['Teams', 'Three to four investigators. One terminal, one electronics kit, one case.'],
   ['Clock', 'Three hours. Your clock starts when your team signs in, not when the room does.'],
   ['Ranking', 'Fastest investigation wins. Hints are available and they cost you time.'],
-  ['The ending', 'You do not name a suspect. You write the case — all of it.']
+  ['The ending', 'You do not name a suspect. You write the case, all of it.']
 ];
 
 export const Landing: React.FC = () => {
@@ -75,7 +75,7 @@ export const Landing: React.FC = () => {
             </div>
             <div>
               <dt>Team size</dt>
-              <dd>3–4</dd>
+              <dd>3-4</dd>
             </div>
             <div>
               <dt>Case files</dt>
@@ -115,7 +115,7 @@ export const Landing: React.FC = () => {
             <span className="eyebrow">Case MUM/HOM/2026/2310</span>
             <h2>What you are walking into</h2>
             <p>
-              Everything below is in the file before you start. Nothing here is a spoiler —
+              Everything below is in the file before you start. Nothing here is a spoiler:
               it is the problem, not the answer.
             </p>
           </div>

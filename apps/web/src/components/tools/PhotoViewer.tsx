@@ -163,7 +163,7 @@ export const PhotoViewer: React.FC = () => {
           </div>
           <div className="font-serif text-xs leading-relaxed text-zinc-950 p-4 bg-manila/60 rounded border border-ink/20 space-y-2">
             <p className="font-typewriter font-bold text-base text-center text-red-950">
-              IN LOVING MEMORY OF JULIAN MARSH (1996 – 2023)
+              IN LOVING MEMORY OF JULIAN MARSH (1996 - 2023)
             </p>
             <p className="text-center italic text-zinc-700">
               "Seeking the truth that was taken from him."
@@ -172,7 +172,7 @@ export const PhotoViewer: React.FC = () => {
               Dedicated by his mother, Helen Marsh, and his brother, Adrian Cross (Marsh).
             </p>
             <p className="text-[11px] text-center font-mono text-zinc-600">
-              Location confirmed against the municipal memorial registry — see the exhibit record below.
+              Location confirmed against the municipal memorial registry. See the exhibit record below.
             </p>
           </div>
         </div>

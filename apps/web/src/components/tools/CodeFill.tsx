@@ -5,7 +5,7 @@ import { Laptop, Table2, AlertCircle, CheckCircle2, Lock } from 'lucide-react';
 interface ExportRow { time: string; event: string; source: string }
 
 /**
- * Beat 9 — The Locked Room.
+ * Beat 9: The Locked Room.
  *
  * Code reading, not debugging. The team is handed the script that cleaned the
  * lock export and the export it produced, and has to reason backwards. There
@@ -60,7 +60,7 @@ export const CodeFill: React.FC = () => {
           <header className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 border-b border-[#2C323C]">
             <span className="flex items-center gap-2 font-typewriter text-xs tracking-wider text-[#ECE6DA]">
               <Table2 className="w-4 h-4 text-signal" aria-hidden="true" />
-              SMART LOCK EXPORT &mdash; AS FILED
+              SMART LOCK EXPORT: AS FILED
             </span>
             <span className="font-mono text-[10px] text-dim">3 rows</span>
           </header>
@@ -108,7 +108,7 @@ export const CodeFill: React.FC = () => {
               When was the study really locked, and which source did the script erase?
             </p>
             <p className="m-0 mt-1 font-mono text-[12px] text-dim">
-              HHMM-XXXX &mdash; the true time in 24-hour IST, a hyphen, then the last four
+              HHMM-XXXX: the true time in 24-hour IST, a hyphen, then the last four
               characters of the erased account.
             </p>
           </div>
