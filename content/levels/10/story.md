@@ -1,13 +1,18 @@
-# Interrogation Room: The Final Conspirator
+# The Accomplice
 
-Following the exposure of his alibi and lock manipulation, {{killer.full}} is brought to the precinct. {{accomplice.full}} immediately attempts to take Adrian into a closed room for a private interrogation.
+{{accomplice.full}} takes {{killer.full}} in and asks to question him alone. Your team insists on being in the room.
 
-Your team insists on your right to observe.
+Adrian looks at the detective for a long moment, understands exactly what is about to happen to him, and starts talking.
 
-Under the harsh lights, Adrian smirks and looks directly past Rowan Hale toward you:
+> *"I'm not a network administrator. I didn't schedule a maintenance window on a police vendor's system, and I don't have an account on it. I didn't delete my own name from an export.*
+>
+> *Ask who requested liaison 4417. And ask who signed Julian's report three years ago."*
 
-> *"You think I acted alone? I'm not a network administrator. I didn't schedule that security maintenance window from 21:20 to 23:50 that blinded every sensor in the house. I didn't delete my name from the system log export. Ask who requested account `LIAISON_4417`. And ask who signed Julian's altered death report three years ago."*
+---
 
-To identify who is behind `LIAISON_4417`, follow the external OSINT trail. Club member profiles harbor encrypted base64 markers referencing badge 4417 leading to the ultimate confirmation.
+The liaison account is real and it belongs to somebody. The force does not publish its internal account register, but the officers attached to the Ridge Road investigation all have public profiles, and one of them has been careless.
 
-Submit the case flag in standard format: `FLAG{...}`.
+**Your Objective:**
+Find the officer behind `LIAISON_4417`. The trail runs through their public profile and out again — follow it to the end and bring back what is waiting there.
+
+Submit the case flag in the form `FLAG{...}`.

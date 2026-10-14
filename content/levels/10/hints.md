@@ -1,8 +1,8 @@
 ### Tier 1
-The clue is a number you have already met twice in this case. Look for it in the profile biographies, not in anybody's posts.
+You already have the only identifier that matters, and you have had it since the old case file. Look for that number in the profiles themselves — in the biography line, not in anything they have posted.
 
 ### Tier 2
-The string sitting in that bio is base64. Any standard decoder will open it.
+Every one of those profiles carries a block of characters that is not a sentence. It is base64. Any decoder will open it, and most of them open onto nothing useful.
 
 ### Tier 3
-What comes out is a link, not a message. Follow it; the image at the end of it carries the flag. Submit it in the `FLAG{...}` form exactly as it is written.
+What comes out is a link, not a message. Follow it. What loads is an image, and the image is not meant to be read with your eyes.

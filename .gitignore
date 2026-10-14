@@ -14,3 +14,9 @@ playwright-report/
 test-results/
 murder-mystery-platform.zip
 scripts/pack.ps1
+
+# Answer-bearing material. This repository is PUBLIC: anything committed here
+# can be read by a participant with one `git clone`. See content/SPOILERS.md.
+content/CANON.md
+content/level10-osint.md
+apps/web/public/q/
