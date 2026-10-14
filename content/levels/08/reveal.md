@@ -2,7 +2,7 @@
 
 **Hardware Register Extraction:**
 
-With the panel open, the controller's local memory reads out:
+With the jumper fitted the controller reports, and the local memory dumps:
 
 - **21:31:04 IST** — service override code entered at the garage keypad.
 - **Code owner:** `A. Cross`.
@@ -12,6 +12,6 @@ With the panel open, the controller's local memory reads out:
 ---
 
 **Clue Unlocked:**
-Thirteen minutes after badging out of the front door, {{killer.full}} came back in through the garage on a service override in his own name. He never left.
+Thirteen minutes after badging out of the front door, {{killer.full}} came back into the house through the garage, on a service override in his own name. He never left.
 
-The front door said nobody entered after 21:18 because the system had been told, that afternoon, to stop writing it down. Somebody scheduled that window. It was not the research assistant — he has no access to the security vendor at all.
+The front door recorded nobody entering after 21:18 because the system had been told, that afternoon, to stop writing it down. Somebody scheduled that window. It was not the research assistant — he has no account on the security vendor's system at all.

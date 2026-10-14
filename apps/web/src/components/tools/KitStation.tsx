@@ -26,7 +26,7 @@ export const KitStation: React.FC = () => {
     if (!res.correct) {
       setErrorMessage(
         res.nudge ||
-          'That pattern does not light the LED on Kit #' + kitNo + '. Re-check the smudged gate against its truth table.'
+          'That is not what Kit #' + kitNo + ' reads. Check the missing jumper against the truth table, then read all three LEDs.'
       );
     } else {
       setAnswerInput('');
@@ -113,12 +113,12 @@ export const KitStation: React.FC = () => {
             <span className="text-[10px] text-zinc-500">SCHEMATIC REF: DWG-7714</span>
           </div>
           <p className="font-serif text-xs text-zinc-700 leading-relaxed">
-            Build the circuit on the breadboard, then work the four selector switches until the output LED lights. Exactly one pattern will do it.
+            The ICs are seated and the input switches are already set. One jumper is missing. Fit it, and the three output LEDs will settle.
           </p>
         </div>
       </div>
 
-      {/* ── the worksheet: the circuit on this team's own kit ───────── */}
+      {/* ── the worksheet: this team's own board ───────────────── */}
       {kitSpec && (
         <section className="rounded border-2 border-[#8E6C38] bg-[#DCCCA6] text-[#1A1510] p-4 sm:p-5 space-y-4 shadow-desk">
           <header className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[rgba(26,21,16,.25)]">
@@ -130,55 +130,80 @@ export const KitStation: React.FC = () => {
             </span>
           </header>
 
+          {/* input switches, already set */}
           <div>
-            <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1">
-              Output logic
+            <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
+              Input switches &mdash; already set, do not change them
             </p>
-            <p className="font-mono text-[15px] sm:text-[17px] m-0 break-words">{kitSpec.formula}</p>
-            <p className="text-[13.5px] text-[#5A4D38] m-0 mt-1.5">
-              F drives the panel LED. Inputs A, B, C and D are the four selector switches.
-            </p>
+            <div className="flex gap-2 flex-wrap">
+              {['A', 'B', 'C', 'D'].map((k) => (
+                <span key={k} className="font-mono text-[15px] px-3 py-1.5 rounded border border-[rgba(26,21,16,.35)] bg-[rgba(26,21,16,.05)]">
+                  {k} = <strong>{kitSpec.inputs?.[k]}</strong>
+                </span>
+              ))}
+            </div>
           </div>
 
-          <div className="flex flex-wrap gap-5">
-            <div>
-              <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
-                Legible on the sheet
-              </p>
-              <ul className="m-0 pl-4 text-[13.5px] space-y-0.5">
-                {kitSpec.knownGates?.map((g: string, i: number) => <li key={i} className="font-mono">{g}</li>)}
-              </ul>
-            </div>
-
-            <div>
-              <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
-                Smudged &mdash; {kitSpec.smudgedGate}
-              </p>
-              <table className="border-collapse font-mono text-[13px]">
-                <thead>
-                  <tr>
-                    {['C', 'D', 'out'].map((h) => (
-                      <th key={h} className="border border-[rgba(26,21,16,.3)] px-3 py-1 text-left font-normal text-[#5A4D38]">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {kitSpec.smudgedTruthTable?.map((r: any, i: number) => (
-                    <tr key={i}>
-                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1">{r.c}</td>
-                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1">{r.d}</td>
-                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1 font-bold">{r.out}</td>
-                    </tr>
+          {/* the three output stages */}
+          <div>
+            <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
+              Output stages
+            </p>
+            <table className="border-collapse font-mono text-[13.5px] w-full max-w-md">
+              <thead>
+                <tr>
+                  {['LED', 'Inputs', 'Gate', 'IC'].map((h) => (
+                    <th key={h} className="border border-[rgba(26,21,16,.3)] px-3 py-1.5 text-left font-normal text-[#5A4D38]">{h}</th>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </tr>
+              </thead>
+              <tbody>
+                {kitSpec.gates?.map((g: any) => {
+                  const gap = g.gate === '?';
+                  return (
+                    <tr key={g.out} className={gap ? 'bg-[rgba(140,40,30,.1)]' : ''}>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5 font-bold">{g.out}</td>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5">{g.inputs}</td>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5">
+                        {gap ? <em className="text-[#8C281E] not-italic font-bold">— jumper missing —</em> : g.gate}
+                      </td>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1.5 text-[#5A4D38]">{g.ic}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* the fragment that identifies the missing gate */}
+          <div>
+            <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
+              Recovered from the manual &mdash; behaviour of the missing stage ({kitSpec.missingOutput})
+            </p>
+            <table className="border-collapse font-mono text-[13px]">
+              <thead>
+                <tr>
+                  {[kitSpec.missingInputs?.split(', ')[0] || 'x', kitSpec.missingInputs?.split(', ')[1] || 'y', kitSpec.missingOutput].map((h: string) => (
+                    <th key={h} className="border border-[rgba(26,21,16,.3)] px-3 py-1 text-left font-normal text-[#5A4D38]">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {kitSpec.missingTruthTable?.map((r: any, i: number) => (
+                  <tr key={i}>
+                    <td className="border border-[rgba(26,21,16,.25)] px-3 py-1">{r.x}</td>
+                    <td className="border border-[rgba(26,21,16,.25)] px-3 py-1">{r.y}</td>
+                    <td className="border border-[rgba(26,21,16,.25)] px-3 py-1 font-bold">{r.out}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <p className="text-[13.5px] m-0 pt-2 border-t border-[rgba(26,21,16,.2)]">
-            Work out the smudged gate from its truth table, build the circuit on your kit, and
-            find the <strong>one</strong> switch pattern that lights the LED. Submit it as four
-            bits in the order <span className="font-mono">A B C D</span>.
+            Identify the missing gate from its behaviour above, fit the jumper to the matching IC
+            on the board, and read the three output LEDs left to right as{' '}
+            <span className="font-mono">F1 F2 F3</span>. Submit the three digits.
           </p>
         </section>
       )}
@@ -188,14 +213,14 @@ export const KitStation: React.FC = () => {
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
           <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
             <Wrench className="w-4 h-4 text-signal" />
-            <span>Enter the switch pattern that lights the LED on Kit #{kitNo} (A B C D):</span>
+            <span>Enter the three output LEDs on Kit #{kitNo}, left to right (F1 F2 F3):</span>
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               value={answerInput}
               onChange={(e) => setAnswerInput(e.target.value)}
-              placeholder="0000"
+              placeholder="000"
               className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
             />
             <button

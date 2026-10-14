@@ -188,11 +188,11 @@ describe('Full 10-Level Investigation Happy Path E2E', () => {
     expect(data.reveal).toContain('Diu');
   });
 
-  it('Level 8: Solves The Garage Panel (per-kit circuit: kit 1 = 1010)', async () => {
+  it('Level 8: Solves The Garage Panel (per-kit wiring: kit 1 reads 001)', async () => {
     const submitRes = await fetch(`${baseUrl}/levels/8/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Cookie: sessionCookie },
-      body: JSON.stringify({ stage: 0, answer: '1010' })
+      body: JSON.stringify({ stage: 0, answer: '001' })
     });
     expect(submitRes.status).toBe(200);
     const data = await submitRes.json();

@@ -138,17 +138,19 @@ export function initDatabase() {
     `);
     // Seeded from content/kits.json: one distinct circuit per kit, so the
     // switch pattern cannot be shouted from one table to the next.
+    // Seeded from content/kits.json. Each kit's ICs and input switches are
+    // pre-set; the team completes the missing jumper and reads three LEDs.
     const defaultAnswers: Record<number, string> = {
-      1: '1010',
-      2: '1001',
-      3: '0110',
-      4: '0101',
-      5: '1110',
-      6: '1101',
-      7: '0010',
-      8: '1011',
-      9: '0111',
-      10: '1111'
+      1: '001',
+      2: '010',
+      3: '011',
+      4: '100',
+      5: '101',
+      6: '110',
+      7: '111',
+      8: '001',
+      9: '010',
+      10: '011'
     };
 
     for (let k = 1; k <= 10; k++) {

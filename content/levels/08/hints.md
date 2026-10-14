@@ -1,8 +1,8 @@
 ### Tier 1
-Everything on the sheet is legible except one gate. Start by reading what you *do* have: the two terms you can see already rule out most of the sixteen possible switch patterns.
+Do not touch the input switches. They are evidence — forensics set them to the positions the board was found in, and changing them changes the answer.
 
 ### Tier 2
-Take the smudged gate on its own. Its truth table is printed beside it with four rows. Compare those four outputs against the gates in your kit — exactly one standard gate behaves that way.
+The sheet records how the missing stage behaves for all four combinations of its two inputs. Read that little table as a gate's signature and compare it against the ICs you have. Exactly one gate does that.
 
 ### Tier 3
-Work backwards from the output instead of forwards from the switches. F is a chain of AND terms, so every term has to be 1 at once. Write down what each term demands of A, B, C and D, and the four bits fall out without touching the breadboard.
+You can finish this on paper before you touch the board. The two legible stages give you two of the three digits straight away; the missing gate plus the two input switches it is wired to gives you the third. Then build it and check the LEDs agree.

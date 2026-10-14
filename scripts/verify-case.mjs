@@ -81,7 +81,7 @@ console.log('\n== PLAYTHROUGH ==');
 const ANSWERS = [
   [1, 0, '2237'], [2, 0, 'NOT ME JULIAN'], [3, 0, '1938MANNINGHAM'], [3, 1, '32-4417'],
   [4, 0, 'LENA_IPAD-P0912'], [5, 0, '3527'], [6, 0, '__DIARY__'], [7, 0, 'Diu'],
-  [8, 0, '1010'], [9, 0, '2308-4417'], [10, 0, 'FLAG{ROWAN_HALE}']
+  [8, 0, '001'], [9, 0, '2308-4417'], [10, 0, 'FLAG{ROWAN_HALE}']
 ];
 for (const [lvl, stage, ansIn] of ANSWERS) {
   let ans = ansIn;
@@ -147,7 +147,8 @@ console.log('== BEAT 8: EACH KIT HAS ITS OWN CIRCUIT ==');
 const l8 = await call('/api/levels/8');
 ok(!!l8.kitSpec, 'the team is served a worksheet');
 ok(l8.kitSpec && l8.kitSpec.answer === undefined, 'the worksheet does NOT contain the answer');
-ok(l8.kitSpec && /XOR|XNOR/.test(l8.kitSpec.formula), 'the worksheet carries a real formula');
+ok(l8.kitSpec && Array.isArray(l8.kitSpec.gates) && l8.kitSpec.gates.some(g => g.gate === '?'), 'the worksheet marks one stage as the missing jumper');
+ok(l8.kitSpec && l8.kitSpec.inputs && typeof l8.kitSpec.inputs.A === 'number', 'the worksheet gives the pre-set input switches');
 
 console.log('');
 console.log('== BEAT 9: CODE READING ==');
