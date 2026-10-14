@@ -234,7 +234,7 @@ export const LogViewer: React.FC = () => {
         </div>
 
         {/* Telemetry Log Table */}
-        <div className="rounded border border-[#254018] bg-[#0A1008] overflow-x-auto shadow-inner max-h-[380px] overflow-y-auto relative z-10">
+        <div className="rounded border border-[#254018] bg-[#0A1008] overflow-x-auto shadow-inner relative z-10">
           <table className="w-full text-left text-xs font-mono border-collapse">
             <thead className="bg-[#142010] text-[#A5D6A7] sticky top-0 border-b border-[#254018] z-10">
               <tr>

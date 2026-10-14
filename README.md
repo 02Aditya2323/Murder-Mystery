@@ -198,7 +198,30 @@ contributes nothing — not its title, not the people it would introduce, not it
 
 ---
 
-## 9. Before the event
+## 9. Troubleshooting
+
+**`npm run dev` dies with `EADDRINUSE :3000`.** A previous `npm start` is still
+holding the port. The dev script runs the API on 3000 and Vite on 5173, with
+`/api` proxied, so 3000 must be free first:
+
+```bash
+# Windows
+netstat -ano | findstr :3000      # then: taskkill /PID <pid> /F
+# macOS / Linux
+lsof -ti:3000 | xargs kill -9
+```
+
+**A test run fails on a second pass.** `npm test` and `npm run verify-case` both
+play the full case as a real team, so they leave the database solved. Reset
+between runs:
+
+```bash
+rm -f apps/server/data/*.db*
+```
+
+---
+
+## 10. Before the event
 
 Set `ADMIN_PASSWORD`, `ANSWER_SECRET` and `SESSION_SECRET` in `.env`. Changing `ANSWER_SECRET`
 invalidates `apps/server/data/answers.hashed.json`, so re-run `npm run hash-answers` afterwards

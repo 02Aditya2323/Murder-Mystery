@@ -295,7 +295,7 @@ export const SqlConsole: React.FC = () => {
 
         {/* Results Screen */}
         {results && (
-          <div className="border-t-2 border-[#3a3024] bg-[#060a06] max-h-[280px] overflow-auto">
+          <div className="border-t-2 border-[#3a3024] bg-[#060a06] max-h-[440px] overflow-auto">
             {results.columns.length === 0 ? (
               <div className="p-4 text-center text-xs text-emerald-600/80 font-mono">
                 Command executed successfully. 0 rows returned in result set.
