@@ -108,7 +108,7 @@ export const DocViewer: React.FC = () => {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-2">
               <span className="text-[11px] font-mono text-ink/70">
-                COMBINED KEY FORMAT: [YEAR][SURNAME] — four digits then the surname, no space
+                COMBINED KEY FORMAT: [YEAR][SURNAME]: four digits then the surname, no space
               </span>
               <button
                 type="submit"
@@ -347,14 +347,16 @@ export const DocViewer: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-ok" />
                   <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
-                    FORENSIC DISCREPANCY VERIFIED & ACCEPTED: 32-4417
+                    FORENSIC DISCREPANCY VERIFIED &amp; ACCEPTED
                   </span>
                 </div>
                 <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>
               </div>
 
               <p className="font-serif text-xs text-dim leading-relaxed">
-                The timeline and officer discrepancy (arrival 32 minutes prior to dispatch by Officer 4417) has been corroborated and entered into the central case file. Submission is locked.
+                {/* No figures here. This block is in the bundle from first load,
+                    so naming the gap or the badge would hand over the answer. */}
+                The arrival-to-dispatch discrepancy has been corroborated and entered into the central case file. Submission is locked.
               </p>
 
           {/* advancement is owned by the case room */}
@@ -409,7 +411,7 @@ export const DocViewer: React.FC = () => {
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
                 <span className="text-[11px] font-mono text-dim">
-                  SUBMISSION FORMAT: [Minutes]-[Badge] — the difference in minutes, a hyphen, the four-digit badge
+                  SUBMISSION FORMAT: [Minutes]-[Badge]: the difference in minutes, a hyphen, the four-digit badge
                 </span>
                 <button
                   type="submit"

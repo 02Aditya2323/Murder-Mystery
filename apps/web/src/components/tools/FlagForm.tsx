@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { ShieldAlert, KeyRound, AlertCircle, Volume2, FileText, CheckCircle2, User, Award, ExternalLink } from 'lucide-react';
+import { ShieldAlert, KeyRound, AlertCircle, CheckCircle2, User, Award, ExternalLink } from 'lucide-react';
 
 export const FlagForm: React.FC = () => {
   const { levelDetail, submitAnswer, setTheoryModalOpen } = useGameStore();
@@ -91,40 +91,13 @@ export const FlagForm: React.FC = () => {
         </form>
       )}
 
-      {/* Unlocked Artifacts: Recording Nine & Elias's Note */}
+      {/* The beat 10 reveal is NOT rendered here. Conditional JSX still ships
+          in the bundle, so a hardcoded post-solve block hands the accomplice
+          over to anyone who opens the bundle before solving anything. The
+          reveal reaches the squad through the case room consequence panel,
+          which the server fills from scenes.json only once the beat closes. */}
       {isSolved && (
         <div className="space-y-5 pt-3 border-t-2 border-[#5c4631]">
-          {/* Recording Nine */}
-          <div className="paper-sheet p-5 rounded-lg border-l-4 border-red-800 text-ink shadow-[0_6px_20px_rgba(0,0,0,0.3)] space-y-2.5">
-            <div className="flex items-center justify-between pb-1.5 border-b border-ink/20">
-              <span className="font-typewriter font-bold text-xs text-red-900 flex items-center gap-2">
-                <Volume2 className="w-4 h-4 text-red-800" />
-                TRANSCRIPT: RECORDING NINE
-              </span>
-              <span className="stamp stamp-skipped text-[9px]">CRIMINAL CONFESSION</span>
-            </div>
-            <div className="font-serif text-xs leading-relaxed text-zinc-950 italic bg-manila/60 p-4 rounded-lg border border-ink/15">
-              <strong>DETECTIVE ROWAN HALE:</strong> "I altered the time of death on Julian's file to 20:40 because you told me you were at that dinner until 9:15, Elias. You told me it was an accident. But if anyone ever links badge 4417 to that crime scene before the 112 dispatch was logged... we both go down for murder."
-            </div>
-          </div>
-
-          {/* Elias's Last Note */}
-          <div className="paper-sheet p-5 rounded-lg border-l-4 border-signal text-ink shadow-[0_6px_20px_rgba(0,0,0,0.3)] space-y-3">
-            <div className="flex items-center justify-between pb-1.5 border-b border-ink/20">
-              <span className="font-typewriter font-bold text-xs text-zinc-950 flex items-center gap-2">
-                <FileText className="w-4 h-4 text-signal" />
-                DR. ELIAS VANE: SEALED FINAL TESTAMENT NOTE
-              </span>
-              <span className="stamp stamp-closed text-[9px]">EXHIBIT 10</span>
-            </div>
-            <div className="font-serif text-base leading-relaxed text-zinc-950 font-bold text-center py-4 bg-manila/50 rounded-lg border border-ink/15">
-              "The person investigating my death already knows who killed me."
-              <span className="block text-xs font-normal text-zinc-600 mt-2 font-mono">
-                Filed under Archive Subject: Detective Rowan Hale (Badge #4417)
-              </span>
-            </div>
-          </div>
-
           {/* Proceed to Final Theory Action Button */}
           <div className="relative bg-gradient-to-r from-[#2e1d14] via-[#241710] to-[#1c120c] p-6 rounded-xl border-2 border-[#b8860b] shadow-[0_12px_35px_rgba(0,0,0,0.7)] flex flex-wrap items-center justify-between gap-4">
             <div className="space-y-1">
