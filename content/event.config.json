@@ -3,7 +3,7 @@
     "name": "Murder Mystery",
     "case_number": "CASE-2026-2310",
     "target_teams": 60,
-    "duration_minutes": 210,
+    "duration_minutes": 180,
     "default_soft_caps": {
       "1": 22,
       "2": 22,
@@ -15,7 +15,25 @@
       "8": 30,
       "9": 30,
       "10": 38
-    }
+    },
+    "_duration_note": "Three hours, decided for 2026. Teams are allowed to overrun: submissions stay open until an organiser presses END, and each team's own clock in the case room counts past zero rather than locking them out.",
+    "batches": [
+      {
+        "name": "Batch 1",
+        "start": "12:00",
+        "end": "15:00"
+      },
+      {
+        "name": "Batch 2",
+        "start": "13:00",
+        "end": "16:00"
+      },
+      {
+        "name": "Batch 3",
+        "start": "14:00",
+        "end": "17:00"
+      }
+    ]
   },
   "theme": {
     "ink": "#211A14",
