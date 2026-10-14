@@ -16,7 +16,7 @@ interface EvidenceCard {
 }
 
 export const MatchBoard: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
 
   const suspects: Suspect[] = levelDetail?.suspects || [];
   const evidenceCards: EvidenceCard[] = levelDetail?.evidenceCards || [];
@@ -32,20 +32,11 @@ export const MatchBoard: React.FC = () => {
   });
 
   const [submitting, setSubmitting] = useState(false);
-  const [feedback, setFeedback] = useState<{ correctCount?: number; error?: string } | null>(null);
+  const [feedback, setFeedback] = useState<{ error?: string } | null>(null);
 
-  useEffect(() => {
-    if (isSolved) {
-      setMatches({
-        lena: 'E3',
-        daniel: 'E5',
-        clara: 'E2',
-        noah: 'E7',
-        adrian: 'none',
-        mira: 'none'
-      });
-    }
-  }, [isSolved]);
+  // Nothing here repopulates the board on solve. A team that has just solved it
+  // is already looking at the correct board — their own selections. Writing the
+  // canonical mapping here only put the answer key into the bundle.
 
   const handleSelect = (suspectId: string, evidenceId: string) => {
     if (isSolved) return;
@@ -66,33 +57,20 @@ export const MatchBoard: React.FC = () => {
     setFeedback(null);
 
     // Calculate display code: Lena number, Daniel number, Clara number, Noah number
-    // e.g. E3 -> 3, E5 -> 5, E2 -> 2, E7 -> 7 => 3527
+    // Four evidence numbers, in suspect order.
     const getNum = (v: string) => v.replace(/^E/, '') || '0';
     const code = `${getNum(matches.lena || '')}${getNum(matches.daniel || '')}${getNum(matches.clara || '')}${getNum(matches.noah || '')}`;
 
     const res = await submitAnswer(code);
 
     if (!res.correct) {
-      // Calculate how many rows are correct for partial feedback
-      const canonical: Record<string, string> = {
-        lena: 'E3',
-        daniel: 'E5',
-        clara: 'E2',
-        noah: 'E7',
-        adrian: 'none',
-        mira: 'none'
-      };
-      let correctCount = 0;
-      Object.keys(canonical).forEach((k) => {
-        if ((matches[k] || 'none') === canonical[k]) {
-          correctCount++;
-        }
-      });
+      // No client-side answer key and no "n of 6 correct" counter. The old
+      // version shipped the canonical mapping in the bundle, and the counter
+      // let a team hill-climb to the answer without reading the evidence.
       setFeedback({
-        correctCount,
-        error: res.nudge
-          ? `Incorrect Corroboration: ${res.nudge}`
-          : `Incorrect Corroboration: ${correctCount} of 6 suspect statements correctly matched. One or more alibis contradict the evidence archive.`
+        error:
+          res.nudge ||
+          'The board does not reconcile. At least one statement is matched to evidence that does not actually refute it — and remember that not everyone here is lying.'
       });
     }
     setSubmitting(false);
@@ -103,7 +81,7 @@ export const MatchBoard: React.FC = () => {
       {/* Overview Dossier Banner */}
       <div className="paper-sheet p-4 rounded-lg border-2 border-amber-900/40 shadow-sm text-xs text-ink font-serif flex flex-wrap items-center justify-between gap-2">
         <p className="max-w-xl leading-relaxed">
-          Cross-examine each suspect's recorded alibi against physical evidence retrieved from 8 Park Terrace. Identify which evidence document directly refutes their testimony, or declare <strong className="text-red-900 font-bold">No Contradiction</strong> if current evidence does not break their statement.
+          Cross-examine each suspect's recorded alibi against physical evidence retrieved from the Vane residence on Ridge Road. Identify which evidence document directly refutes their testimony, or declare <strong className="text-red-900 font-bold">No Contradiction</strong> if current evidence does not break their statement.
         </p>
         <span className={`stamp text-[10px] ${isSolved ? 'stamp-closed text-emerald-800 border-emerald-800' : 'stamp-open'}`}>
           {isSolved ? 'VERIFIED MATCH MATRIX' : 'CORROBORATION BOARD'}
@@ -318,18 +296,12 @@ export const MatchBoard: React.FC = () => {
                 CONTRADICTIONS ESTABLISHED // CASE #05 SOLVED
               </span>
               <span className="text-xs font-serif text-emerald-100/80">
-                The suspect depositions have been corroborated against physical exhibits. Code: 3527 confirmed.
+                The depositions have been reconciled against the physical exhibits. The contradiction code checks out.
               </span>
             </div>
           </div>
 
-          <button
-            onClick={() => selectLevel(6)}
-            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
-          >
-            <span>Proceed to Case #06</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {/* advancement is owned by the case room */}
         </div>
       )}
 

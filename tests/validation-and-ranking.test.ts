@@ -14,12 +14,12 @@ describe('Answer Normalization & Geolocation', () => {
   });
 
   it('calculates haversine distance accurately for geolocation radius validation', () => {
-    // Distance between Whitby center (54.4897, -0.6173) and point 200m away
+    // Distance between the Diu centre (20.7144, 70.9874) and a point ~200m away
     const dist = haversineMeters(54.4897, -0.6173, 54.4905, -0.6170);
     expect(dist).toBeGreaterThan(0);
     expect(dist).toBeLessThan(500);
 
-    // London to Whitby should be ~350km
+    // Mumbai to Diu should be a few hundred km
     const londonDist = haversineMeters(51.5074, -0.1278, 54.4897, -0.6173);
     expect(londonDist).toBeGreaterThan(300000);
   });
@@ -54,8 +54,8 @@ describe('Dynamic Templating Engine', () => {
     const resolved = resolveTemplates(template);
 
     expect(resolved).toContain('Dr. Elias Vane');
-    expect(resolved).toContain('Hampstead, North London');
-    expect(resolved).toContain('Whitby');
+    expect(resolved).toContain('Malabar Hill, Mumbai');
+    expect(resolved).toContain('Diu');
   });
 });
 
@@ -76,8 +76,8 @@ describe('Hashed Answers & Validation Integrity', () => {
   });
 
   it('validates password hashing consistency', () => {
-    const hash1 = hashPassword('case1986');
-    const hash2 = hashPassword('case1986');
+    const hash1 = hashPassword('ridgeroad');
+    const hash2 = hashPassword('ridgeroad');
     expect(hash1).toBe(hash2);
     expect(hash1.length).toBe(64); // SHA-256 hex
   });

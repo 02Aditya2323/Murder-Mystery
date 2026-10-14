@@ -3,7 +3,7 @@ import { useGameStore } from '../../store/gameStore.js';
 import { Cpu, Printer, AlertCircle, CheckCircle2, Zap, Activity, Wrench, ShieldAlert, ArrowRight } from 'lucide-react';
 
 export const KitStation: React.FC = () => {
-  const { team, levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { team, levelDetail, submitAnswer } = useGameStore();
 
   const [answerInput, setAnswerInput] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -228,13 +228,7 @@ export const KitStation: React.FC = () => {
             </div>
           </div>
 
-          <button
-            onClick={() => selectLevel(9)}
-            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
-          >
-            <span>Proceed to Case #09</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {/* advancement is owned by the case room */}
         </div>
       )}
 

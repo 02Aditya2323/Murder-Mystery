@@ -55,16 +55,16 @@ afterAll(async () => {
 describe('Full 10-Level Investigation Happy Path E2E', () => {
   let sessionCookie = '';
 
-  it('Step 0: Logs in as Team 1 (Baker Street Unit)', async () => {
+  it('Step 0: Logs in as Team 1 (Colaba Division)', async () => {
     const res = await fetch(`${baseUrl}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: 'BAKER', password: 'case1986' })
+      body: JSON.stringify({ code: 'COLABA', password: 'ridgeroad' })
     });
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.ok).toBe(true);
-    expect(data.team.name).toBe('Baker Street Unit');
+    expect(data.team.name).toBe('Colaba Division');
 
     const setCookie = res.headers.get('set-cookie');
     expect(setCookie).toBeTruthy();
@@ -162,11 +162,11 @@ describe('Full 10-Level Investigation Happy Path E2E', () => {
     expect(data.reveal).toContain('Four suspects lied');
   });
 
-  it('Level 6: Solves Mira Silence (Chronological Pages: P1,P2,P3,P4,P5,P6)', async () => {
+  it('Level 6: Solves Mira Silence (opaque exhibit refs, true chronological order)', async () => {
     const submitRes = await fetch(`${baseUrl}/levels/6/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Cookie: sessionCookie },
-      body: JSON.stringify({ stage: 0, answer: 'P1,P2,P3,P4,P5,P6' })
+      body: JSON.stringify({ stage: 0, answer: 'MV-73,MV-18,MV-41,MV-66,MV-05,MV-29' })
     });
     expect(submitRes.status).toBe(200);
     const data = await submitRes.json();
@@ -175,24 +175,24 @@ describe('Full 10-Level Investigation Happy Path E2E', () => {
     expect(data.reveal).toContain('music box');
   });
 
-  it('Level 7: Solves The Perfect Alibi (Whitby Geolocation Answer)', async () => {
+  it('Level 7: Solves The Perfect Alibi (geolocation)', async () => {
     const submitRes = await fetch(`${baseUrl}/levels/7/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Cookie: sessionCookie },
-      body: JSON.stringify({ stage: 0, answer: 'Whitby' })
+      body: JSON.stringify({ stage: 0, answer: 'Diu' })
     });
     expect(submitRes.status).toBe(200);
     const data = await submitRes.json();
     expect(data.correct).toBe(true);
     expect(data.solved).toBe(true);
-    expect(data.reveal).toContain('Whitby');
+    expect(data.reveal).toContain('Diu');
   });
 
-  it('Level 8: Solves The Garage Panel (Per-Kit Validation: Kit 1 answer 42)', async () => {
+  it('Level 8: Solves The Garage Panel (per-kit circuit: kit 1 = 1010)', async () => {
     const submitRes = await fetch(`${baseUrl}/levels/8/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Cookie: sessionCookie },
-      body: JSON.stringify({ stage: 0, answer: '42' })
+      body: JSON.stringify({ stage: 0, answer: '1010' })
     });
     expect(submitRes.status).toBe(200);
     const data = await submitRes.json();
@@ -201,16 +201,15 @@ describe('Full 10-Level Investigation Happy Path E2E', () => {
     expect(data.reveal).toContain('A. Cross');
   });
 
-  it('Level 9: Solves The Locked Room (Checks Blanks then Output: 2308-4417)', async () => {
-    // Blank checking
-    const blankRes = await fetch(`${baseUrl}/levels/9/check-blanks`, {
+  it('Level 9: Solves The Locked Room (code reading)', async () => {
+    // The per-blank checker was removed: it answered with no rate limit and no
+    // attempt logging, so twelve requests brute-forced the beat.
+    const goneRes = await fetch(`${baseUrl}/levels/9/check-blanks`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Cookie: sessionCookie },
       body: JSON.stringify({ picks: ['60', '+', '%'] })
     });
-    expect(blankRes.status).toBe(200);
-    const blankData = await blankRes.json();
-    expect(blankData.results).toEqual([true, true, true]);
+    expect(goneRes.status).not.toBe(200);
 
     // Submit
     const submitRes = await fetch(`${baseUrl}/levels/9/submit`, {

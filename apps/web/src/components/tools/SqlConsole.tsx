@@ -4,7 +4,7 @@ import initSqlJs, { Database } from 'sql.js';
 import { Play, Database as DbIcon, History, AlertCircle, Table, Terminal, Monitor, HardDrive, ShieldAlert, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const SqlConsole: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
   const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
 
   const [db, setDb] = useState<Database | null>(null);
@@ -401,18 +401,12 @@ export const SqlConsole: React.FC = () => {
                 SQL AUDIT RECONCILED // CASE #04 SOLVED
               </span>
               <span className="text-xs font-serif text-emerald-100/80">
-                Log tampering on Lena's iPad verified, and redacted patient code P-0912 connected to the timeline.
+                Audit trail reconciled. The deleting device and the redacted patient file are both now on record.
               </span>
             </div>
           </div>
 
-          <button
-            onClick={() => selectLevel(5)}
-            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
-          >
-            <span>Proceed to Case #05</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {/* advancement is owned by the case room */}
         </div>
       )}
     </div>

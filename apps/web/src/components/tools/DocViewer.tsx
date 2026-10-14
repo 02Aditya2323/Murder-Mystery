@@ -3,7 +3,7 @@ import { useGameStore } from '../../store/gameStore.js';
 import { Lock, FileText, PhoneCall, Newspaper, AlertCircle, Printer, Search, Eye, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const DocViewer: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
   const isSolved = levelDetail?.status === 'SOLVED';
   const currentStage = levelDetail?.currentStageIndex || 0;
 
@@ -326,7 +326,7 @@ export const DocViewer: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs leading-relaxed text-zinc-800 text-justify">
                   <p>
-                    Police sources confirmed yesterday that investigators are scrutinizing the final hours of Julian Marsh, found deceased in Park Terrace late Saturday evening. Prominent consultant psychologist Dr. Elias Vane expressed deep sorrow, confirming he had spoken with Mr. Marsh during past clinical assessments.
+                    Police sources confirmed yesterday that investigators are scrutinizing the final hours of Julian Marsh, found deceased at his Carter Road flat late on Saturday evening. Prominent consultant psychologist Dr. Elias Vane expressed deep sorrow, confirming he had spoken with Mr. Marsh during past clinical assessments.
                   </p>
                   <p>
                     A police spokesperson stated that responding officers arrived swiftly, noting the victim was estimated to have expired well before 9:00 PM. Inquiries continue regarding the timeline of emergency communications.
@@ -357,16 +357,7 @@ export const DocViewer: React.FC = () => {
                 The timeline and officer discrepancy (arrival 32 minutes prior to dispatch by Officer 4417) has been corroborated and entered into the central case file. Submission is locked.
               </p>
 
-              <div className="pt-1 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => selectLevel(4)}
-                  className="px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow flex items-center gap-2"
-                >
-                  <span>Proceed to Case #04: The Database Audit</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
+          {/* advancement is owned by the case room */}
             </div>
           ) : (
             <form onSubmit={handleStage2Submit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-4">

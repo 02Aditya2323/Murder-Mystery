@@ -99,7 +99,7 @@ export const FlagForm: React.FC = () => {
             <div className="flex items-center justify-between pb-1.5 border-b border-ink/20">
               <span className="font-typewriter font-bold text-xs text-red-900 flex items-center gap-2">
                 <Volume2 className="w-4 h-4 text-red-800" />
-                TRANSCRIPT: RECORDING NINE (PATIENT P-0912 / DETECTIVE HALE)
+                TRANSCRIPT: RECORDING NINE
               </span>
               <span className="stamp stamp-skipped text-[9px]">CRIMINAL CONFESSION</span>
             </div>

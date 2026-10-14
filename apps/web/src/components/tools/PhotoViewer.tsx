@@ -3,7 +3,7 @@ import { useGameStore } from '../../store/gameStore.js';
 import { ZoomIn, ZoomOut, RotateCcw, Image, AlertCircle, FileText, Crosshair, MapPin, Compass, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const PhotoViewer: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
 
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -172,7 +172,7 @@ export const PhotoViewer: React.FC = () => {
               Dedicated by his mother, Helen Marsh, and his brother, Adrian Cross (Marsh).
             </p>
             <p className="text-[11px] text-center font-mono text-zinc-600">
-              Official Registry Location: Seafront Promenade, Diu (20.7144° N, 70.9874° E)
+              Location confirmed against the municipal memorial registry — see the exhibit record below.
             </p>
           </div>
         </div>
@@ -218,18 +218,12 @@ export const PhotoViewer: React.FC = () => {
                 LOCATION VERIFIED // CASE #07 SOLVED
               </span>
               <span className="text-xs font-serif text-emerald-100/80">
-                Alibi photograph traced to the Diu seafront memorial. Adrian Cross's true identity uncovered.
+                Alibi photograph traced to its real coastline. The memorial registry does the rest.
               </span>
             </div>
           </div>
 
-          <button
-            onClick={() => selectLevel(8)}
-            className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-serif font-bold text-xs uppercase tracking-wider rounded transition-colors shadow-lg active:translate-y-0.5 flex items-center gap-2"
-          >
-            <span>Proceed to Case #08</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          {/* advancement is owned by the case room */}
         </div>
       )}
     </div>

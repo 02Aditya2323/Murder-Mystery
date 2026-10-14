@@ -4,7 +4,7 @@ import { api } from '../../api/client.js';
 import { Play, RotateCcw, Volume2, AlertCircle, FileText, Disc, Radio, Sliders, Download, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export const MorsePlayer: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [pulseActive, setPulseActive] = useState(false);
@@ -482,7 +482,7 @@ export const MorsePlayer: React.FC = () => {
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-ok" />
               <span className="font-typewriter font-bold text-xs uppercase tracking-wider text-ok">
-                DECODED MESSAGE VERIFIED: NOT ME JULIAN
+                TAPS DECODED — SEE THE EXHIBIT RECORD BELOW
               </span>
             </div>
             <span className="stamp stamp-closed text-[10px]">CASE SOLVED &bull; INPUT LOCKED</span>
@@ -492,16 +492,7 @@ export const MorsePlayer: React.FC = () => {
             Acoustic tapping decoded: Mira Vane communicated that she was innocent and pointed to Julian Marsh. The transcript is permanently logged. Submission field is locked.
           </p>
 
-          <div className="pt-1 flex justify-end">
-            <button
-              type="button"
-              onClick={() => selectLevel(3)}
-              className="px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow flex items-center gap-2"
-            >
-              <span>Proceed to Case #03: The Autopsy Inconsistency</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+          {/* advancement is owned by the case room */}
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border border-signal/40 shadow-desk space-y-3">

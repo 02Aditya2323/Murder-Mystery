@@ -11,7 +11,7 @@ interface LogItem {
 }
 
 export const LogViewer: React.FC = () => {
-  const { levelDetail, submitAnswer, selectLevel } = useGameStore();
+  const { levelDetail, submitAnswer } = useGameStore();
   const logs: LogItem[] = levelDetail?.logs || [];
   const isSolved = levelDetail?.status === 'SOLVED';
 
@@ -295,16 +295,7 @@ export const LogViewer: React.FC = () => {
             Forensic discrepancy identified: The 22:17 clock was deliberately staged. Correcting for panel skew, Elias was active until 21:52 IST, establishing the genuine Medical Examiner window starting at <strong>22:37</strong>. Submission field is locked.
           </p>
 
-          <div className="pt-1 flex justify-end">
-            <button
-              type="button"
-              onClick={() => selectLevel(2)}
-              className="px-5 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow flex items-center gap-2"
-            >
-              <span>Proceed to Case #02: Tape Reel 07</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+          {/* advancement is owned by the case room */}
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border-2 border-signal/40 space-y-2.5 shadow-desk">

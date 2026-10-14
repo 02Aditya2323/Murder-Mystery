@@ -270,7 +270,7 @@ export const LevelWorkspace: React.FC = () => {
         {/* 2. CONFIDENTIAL CASE BRIEFING MEMO */}
         <div className="bg-[#EFE5CD] p-4 sm:p-5 rounded-sm border border-ink/20 shadow-sm relative space-y-2">
           <div className="flex items-center justify-between pb-1.5 border-b border-ink/15 text-[10px] font-mono text-ink/65 uppercase">
-            <span>OFFICIAL BRIEFING &bull; DISPATCH NW3</span>
+            <span>OFFICIAL BRIEFING &bull; DISPATCH MALABAR HILL</span>
             <span className="font-typewriter font-bold tracking-widest text-alarm">
               RESTRICTED INVESTIGATOR EYES ONLY
             </span>
