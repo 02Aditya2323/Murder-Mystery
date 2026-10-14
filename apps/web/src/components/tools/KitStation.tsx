@@ -11,6 +11,7 @@ export const KitStation: React.FC = () => {
   const [showPrintModal, setShowPrintModal] = useState(false);
 
   const kitNo = team?.kitNo || levelDetail?.kitNo || 1;
+  const kitSpec: any = (levelDetail as any)?.kitSpec;
 
   const isSolved = levelDetail?.status === 'SOLVED' || levelDetail?.status === 'SKIPPED';
 
@@ -25,7 +26,7 @@ export const KitStation: React.FC = () => {
     if (!res.correct) {
       setErrorMessage(
         res.nudge ||
-          'Hardware register output does not reconcile with Kit #' + kitNo + '. Inspect truth table connections.'
+          'That pattern does not light the LED on Kit #' + kitNo + '. Re-check the smudged gate against its truth table.'
       );
     } else {
       setAnswerInput('');
@@ -112,24 +113,89 @@ export const KitStation: React.FC = () => {
             <span className="text-[10px] text-zinc-500">SCHEMATIC REF: DWG-7714</span>
           </div>
           <p className="font-serif text-xs text-zinc-700 leading-relaxed">
-            Wire the IC inputs according to the truth table matching Kit #{kitNo}. Measure the output voltage or count the active register bits displayed across the bench segment LEDs.
+            Build the circuit on the breadboard, then work the four selector switches until the output LED lights. Exactly one pattern will do it.
           </p>
         </div>
       </div>
+
+      {/* ── the worksheet: the circuit on this team's own kit ───────── */}
+      {kitSpec && (
+        <section className="rounded border-2 border-[#8E6C38] bg-[#DCCCA6] text-[#1A1510] p-4 sm:p-5 space-y-4 shadow-desk">
+          <header className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[rgba(26,21,16,.25)]">
+            <span className="font-typewriter text-xs tracking-widest uppercase">
+              Maintenance sheet &mdash; garage keypad controller
+            </span>
+            <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-[rgba(26,21,16,.1)]">
+              KIT #{kitSpec.kit_no}
+            </span>
+          </header>
+
+          <div>
+            <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1">
+              Output logic
+            </p>
+            <p className="font-mono text-[15px] sm:text-[17px] m-0 break-words">{kitSpec.formula}</p>
+            <p className="text-[13.5px] text-[#5A4D38] m-0 mt-1.5">
+              F drives the panel LED. Inputs A, B, C and D are the four selector switches.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-5">
+            <div>
+              <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
+                Legible on the sheet
+              </p>
+              <ul className="m-0 pl-4 text-[13.5px] space-y-0.5">
+                {kitSpec.knownGates?.map((g: string, i: number) => <li key={i} className="font-mono">{g}</li>)}
+              </ul>
+            </div>
+
+            <div>
+              <p className="font-typewriter text-[10px] tracking-widest uppercase text-[#5A4D38] mb-1.5">
+                Smudged &mdash; {kitSpec.smudgedGate}
+              </p>
+              <table className="border-collapse font-mono text-[13px]">
+                <thead>
+                  <tr>
+                    {['C', 'D', 'out'].map((h) => (
+                      <th key={h} className="border border-[rgba(26,21,16,.3)] px-3 py-1 text-left font-normal text-[#5A4D38]">{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {kitSpec.smudgedTruthTable?.map((r: any, i: number) => (
+                    <tr key={i}>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1">{r.c}</td>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1">{r.d}</td>
+                      <td className="border border-[rgba(26,21,16,.25)] px-3 py-1 font-bold">{r.out}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p className="text-[13.5px] m-0 pt-2 border-t border-[rgba(26,21,16,.2)]">
+            Work out the smudged gate from its truth table, build the circuit on your kit, and
+            find the <strong>one</strong> switch pattern that lights the LED. Submit it as four
+            bits in the order <span className="font-mono">A B C D</span>.
+          </p>
+        </section>
+      )}
 
       {/* Answer Form or Solved Banner */}
       {!isSolved ? (
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
           <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
             <Wrench className="w-4 h-4 text-signal" />
-            <span>Enter the calculated register value verified from your physical Kit #{kitNo}:</span>
+            <span>Enter the switch pattern that lights the LED on Kit #{kitNo} (A B C D):</span>
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               value={answerInput}
               onChange={(e) => setAnswerInput(e.target.value)}
-              placeholder="Value shown on your kit"
+              placeholder="0000"
               className="flex-1 bg-ink text-label font-mono text-sm px-3.5 py-2 rounded border border-signal/40 focus:border-signal focus:outline-none shadow-inner"
             />
             <button

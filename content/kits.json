@@ -1,0 +1,335 @@
+{
+  "_comment": "Beat 8 (The Garage Panel). One circuit per kit so the answer cannot be shared between tables. 'smudged' is the gate blanked out on the printed worksheet; the team deduces it from the partial truth table and then finds the single switch pattern that lights the LED.",
+  "kits": [
+    {
+      "kit_no": 1,
+      "formula": "F = (A XOR B) · (C XOR D) · (A · C)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XOR B",
+        "A · C",
+        "final AND"
+      ],
+      "answer": "1010"
+    },
+    {
+      "kit_no": 2,
+      "formula": "F = (A XOR B) · (C XOR D) · (A · D)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XOR B",
+        "A · D",
+        "final AND"
+      ],
+      "answer": "1001"
+    },
+    {
+      "kit_no": 3,
+      "formula": "F = (A XOR B) · (C XOR D) · (B · C)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XOR B",
+        "B · C",
+        "final AND"
+      ],
+      "answer": "0110"
+    },
+    {
+      "kit_no": 4,
+      "formula": "F = (A XOR B) · (C XOR D) · (B · D)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XOR B",
+        "B · D",
+        "final AND"
+      ],
+      "answer": "0101"
+    },
+    {
+      "kit_no": 5,
+      "formula": "F = (A XNOR B) · (C XOR D) · (A · C)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XNOR B",
+        "A · C",
+        "final AND"
+      ],
+      "answer": "1110"
+    },
+    {
+      "kit_no": 6,
+      "formula": "F = (A XNOR B) · (C XOR D) · (A · D)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XNOR B",
+        "A · D",
+        "final AND"
+      ],
+      "answer": "1101"
+    },
+    {
+      "kit_no": 7,
+      "formula": "F = (A XNOR B) · (C XOR D) · (C · Ā)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 0
+        }
+      ],
+      "knownGates": [
+        "A XNOR B",
+        "C · Ā",
+        "final AND"
+      ],
+      "answer": "0010"
+    },
+    {
+      "kit_no": 8,
+      "formula": "F = (A XOR B) · (C XNOR D) · (A · C)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 0
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 1
+        }
+      ],
+      "knownGates": [
+        "A XOR B",
+        "A · C",
+        "final AND"
+      ],
+      "answer": "1011"
+    },
+    {
+      "kit_no": 9,
+      "formula": "F = (A XOR B) · (C XNOR D) · (B · C)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 0
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 1
+        }
+      ],
+      "knownGates": [
+        "A XOR B",
+        "B · C",
+        "final AND"
+      ],
+      "answer": "0111"
+    },
+    {
+      "kit_no": 10,
+      "formula": "F = (A XNOR B) · (C XNOR D) · (A · C)",
+      "smudgedGate": "the gate joining C and D",
+      "smudgedTruthTable": [
+        {
+          "c": 0,
+          "d": 0,
+          "out": 1
+        },
+        {
+          "c": 0,
+          "d": 1,
+          "out": 0
+        },
+        {
+          "c": 1,
+          "d": 0,
+          "out": 0
+        },
+        {
+          "c": 1,
+          "d": 1,
+          "out": 1
+        }
+      ],
+      "knownGates": [
+        "A XNOR B",
+        "A · C",
+        "final AND"
+      ],
+      "answer": "1111"
+    }
+  ]
+}

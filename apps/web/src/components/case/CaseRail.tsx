@@ -4,9 +4,8 @@ import { Check, Save } from 'lucide-react';
 
 type Tab = 'log' | 'hints' | 'notes' | 'standings';
 
-/** Minutes added to a team's elapsed time per hint tier. Winner is on the clock,
- *  so time is the only currency the ranking already understands. */
-const HINT_COST_MIN = [2, 4, 7];
+/** Fallback only — the server is authoritative and sends hintCostsSeconds. */
+const FALLBACK_COSTS = [120, 240, 420];
 
 export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats }) => {
   const {
@@ -28,6 +27,9 @@ export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats 
   const closed = beats.filter((b) => b.closed);
   const hintsUsed = levelDetail?.hintsUsed ?? 0;
   const totalHints = levelDetail?.totalHints ?? 3;
+  const costs: number[] = (levelDetail as any)?.hintCostsSeconds ?? FALLBACK_COSTS;
+  const charged: number = (levelDetail as any)?.penaltySeconds ?? 0;
+  const mins = (sec: number) => `${Math.round(sec / 60)} min`;
 
   const fmt = (s: number) => `${Math.floor(s / 60)}m ${String(s % 60).padStart(2, '0')}s`;
 
@@ -74,8 +76,16 @@ export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats 
         {tab === 'hints' && (
           <>
             <p className="railhead">
-              Three tiers. Each adds time to your investigation, and time is how this is won.
+              Three tiers. Each one adds time to your investigation, and time is how this is won.
             </p>
+            {charged > 0 && (
+              <div className="beliefbox" style={{ borderLeftColor: 'var(--alarm)' }}>
+                <span className="bl" style={{ color: 'var(--alarm)' }}>Charged on this case file</span>
+                <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '1.05rem' }}>
+                  +{mins(charged)}
+                </p>
+              </div>
+            )}
             {[1, 2, 3].map((tier) => {
               const open = tier <= hintsUsed;
               const text = levelDetail?.hintsRevealed?.[tier - 1];
@@ -87,7 +97,7 @@ export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats 
                     disabled={open || tier !== hintsUsed + 1}
                   >
                     <span className="ht">TIER {tier} · {open ? 'OPENED' : 'SEALED'}</span>
-                    <span className="hc">+{HINT_COST_MIN[tier - 1]} min</span>
+                    <span className="hc">+{mins(costs[tier - 1] ?? 0)}</span>
                   </button>
                   {open && text && <div className="hb">{text}</div>}
                 </div>
@@ -137,7 +147,15 @@ export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats 
                   key={e.teamId}
                 >
                   <span className="sn">{i + 1}</span>
-                  <span className="snm">{e.teamName}{e.teamId === team?.id ? ' · you' : ''}</span>
+                  <span className="snm">
+                    {e.teamName}{e.teamId === team?.id ? ' · you' : ''}
+                    {!!(e as any).penaltySeconds && (
+                      <span style={{ display: 'block', fontFamily: "'IBM Plex Mono', monospace",
+                        fontSize: 10, color: 'var(--alarm)' }}>
+                        incl. +{Math.round((e as any).penaltySeconds / 60)}m hints
+                      </span>
+                    )}
+                  </span>
                   <span className="stm">{fmt(e.totalElapsedSeconds)}</span>
                 </div>
               ))

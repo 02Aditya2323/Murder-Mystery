@@ -1,8 +1,8 @@
 ### Tier 1
-Three of the four gates on your sheet are drawn in full. Only one of them is obscured.
+Everything on the sheet is legible except one gate. Start by reading what you *do* have: the two terms you can see already rule out most of the sixteen possible switch patterns.
 
 ### Tier 2
-Compare the partial truth table printed in the manual against the inputs and outputs of the gate you cannot read. Exactly one gate type behaves that way.
+Take the smudged gate on its own. Its truth table is printed beside it with four rows. Compare those four outputs against the gates in your kit — exactly one standard gate behaves that way.
 
 ### Tier 3
-The missing gate outputs 1 only when its two inputs differ from each other. Wire it as such, then work the switch bank until the LED lights, and read the pattern straight off the switches.
+Work backwards from the output instead of forwards from the switches. F is a chain of AND terms, so every term has to be 1 at once. Write down what each term demands of A, B, C and D, and the four bits fall out without touching the breadboard.

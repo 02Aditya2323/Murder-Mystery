@@ -18,6 +18,11 @@ import { rootDir } from '../config.js';
 
 const router = Router();
 
+/** Minutes added to a team's elapsed time per hint tier. Ranking is on elapsed
+ *  time, so this is the whole scoring layer — no separate point system needed. */
+const HINT_COST_SECONDS = [120, 240, 420];
+
+
 /**
  * Mira's diary. `canonical` is what the answer key is hashed against; `token` is
  * the only thing the browser ever sees. Tokens are archive exhibit refs and carry
@@ -145,6 +150,8 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
     canSkip,
     remainingUntilSkip,
     wrongAttempts: state.wrong_attempts,
+    hintCostsSeconds: HINT_COST_SECONDS,
+    penaltySeconds: state.penalty_seconds ?? 0,
     reveal: (state.status === 'SOLVED' || state.status === 'SKIPPED') ? getLevelReveal(levelNum) : null
   };
 
@@ -192,33 +199,48 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
     }
   } else if (levelNum === 8) {
     payload.kitNo = req.team!.kit_no;
-  } else if (levelNum === 9) {
-    payload.codeTemplates = {
-      python: {
-        code: `SHIFT_MIN = 42\nDROPPED_SOURCE = "LIAISON_4417"\nforged = "22:26"              # the only INTERIOR_PANEL row in the export\n\nhour, minute = forged.split(":")\ntotal = int(hour) * ___BLANK_1___ + int(minute)        # blank 1\ntotal = total ___BLANK_2___ SHIFT_MIN                   # blank 2\nreal_hour = total // 60\nreal_minute = total ___BLANK_3___ 60                    # blank 3\nprint(f"{real_hour:02d}{real_minute:02d}-{DROPPED_SOURCE[-4:]}")`,
-        options: {
-          b1: ['24', '60', '100', '3600'],
-          b2: ['+', '-', '*', '//'],
-          b3: ['//', '%', '/', '**']
-        }
-      },
-      java: {
-        code: `int shiftMin = 42;\nString droppedSource = "LIAISON_4417";\nString forged = "22:26";\n\nString[] parts = forged.split(":");\nint total = Integer.parseInt(parts[0]) * ___BLANK_1___ + Integer.parseInt(parts[1]);\ntotal = total ___BLANK_2___ shiftMin;\nint realHour = total / 60;\nint realMinute = total ___BLANK_3___ 60;\nSystem.out.printf("%02d%02d-%s\\n", realHour, realMinute, droppedSource.substring(droppedSource.length() - 4));`,
-        options: {
-          b1: ['24', '60', '100', '3600'],
-          b2: ['+', '-', '*', '/'],
-          b3: ['/', '%', '*', '&']
-        }
-      },
-      cpp: {
-        code: `const int SHIFT_MIN = 42;\nstd::string dropped_source = "LIAISON_4417";\nstd::string forged = "22:26";\n\nint hour = std::stoi(forged.substr(0, 2));\nint minute = std::stoi(forged.substr(3, 2));\nint total = hour * ___BLANK_1___ + minute;\ntotal = total ___BLANK_2___ SHIFT_MIN;\nint real_hour = total / 60;\nint real_minute = total ___BLANK_3___ 60;\nstd::cout << (real_hour < 10 ? "0" : "") << real_hour << (real_minute < 10 ? "0" : "") << real_minute << "-" << dropped_source.substr(dropped_source.length() - 4) << std::endl;`,
-        options: {
-          b1: ['24', '60', '100', '3600'],
-          b2: ['+', '-', '*', '/'],
-          b3: ['/', '%', '*', '&']
-        }
+    // Only ever this team's own circuit. The answer field is stripped: the
+    // worksheet tells them what the gates are, not what the switches should be.
+    try {
+      const all = JSON.parse(
+        fs.readFileSync(path.resolve(rootDir, 'content/kits.json'), 'utf8')
+      ) as { kits: Array<Record<string, any>> };
+      const mine = all.kits.find((k) => k.kit_no === req.team!.kit_no);
+      if (mine) {
+        const { answer, ...safe } = mine;
+        payload.kitSpec = safe;
       }
+    } catch {
+      // worksheet is optional; the physical sheet on the table is authoritative
+    }
+  } else if (levelNum === 9) {
+    // Code READING, not fill-in-the-blank. The team is given the script that
+    // cleaned the export and the export it produced, and reasons backwards.
+    // SHIFT_MIN is 58, not 42, so the forged row reads 22:10 — BEFORE the
+    // staged 22:17 attack. At 42 the cover story contradicted itself: the
+    // study would have been bolted from inside after Vane was already dead.
+    payload.script = {
+      filename: 'tidy_export.py',
+      found: "Recovered from the research assistant's work laptop",
+      language: 'python',
+      code: `# tidy_export.py
+SHIFT_MIN = 58
+
+for row in raw_lock_log:
+    if row.source == "LIAISON_4417":
+        continue                          # keep police access out of the export
+
+    if row.source == "TABLET_API":
+        row.source = "INTERIOR_PANEL"     # make it look bolted from inside
+        row.time   = row.time - SHIFT_MIN # and move it before the clock
+
+    export(row)`
     };
+    payload.exportRows = [
+      { time: '22:10', event: 'LOCK',   source: 'INTERIOR_PANEL' },
+      { time: '23:40', event: 'UNLOCK', source: 'MANUAL_KEY' },
+      { time: '23:56', event: 'LOCK',   source: 'MANUAL_KEY' }
+    ];
   }
 
   return res.json(payload);
@@ -391,41 +413,33 @@ router.post('/:n/hint', requireTeamAuth, (req: AuthenticatedRequest, res: Respon
   }
 
   const allHints = getLevelHints(levelNum);
-  const newHintsUsed = Math.min(allHints.length, state.hints_used + 1);
+  if (state.hints_used >= allHints.length) {
+    return res.status(400).json({ error: 'All hint tiers for this case file are already open.' });
+  }
+
+  const newHintsUsed = state.hints_used + 1;
+  const cost = HINT_COST_SECONDS[newHintsUsed - 1] ?? 0;
 
   db.prepare(`
     UPDATE level_state
-    SET hints_used = ?
+    SET hints_used = ?, penalty_seconds = penalty_seconds + ?
     WHERE team_id = ? AND level = ?
-  `).run(newHintsUsed, teamId, levelNum);
+  `).run(newHintsUsed, cost, teamId, levelNum);
+
+  broadcastLeaderboard();
 
   return res.json({
     hintsUsed: newHintsUsed,
     hintText: allHints[newHintsUsed - 1],
-    allRevealed: allHints.slice(0, newHintsUsed)
+    allRevealed: allHints.slice(0, newHintsUsed),
+    costSeconds: cost,
+    penaltySeconds: state.penalty_seconds + cost
   });
 });
 
 // POST /api/levels/:n/skip - soft cap skip disabled
 router.post('/:n/skip', requireTeamAuth, (_req: AuthenticatedRequest, res: Response) => {
   return res.status(403).json({ error: 'Level skipping is disabled. All case files must be solved directly.' });
-});
-
-// POST /api/levels/9/check-blanks - check blanks without revealing answer
-router.post('/9/check-blanks', requireTeamAuth, (req: AuthenticatedRequest, res: Response) => {
-  const { picks } = req.body;
-  if (!Array.isArray(picks) || picks.length !== 3) {
-    return res.status(400).json({ error: 'Expected 3 picks.' });
-  }
-
-  const correctBlanks = ['60', '+', '%'];
-  const results = [
-    String(picks[0]).trim() === correctBlanks[0],
-    String(picks[1]).trim() === correctBlanks[1],
-    String(picks[2]).trim() === correctBlanks[2]
-  ];
-
-  return res.json({ results });
 });
 
 export default router;

@@ -1,15 +1,17 @@
-# Digital Reconstruction: The Tampered Lock Audit
+# The Locked Room
 
-When detectives arrived, Dr. Elias Vane was discovered locked inside his private study. First responders initially assumed this was a classic locked-room mystery—that Dr. Vane had secured the mechanical deadbolt from the interior at 22:26 before expiring.
+When the first officers arrived, {{victim.full}} was behind a door bolted on his own side of it. The lock export {{accomplice.full}} finally handed over says the same thing: the study was secured from the **interior panel** at 22:10, seven minutes before the clock on the floor says the attack happened.
 
-However, forensic analysis of {{killer.full}}'s work laptop uncovered a Python manipulation script that sanitised the smart lock's exported access log before handing it to investigators. 
+If that is true, nobody could have been in the room. The murder is impossible.
 
-Adrian's script did two things:
-1. Replaced the remote lock trigger (`TABLET_API`) with `INTERIOR_PANEL`.
-2. Shifted the lock timestamp backwards by 42 minutes: the forged log displayed `22:26 LOCK INTERIOR_PANEL`.
-3. Erased all log entries originating from authorization account `LIAISON_4417`.
+It is not true.
 
-A cyber-investigation technician attempted to build an inverse restoration script to calculate the genuine lock timestamp and identify the erased liaison authority, but left three logic blanks uncompleted.
+Seized from {{killer.full}}'s work laptop is a short script. It ran over the raw lock log before the export reached the case file, and it did two things to it.
 
 **Your Objective:**
-Select the correct syntax/operators to complete the three blanks in the script (choose your preferred language: Python, Java, or C++), verify your choices, and calculate the exact text string printed by the program (format: `HHMM-XXXX`).
+Read the script. Work out what it did to each row, then undo it.
+
+1. What time was the study **really** locked?
+2. Which log source did the script erase from the export entirely?
+
+Submit as `HHMM-XXXX` — the true lock time in 24-hour IST, a hyphen, then the last four characters of the erased account.

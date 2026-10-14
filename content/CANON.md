@@ -164,7 +164,7 @@ These were real holes. They are resolved as follows, and the resolution is canon
    but the forged lock export said the study was bolted from inside at 10:26 — i.e. Vane alive
    *after* his own staged death. **Ruling: the shift is 58 minutes, not 42**, so the forged row
    reads **10:10 PM**, before the staged attack, and the cover story is internally consistent.
-   The submitted answer is unchanged (`2308-4417`). *Not yet applied in code — see §10.*
+   The submitted answer is unchanged (`2308-4417`). **Applied.**
 2. **The maintenance window contradicted beat 1.** Beat 1 depends on a study-motion event at
    9:52, inside the window that beats 8 and 10 say recorded nothing. **Ruling: the window
    suppresses access-control events and alarm dispatch only.** Interior motion still writes to
@@ -194,16 +194,32 @@ Hits are only acceptable inside a block that renders **after** the beat is solve
 
 ## 10. Still open
 
-- [ ] **Beat 9**: apply the 58-minute shift (§8.1) and rebuild it as *code reading* — show the
-      script and the three-row export — rather than fill-in-the-blank. Remove
-      `POST /api/levels/9/check-blanks`, which is an unrated, unlogged oracle.
-- [ ] **Beat 8**: kit answers are arbitrary numbers. Replace with the designed circuit
-      `F = (A XOR B) AND (C XOR D) AND (A AND C)`, unique solution `1010`, same for every kit.
-- [ ] **Beat 7**: the photograph on disk is still the old placeholder. A real, EXIF-stripped
-      photograph of the Diu seafront must replace it, and `whitby` must come out of
-      `accepted_names`.
-- [ ] **Beat 10**: not built. Needs club member profiles, base64 strings, QR images and decoys.
-- [ ] **Beat 2**: the repo ships both an MP3 and the Web Audio synthesiser. Pick one; the spec
-      says no audio files.
-- [ ] Hint time penalties (+2/+4/+7 min) are displayed but not yet added to elapsed time.
-- [ ] Theory grading: decide whether Q1 gates eligibility or carries weighted points.
+Owner-supplied assets, and two decisions.
+
+- [ ] **Beat 7 photograph.** `content/assets-private/l7_geo_photo.jpg` is still the old Whitby
+      placeholder. It needs a real, EXIF-stripped photograph of the Diu seafront showing the
+      fort wall, the island battery and the church tower. Once it is in, remove `whitby` from
+      `accepted_names` in `l7_geo_config.json`.
+- [ ] **Beat 10 is not built.** Needs club member profiles carrying base64 strings, the QR
+      images they resolve to, and decoy strings on every other profile so it cannot be brute
+      forced. Consent from every member whose profile is used. Test the whole chain from a
+      clean browser and a phone; a private account breaks the level.
+- [ ] **Beat 8 printed worksheets.** The circuits are generated in `content/kits.json`, one per
+      kit, and the app shows each team only its own. The printed sheet for each table still has
+      to be laid out and produced, with the C/D gate physically smudged.
+- [ ] **Beat 2 audio.** The repo ships both an MP3 and the Web Audio synthesiser. The build spec
+      forbids audio files on venue Wi-Fi. Pick one and delete the other.
+- [ ] **Theory grading.** Decide whether Q1 gates eligibility to win, or whether Q1–Q8 carry
+      weighted points. Ranking is currently pure elapsed time, which is what was decided.
+
+### Done
+
+- Hint tiers charge **+2 / +4 / +7 minutes** against elapsed time (`penalty_seconds` on
+  `level_state`, folded into the leaderboard). There is no point system and does not need to be.
+- Beat 9 is code reading: the script and the three-row export are shown, the shift is 58
+  minutes, and `POST /api/levels/9/check-blanks` — an unrated, unlogged oracle that could be
+  brute forced in twelve requests — has been removed.
+- Beat 8 has ten distinct circuits, one per kit, so a switch pattern cannot be shouted between
+  tables. The worksheet served to the browser has the answer stripped from it.
+- Beat 1's clock starts at each team's own first sign-in, not at roster import.
+- No answer appears in any story text, input placeholder, field label or hint tier.

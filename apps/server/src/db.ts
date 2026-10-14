@@ -112,6 +112,14 @@ export function initDatabase() {
     );
   `);
 
+  // ── migrations ────────────────────────────────────────────────────────────
+  // Hints cost time, not points: the winner is decided on elapsed time, so time
+  // is the only currency the ranking already understands.
+  const cols = db.prepare("PRAGMA table_info(level_state)").all() as Array<{ name: string }>;
+  if (!cols.some((c) => c.name === 'penalty_seconds')) {
+    db.exec('ALTER TABLE level_state ADD COLUMN penalty_seconds INTEGER NOT NULL DEFAULT 0');
+  }
+
   // Ensure initial event row
   const row = db.prepare('SELECT id FROM event WHERE id = 1').get();
   if (!row) {
@@ -128,17 +136,19 @@ export function initDatabase() {
       INSERT INTO kits (kit_no, answer_hash, alternates_json, updated_at)
       VALUES (?, ?, ?, datetime('now'))
     `);
+    // Seeded from content/kits.json: one distinct circuit per kit, so the
+    // switch pattern cannot be shouted from one table to the next.
     const defaultAnswers: Record<number, string> = {
-      1: '42',
-      2: '67',
-      3: '89',
-      4: '55',
-      5: '31',
-      6: '94',
-      7: '18',
-      8: '73',
-      9: '62',
-      10: '49'
+      1: '1010',
+      2: '1001',
+      3: '0110',
+      4: '0101',
+      5: '1110',
+      6: '1101',
+      7: '0010',
+      8: '1011',
+      9: '0111',
+      10: '1111'
     };
 
     for (let k = 1; k <= 10; k++) {

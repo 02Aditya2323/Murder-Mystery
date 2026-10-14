@@ -78,6 +78,8 @@ export interface LeaderboardEntry {
   levelsSkipped: number;
   currentLevel: number;
   totalElapsedSeconds: number;
+  rawElapsedSeconds?: number;
+  penaltySeconds?: number;
   totalHintsUsed: number;
   totalWrongAttempts: number;
   lastSolvedAt: string | null;

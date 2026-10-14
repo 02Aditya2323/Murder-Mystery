@@ -78,7 +78,7 @@ export function getLeaderboardData(): { hidden: boolean; entries: LeaderboardEnt
 
   for (const t of teams) {
     const states = db.prepare(`
-      SELECT level, status, started_at, solved_at, hints_used, wrong_attempts, skipped
+      SELECT level, status, started_at, solved_at, hints_used, wrong_attempts, skipped, penalty_seconds
       FROM level_state
       WHERE team_id = ?
       ORDER BY level ASC
@@ -90,6 +90,7 @@ export function getLeaderboardData(): { hidden: boolean; entries: LeaderboardEnt
       hints_used: number;
       wrong_attempts: number;
       skipped: number;
+      penalty_seconds: number;
     }>;
 
     let solvedCount = 0;
@@ -99,10 +100,13 @@ export function getLeaderboardData(): { hidden: boolean; entries: LeaderboardEnt
     let totalWrongs = 0;
     let currentLevel = 1;
     let lastSolvedAt: string | null = null;
+    let totalPenaltySeconds = 0;
 
     for (const s of states) {
       totalHints += s.hints_used;
       totalWrongs += s.wrong_attempts;
+      // Hint time is charged whether or not the level was ever finished.
+      totalPenaltySeconds += s.penalty_seconds || 0;
 
       if (s.status === 'SOLVED') {
         solvedCount++;
@@ -133,7 +137,9 @@ export function getLeaderboardData(): { hidden: boolean; entries: LeaderboardEnt
       levelsSolved: solvedCount,
       levelsSkipped: skippedCount,
       currentLevel,
-      totalElapsedSeconds,
+      totalElapsedSeconds: totalElapsedSeconds + totalPenaltySeconds,
+      rawElapsedSeconds: totalElapsedSeconds,
+      penaltySeconds: totalPenaltySeconds,
       totalHintsUsed: totalHints,
       totalWrongAttempts: totalWrongs,
       lastSolvedAt

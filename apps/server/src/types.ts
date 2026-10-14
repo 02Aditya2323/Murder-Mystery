@@ -35,6 +35,7 @@ export interface LevelStateRow {
   hints_used: number;
   wrong_attempts: number;
   skipped: number; // 0 or 1
+  penalty_seconds: number; // hint time charged against this level
 }
 
 export interface AttemptRow {
@@ -86,6 +87,8 @@ export interface LeaderboardEntry {
   levelsSkipped: number;
   currentLevel: number;
   totalElapsedSeconds: number;
+  rawElapsedSeconds: number;
+  penaltySeconds: number;
   totalHintsUsed: number;
   totalWrongAttempts: number;
   lastSolvedAt: string | null;
