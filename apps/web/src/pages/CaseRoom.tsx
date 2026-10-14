@@ -28,7 +28,7 @@ const TOOLS: Record<number, React.FC> = {
 };
 
 function hhmmss(total: number) {
-  const s = Math.max(0, Math.abs(total));
+  const s = Math.max(0, total);
   const h = Math.floor(s / 3600);
   const m = Math.floor((s % 3600) / 60);
   const sec = s % 60;
@@ -56,19 +56,22 @@ export const CaseRoom: React.FC = () => {
     return () => clearTimeout(t);
   }, [navigate]);
 
-  // Per-team clock. Starts at this squad's own sign-in, and is allowed to run
-  // past zero: batches overlap and teams are permitted to overrun.
+  // Per-team clock. Counts UP from zero at this squad's own sign-in, because
+  // elapsed time is what the squads are actually ranked on. Three hours is the
+  // target, not a cutoff: batches overlap and teams are allowed to overrun, so
+  // the clock keeps running and only changes colour once it passes the target.
   useEffect(() => {
     const id = setInterval(() => setTick((n) => n + 1), 1000);
     return () => clearInterval(id);
   }, []);
 
-  const remaining = useMemo(() => {
+  const elapsed = useMemo(() => {
     const first = levels.find((l) => l.id === 1);
-    if (!first?.startedAt) return THREE_HOURS;
-    const elapsed = Math.floor((Date.now() - new Date(first.startedAt).getTime()) / 1000);
-    return THREE_HOURS - elapsed;
+    if (!first?.startedAt) return 0;
+    return Math.floor((Date.now() - new Date(first.startedAt).getTime()) / 1000);
   }, [levels, tick]);
+
+  const overTarget = elapsed > THREE_HOURS;
 
   const beats = caseData?.beats ?? [];
   const current = beats.find((b: any) => b.current) ?? null;
@@ -102,10 +105,8 @@ export const CaseRoom: React.FC = () => {
 
         <div className="rb-clock">
           <div>
-            <span className="lbl">{remaining < 0 ? 'OVER TIME' : 'TIME REMAINING'}</span>
-            <span className={`t${remaining < 0 ? ' over' : ''}`}>
-              {remaining < 0 ? '+' : ''}{hhmmss(remaining)}
-            </span>
+            <span className="lbl">{overTarget ? 'ELAPSED / PAST THREE HOURS' : 'TIME ELAPSED'}</span>
+            <span className={`t${overTarget ? ' over' : ''}`}>{hhmmss(elapsed)}</span>
           </div>
         </div>
 
@@ -229,7 +230,7 @@ export const CaseRoom: React.FC = () => {
           </div>
         </section>
 
-        <CaseRail beats={beats} remaining={remaining} />
+        <CaseRail beats={beats} elapsed={elapsed} />
       </div>
 
       {person && <PersonSheet person={person} onClose={() => setOpenPerson(null)} />}

@@ -7,7 +7,7 @@ type Tab = 'log' | 'hints' | 'notes' | 'standings';
 /** Fallback only: the server is authoritative and sends hintCostsSeconds. */
 const FALLBACK_COSTS = [120, 240, 420];
 
-export const CaseRail: React.FC<{ beats: any[]; remaining: number }> = ({ beats }) => {
+export const CaseRail: React.FC<{ beats: any[]; elapsed: number }> = ({ beats }) => {
   const {
     levelDetail, requestHint, notebookText, notebookSaved,
     setNotebookText, saveNotebook, leaderboard, leaderboardHidden, team

@@ -7,7 +7,7 @@ In {{victim.full}}'s consultation binder regarding {{mira.full}}, there is a han
 ---
 
 ### Stage 1: The Password Gate
-Enter the year the theatrical play premiered and the husband's surname (e.g. `1938MANNINGHAM` or via separate fields).
+Enter the year of the play's London premiere followed immediately by the husband's surname: four digits, then the surname in capitals, with no space or hyphen between them.
 
 ---
 

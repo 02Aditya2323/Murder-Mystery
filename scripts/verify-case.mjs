@@ -83,7 +83,22 @@ const ANSWERS = [
   [4, 0, 'LENA_IPAD-P0912'], [5, 0, '3527'], [6, 0, '__DIARY__'], [7, 0, 'Diu'],
   [8, 0, '001'], [9, 0, '2308-4417'], [10, 0, 'FLAG{ROWAN_HALE}']
 ];
+// Beat 3's story used to print "e.g. 1938MANNINGHAM" as its format example,
+// which is the answer, and /api/levels/3 serves the story. Check every beat the
+// same way: while the beat is still open, nothing the server hands over may
+// contain the string we are about to submit.
+const leakExempt = new Set([
+  '32-4417',   // the badge is printed on the report on purpose; reading it is the task
+  '2308-4417', // same badge, same reason
+  'Diu'        // the place name is in the accepted-answer prompt copy
+]);
+
 for (const [lvl, stage, ansIn] of ANSWERS) {
+  // The beat is open right now, so this is what a squad sitting on it receives.
+  if (ansIn !== '__DIARY__' && !leakExempt.has(ansIn)) {
+    const payload = JSON.stringify(await call(`/api/levels/${lvl}`));
+    ok(!payload.includes(ansIn), `beat ${lvl} does not serve its own answer while open`);
+  }
   let ans = ansIn;
   if (ans === '__DIARY__') {
     const d = await call('/api/levels/6');
