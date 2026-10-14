@@ -1,5 +1,5 @@
 /* ============================================================================
-   THE LAST RECORDING — shell
+   THE LAST RECORDING: shell
    Loaded after tokens.css. Owns the landing page, the entry gate and the case
    room. Rule that governs everything here: cold dark is the application, warm
    paper is a document. Paper is never decoration.
@@ -402,7 +402,7 @@
   margin: 0; font-weight: 400; color: #F3EEE3; letter-spacing: .01em; text-wrap: balance;
 }
 
-/* narrative block — the connective tissue */
+/* narrative block: the connective tissue */
 .narr {
   border-left: 3px solid var(--brass-dim); padding: 2px 0 2px 18px;
   font-size: 1.07rem; line-height: 1.68; color: #CDC8BC; max-width: 70ch;
@@ -458,7 +458,16 @@
 /* right rail */
 .rail { position: sticky; top: 64px; display: flex; flex-direction: column; max-height: calc(100vh - 64px); }
 @media (max-width: 1100px) { .rail { position: static; max-height: none; } }
-.rail-tabs { display: flex; overflow-x: auto; background: #0A0C0F; border-bottom: 1px solid var(--line); scrollbar-width: none; }
+/* flex: 0 0 auto matters. The rail is a capped-height flex column, so a default
+   flex item here gets squeezed once the body is tall: at 1366x768 the strip was
+   compressed from 30px to 21px, clipping the labels and the active underline.
+   overflow-y: hidden keeps the one-row strip from becoming a scroll container
+   when overflow-x starts scrolling on a narrow rail. */
+.rail-tabs {
+  display: flex; flex: 0 0 auto;
+  overflow-x: auto; overflow-y: hidden;
+  background: #0A0C0F; border-bottom: 1px solid var(--line); scrollbar-width: none;
+}
 .rail-tabs::-webkit-scrollbar { display: none; }
 .rail-tab {
   flex: 1 0 auto; background: none; border: 0; border-bottom: 2px solid transparent;

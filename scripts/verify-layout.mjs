@@ -28,9 +28,15 @@ try {
 const BASE = process.env.BASE_URL || 'http://localhost:3000';
 const TEAM = { code: process.env.TEAM_CODE || 'COLABA', pass: process.env.TEAM_PASS || 'ridgeroad' };
 
-// Scrolling here is intentional: a horizontal strip of people, a code block
-// that must not wrap, a console output pane, and the pinned rail.
-const ALLOWED = [/\bboardstrip\b/, /\brail-body\b/, /\bovl\b/, /\bovl-body\b/, /^pre\b/, /\bcrt-terminal\b/];
+// Panels that are meant to scroll vertically: the pinned rail and the dossier
+// overlay. Nothing else on the page may become a vertical scroll container.
+const SCROLLS_DOWN = [/\brail-body\b/, /\bovl\b/, /\bovl-body\b/];
+
+// Strips that are meant to scroll sideways only: the people board, a code block
+// that must not wrap, the console output. These are NOT exempt from the
+// vertical check -- a one-row strip that starts scrolling down is being
+// squeezed by its parent and is clipping its own contents.
+const SCROLLS_SIDEWAYS = [/\bboardstrip\b/, /^pre\b/, /\bcrt-terminal\b/];
 
 let fails = 0;
 const ok = (c, m) => { console.log((c ? '  PASS  ' : '  FAIL  ') + m); if (!c) fails++; };
@@ -73,10 +79,17 @@ async function check(label, viewport, navigate) {
   ok(r.hOverflow <= 2, `no horizontal page scroll (${r.hOverflow}px)`);
 
   const rogue = r.scrollers.filter(
-    (s) => s.vertical > 0 && !ALLOWED.some((re) => re.test(s.sel))
+    (s) => s.vertical > 0 && !SCROLLS_DOWN.some((re) => re.test(s.sel))
   );
   ok(rogue.length === 0, `no unexpected vertical scroll container${rogue.length ? ':' : ''}`);
   rogue.forEach((s) => console.log(`          ${s.sel}  scrolls ${s.vertical}px vertically`));
+
+  // A sideways strip that is also clipping vertically is being squeezed.
+  const squeezed = r.scrollers.filter(
+    (s) => s.vertical > 0 && SCROLLS_SIDEWAYS.some((re) => re.test(s.sel))
+  );
+  ok(squeezed.length === 0, `no sideways strip squeezed below its content${squeezed.length ? ':' : ''}`);
+  squeezed.forEach((s) => console.log(`          ${s.sel}  clipped by ${s.vertical}px`));
 
   await ctx.close();
 }
