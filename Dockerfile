@@ -3,6 +3,10 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
+
+# better-sqlite3 / node-gyp requirements
+RUN apk add --no-cache python3 make g++
+
 # Copy root and workspace package files
 COPY package.json package-lock.json ./
 COPY apps/server/package.json ./apps/server/
@@ -28,6 +32,10 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
+
+
+RUN apk add --no-cache python3 make g++
+
 
 COPY package.json package-lock.json ./
 COPY apps/server/package.json ./apps/server/
