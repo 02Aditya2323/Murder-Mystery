@@ -456,8 +456,12 @@
 .nextbtn:hover { background: #91B269; }
 
 /* right rail */
-.rail { position: sticky; top: 64px; display: flex; flex-direction: column; max-height: calc(100vh - 64px); }
-@media (max-width: 1100px) { .rail { position: static; max-height: none; } }
+/* height, not max-height. room-main uses align-items: start, so a rail sized to
+   its own content left the rest of that column showing bare grid background as
+   a black slab whenever the case log was short. Pinned and viewport-tall, it
+   always covers the column. */
+.rail { position: sticky; top: 64px; display: flex; flex-direction: column; height: calc(100vh - 64px); }
+@media (max-width: 1100px) { .rail { position: static; height: auto; } }
 /* flex: 0 0 auto matters. The rail is a capped-height flex column, so a default
    flex item here gets squeezed once the body is tall: at 1366x768 the strip was
    compressed from 30px to 21px, clipping the labels and the active underline.
@@ -574,7 +578,10 @@
    story and this reads as instructions. */
 .brief {
   background: var(--surface-1); border: 1px solid var(--line);
-  border-radius: 2px; max-width: 78ch;
+  border-radius: 2px;
+  /* The card spans the work column so its right edge lines up with the tool
+     below it. Capping the CARD at 78ch left a 420px dead strip between the
+     brief and the rail at desktop widths. The prose inside is capped instead. */
 }
 .brief > summary {
   list-style: none; cursor: pointer; padding: 11px 16px;
@@ -589,18 +596,19 @@
 .brief[open] > summary::before { transform: rotate(90deg); }
 .brief > summary:hover { color: #F3EEE3; }
 .brief-body {
-  padding: 2px 20px 18px; border-top: 1px solid var(--line);
-  font-size: .98rem; line-height: 1.66; color: #C6C1B6;
+  padding: 2px 20px 16px; border-top: 1px solid var(--line);
+  font-size: .95rem; line-height: 1.58; color: #C6C1B6;
+  max-width: 78ch;              /* readable measure, inside a full-width card */
 }
 /* this renderer shifts headings down one level: md h1 -> h2, h3 -> h4 */
 .brief-body h2 { display: none; }           /* the beat title is already above */
 .brief-body h3, .brief-body h4 {
   font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--brass-dim); margin: 18px 0 6px;
+  text-transform: uppercase; color: var(--brass-dim); margin: 14px 0 5px;
 }
-.brief-body p, .brief-body ul, .brief-body ol { margin: 0 0 11px; }
+.brief-body p, .brief-body ul, .brief-body ol { margin: 0 0 9px; }
 .brief-body ul, .brief-body ol { padding-left: 22px; }
-.brief-body li { margin-bottom: 5px; }
+.brief-body li { margin-bottom: 3px; }
 .brief-body strong { color: #F3EEE3; }
 .brief-body em { color: var(--brass); }
 .brief-body code {
@@ -612,3 +620,29 @@
   background: var(--surface-2); color: #CDC8BC; font-style: italic;
 }
 .brief-body hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }
+
+/* Two columns for the brief once there is room for them. Beat 1's brief is the
+   longest in the case, and at one column it was 846px tall, which pushed the
+   evidence workspace 357px below the fold on a 900px screen: a squad landed on
+   the beat and could not see anything to work with. */
+@media (min-width: 1180px) {
+  .brief-body {
+    max-width: none;
+    column-count: 2;
+    column-gap: 44px;
+    column-rule: 1px solid var(--line);
+  }
+  .brief-body > * { break-inside: avoid; }
+  .brief-body > h3:first-child,
+  .brief-body > h4:first-child,
+  .brief-body > p:first-child { margin-top: 0; }
+}
+
+/* The rail and the work column were both #0B0D10, so a rail with a short case
+   log read as a black void rather than an empty panel. A step up in value
+   makes it legible as a sidebar that simply has nothing in it yet. */
+.rail { background: #0E1116; }
+.rail-empty {
+  margin: auto 0; padding: 22px 4px; text-align: center;
+  color: var(--dim); font-size: .9rem; line-height: 1.6;
+}

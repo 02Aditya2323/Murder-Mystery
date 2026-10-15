@@ -64,7 +64,33 @@ const probe = (page) => page.evaluate(() => {
       horizontal: h ? el.scrollWidth - el.clientWidth : 0
     });
   });
-  return { hOverflow: de.scrollWidth - de.clientWidth, scrollers };
+  // Ragged right edge: blocks stacked in the same column that are much
+  // narrower than their widest sibling leave a dead strip beside them. This is
+  // how the brief shipped at 660px next to a 1080px tool, with 420px of void
+  // between it and the rail, and the scroll checks said everything was fine.
+  const ragged = [];
+  const col = document.querySelector('.work-inner');
+  if (col) {
+    const kids = [...col.children].filter((el) => el.getBoundingClientRect().height > 30);
+    const widest = Math.max(0, ...kids.map((el) => el.getBoundingClientRect().width));
+    kids.forEach((el) => {
+      const w = el.getBoundingClientRect().width;
+      // .narr is an unboxed pull-quote and is meant to sit at a short measure.
+      if (el.classList.contains('narr')) return;
+      if (widest - w > widest * 0.15) {
+        const cls = typeof el.className === 'string' ? el.className.trim().split(/\s+/)[0] : '';
+        ragged.push({ sel: el.tagName.toLowerCase() + (cls ? '.' + cls : ''), w: Math.round(w), widest: Math.round(widest) });
+      }
+    });
+  }
+
+  // A column that stops well short of the viewport shows bare page behind it.
+  const rail = document.querySelector('.rail');
+  const railShort = rail && window.innerWidth > 1100
+    ? Math.round(Math.min(window.innerHeight - 64, document.body.scrollHeight) - rail.getBoundingClientRect().height)
+    : 0;
+
+  return { hOverflow: de.scrollWidth - de.clientWidth, scrollers, ragged, railShort };
 });
 
 async function check(label, viewport, navigate) {
@@ -89,6 +115,12 @@ async function check(label, viewport, navigate) {
   );
   ok(squeezed.length === 0, `no sideways strip squeezed below its content${squeezed.length ? ':' : ''}`);
   squeezed.forEach((s) => console.log(`          ${s.sel}  clipped by ${s.vertical}px`));
+
+  ok(r.ragged.length === 0, `no dead strip beside a short block${r.ragged.length ? ':' : ''}`);
+  r.ragged.forEach((s) =>
+    console.log(`          ${s.sel}  is ${s.w}px beside a ${s.widest}px sibling`));
+
+  ok(r.railShort <= 40, `the rail fills its column (${r.railShort}px short)`);
 
   await ctx.close();
 }
