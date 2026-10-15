@@ -1,9 +1,13 @@
-# Personal Journal: Mira's Therapy Exercise
+{{mira.full}} will not talk to police.
 
-As part of her post-trauma therapy in early 2024, {{victim.full}} instructed {{mira.full}} to keep an unbound handwritten journal. 
+She will look at her own diary, if you can put it back the way she wrote it.
 
-Mira stopped speaking out loud three years ago because everyone insisted her memories of the night {{julian.full}} died were confused or fabricated. The loose diary sheets were recovered from her residence, completely jumbled.
+In 2024 Vane asked her to keep a journal on loose sheets. The pages were seized after his death, shuffled, and handed back to her out of order. For three years people have been telling her that her memory is the thing that is disordered.
 
-Read her six handwritten pages and reorder them in the exact chronological sequence in which she wrote them. Each page contains relative time anchors and references to preceding events.
+Six pages. None of them are dated.
 
-Once the authentic sequence is assembled, Mira will finally be willing to communicate what Dr. Vane brought to her home the day before he died.
+They do not need to be. Every page refers to something that already happened, so the order is in the writing itself.
+
+**What to do:** read all six, then put them in the order she wrote them, earliest first.
+
+Get it right and she will tell you what Dr Vane brought to her house the day before he died.

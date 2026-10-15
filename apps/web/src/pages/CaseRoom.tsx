@@ -167,6 +167,19 @@ export const CaseRoom: React.FC = () => {
 
             {activeBeat?.arrive && <div className="narr">{activeBeat.arrive}</div>}
 
+            {/* The brief. story.md was served by the API but never rendered, so
+                the only instructions a squad could see were whatever labels the
+                tool happened to carry. This is where the plain-language version
+                of 'what you are being asked to do' actually reaches them. */}
+            {!loadingLevel && levelDetail?.story && (
+              <details className="brief" open>
+                <summary>The brief</summary>
+                <div className="brief-body">
+                  <MarkdownText text={levelDetail.story} />
+                </div>
+              </details>
+            )}
+
             {loadingLevel ? (
               <p className="eyebrow">Loading evidence…</p>
             ) : (

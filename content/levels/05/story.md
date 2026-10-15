@@ -1,15 +1,22 @@
-# Suspect Dossiers: Alibis & Contradictions
+Six people gave statements. Their accounts are on the left. Nine pieces of physical evidence are on the right.
 
-Detectives conducted formal interviews with six individuals connected to {{victim.full}}. 
+Evidence beats a statement. If a document puts someone somewhere they said they were not, that statement is finished.
 
-Review each person's statement on the left and compare it against the nine recovered physical evidence cards on the right. Determine which piece of evidence refutes each person's claim, or whether their statement remains uncontradicted by the currently available proof.
+**What to do:** for each person, pick the one piece of evidence that catches them out. If nothing here contradicts them, say so.
 
-### The Individuals:
-1. **{{lena.full}}** (Wife)
-2. **{{daniel.full}}** (Former Patient)
-3. **{{clara.full}}** (Sister)
-4. **{{noah.full}}** (Investigative Journalist)
-5. **{{killer.full}}** (Research Assistant)
-6. **{{mira.full}}** (Former Patient)
+**Before you start, two things worth knowing:**
 
-Select the contradicting evidence item (E1 through E9, or "None") for each person. When submitted, the system checks your board and returns the verification code.
+Not everyone who lies is a murderer. Some of these people are hiding something that has nothing to do with that night.
+
+And at least one of them is telling the truth.
+
+### The six
+
+1. **{{lena.full}}** - his wife
+2. **{{daniel.full}}** - a former patient
+3. **{{clara.full}}** - his sister
+4. **{{noah.full}}** - a journalist
+5. **{{killer.full}}** - his research assistant
+6. **{{mira.full}}** - a former patient
+
+**Answer:** set every row, then submit the board. It returns a verification code.

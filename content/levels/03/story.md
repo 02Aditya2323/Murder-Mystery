@@ -1,24 +1,32 @@
-# Archive Dossier: The 2023 Tragedy
+Everything turns on something that happened three years ago, and that file is sealed.
 
-In {{victim.full}}'s consultation binder regarding {{mira.full}}, there is a handwritten clinical bookmark referring to a specific historical play:
+In Vane's notes on {{mira.full}} there is a bookmark. He never wrote the title down, only the plot:
 
-> *"A Victorian theatrical thriller where a manipulative husband methodically dims the home's gas lamps each evening, moves household trinkets, and insists his wife is losing her sanity when she notices. The key to accessing Julian's classified police file is the year of the play's London premiere and the husband's surname."*
+> *"The play where the husband turns the gas lamps down a little every evening, moves things around the house, and tells his wife she is imagining it. Password: the year it opened in London, then his surname."*
 
----
-
-### Stage 1: The Password Gate
-Enter the year of the play's London premiere followed immediately by the husband's surname: four digits, then the surname in capitals, with no space or hyphen between them.
+That play is where a word you already use every day comes from.
 
 ---
 
-### Stage 2: Forensic Comparison
-Once inside the sealed police archives, you will access three Mumbai police and telecommunications records from the night {{julian.full}} died (2 December 2023):
-- **Doc 2: Crime Branch Incident Initial Report (Crim-02-12-23)**
-- **Doc 3: MTNL Cellular & Landline Toll Record**
-- **Doc 4: The Peninsula Gazette Press Clipping**
+### First: get in
 
-Calculate:
-1. The difference in minutes between the official **estimated time of death** on the police report and **Julian's recorded outgoing call** to Dr. Elias Vane.
-2. The **badge number** of the first responding police officer on scene.
+**Answer:** the year, then the surname, run together in capitals. Four digits, then letters, nothing in between.
 
-Submit as `[Minutes]-[BadgeNumber]`: the number of minutes, a hyphen, then the four-digit badge. No spaces.
+---
+
+### Then: compare three documents
+
+Inside are three records from the night {{julian.full}} died:
+
+- the Crime Branch incident report
+- the MTNL phone records
+- a clipping from the Peninsula Gazette
+
+Two numbers in there do not fit together, and one signature matters.
+
+**Work out:**
+
+1. The gap, in minutes, between the time of death on the police report and Julian's outgoing call to Dr Vane.
+2. The badge number of the first officer who reached the scene.
+
+**Answer:** the minutes, a hyphen, then the four-digit badge. No spaces.

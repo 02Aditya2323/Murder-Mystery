@@ -568,3 +568,47 @@
 }
 
 :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+/* the brief: the plain-language "what you are being asked to do" panel.
+   Deliberately cooler and quieter than .narr, so the story reads as the
+   story and this reads as instructions. */
+.brief {
+  background: var(--surface-1); border: 1px solid var(--line);
+  border-radius: 2px; max-width: 78ch;
+}
+.brief > summary {
+  list-style: none; cursor: pointer; padding: 11px 16px;
+  font-family: 'Special Elite', monospace; font-size: 10px;
+  letter-spacing: .17em; text-transform: uppercase; color: var(--brass);
+  display: flex; align-items: center; gap: 9px;
+}
+.brief > summary::-webkit-details-marker { display: none; }
+.brief > summary::before {
+  content: "▸"; font-size: 11px; color: var(--dim); transition: transform .15s ease;
+}
+.brief[open] > summary::before { transform: rotate(90deg); }
+.brief > summary:hover { color: #F3EEE3; }
+.brief-body {
+  padding: 2px 20px 18px; border-top: 1px solid var(--line);
+  font-size: .98rem; line-height: 1.66; color: #C6C1B6;
+}
+/* this renderer shifts headings down one level: md h1 -> h2, h3 -> h4 */
+.brief-body h2 { display: none; }           /* the beat title is already above */
+.brief-body h3, .brief-body h4 {
+  font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--brass-dim); margin: 18px 0 6px;
+}
+.brief-body p, .brief-body ul, .brief-body ol { margin: 0 0 11px; }
+.brief-body ul, .brief-body ol { padding-left: 22px; }
+.brief-body li { margin-bottom: 5px; }
+.brief-body strong { color: #F3EEE3; }
+.brief-body em { color: var(--brass); }
+.brief-body code {
+  font-family: 'IBM Plex Mono', monospace; font-size: .9em;
+  background: var(--surface-3); padding: 1px 5px; border-radius: 2px; color: var(--brass);
+}
+.brief-body blockquote {
+  margin: 0 0 12px; padding: 10px 16px; border-left: 2px solid var(--brass-dim);
+  background: var(--surface-2); color: #CDC8BC; font-style: italic;
+}
+.brief-body hr { border: 0; border-top: 1px solid var(--line); margin: 16px 0; }

@@ -1,17 +1,16 @@
-# Electronic Medical Archive: Patient Records Database
+Vane kept his clinical records in a database on his desktop. Forensics have pulled it off the machine and given you a console to query it.
 
-Dr. Vane maintained a local clinical SQLite records database on his workstation. Following the recovery of the study terminal, the digital forensic unit extracted the encrypted container: `patient_records.db`.
+Three tables:
 
-You have been granted access to an interactive offline SQL investigation console.
+- **`patients`** - patient codes, names, and whether the record is confidential
+- **`records`** - session dates, recording references, notes, and when each was last modified
+- **`access_log`** - who signed in, from which device, what they did, and to which record
 
-The database contains three primary tables:
-- `patients`: Clinical patient codes, registered display names, and confidentiality status flags.
-- `records`: Session dates, associated audio recording references (`recording_ref`), clinical notes summaries, and modification audit timestamps.
-- `access_log`: Audit trail recording system user logins, devices used, specific actions (`VIEW`, `EDIT`, `DELETE`, `EXPORT`), and target record IDs.
+Somebody used this system twice in a way they should not have. Once on the night Vane died, and once three years earlier.
 
-### Your Questions:
-1. Which specific device was used to execute a `DELETE` action on a clinical record on the night of {{victim.first}}'s murder (23 October 2026)?
-2. Julian Marsh died under suspicious circumstances on 2 December 2023. Which confidential patient code (marked `REDACTED`) had its session record modified by Dr. Elias Vane in the week immediately following Julian's death (between 2 and 9 December 2023)?
+**Find:**
 
-Submit as `DEVICE-CODE`: the device identifier exactly as the audit log spells it, a hyphen, then the patient code.
+1. On the night of 23 October 2026, a record was deleted. **Which device did it?**
+2. In the week after {{julian.full}} died (2 to 9 December 2023), Vane edited one **`REDACTED`** patient file. **Which patient code?**
 
+**Answer:** the device exactly as the log spells it, a hyphen, then the patient code.

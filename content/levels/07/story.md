@@ -1,14 +1,15 @@
-# Photographic Verification: The 22:21 Alibi
+{{killer.full}} has an alibi, and it is a good one.
 
-During questioning, {{killer.full}} produced what looks like an airtight alibi.
-
-At 22:21 on the night of the murder, four minutes after the time frozen on the smashed desk clock, and squarely inside the medical window of death, Adrian posted a seaside photograph to his personal feed, captioned:
+At 22:21 that night, four minutes after the time frozen on the smashed clock and well inside the window of death, he posted a photograph of the sea:
 
 > *"Clear October night, watching the tide come in at {{geo.claimed_place}}."*
 
-{{geo.claimed_place}} is roughly ninety minutes from Ridge Road in either direction. If he was genuinely standing on that shoreline at 22:21, he could not have been in Malabar Hill at any point in the window, and the case against him collapses.
+{{geo.claimed_place}} is ninety minutes from Ridge Road. If he was standing on that shore at 22:21, he cannot have been in Malabar Hill at any point that matters, and the case against him is over.
 
-But after Mira's statement and Dr. Vane's hidden recording, the digital forensics unit no longer believes the photograph is his. There is no metadata on the file. There is no sign it was taken that night at all.
+Forensics do not think the photograph is his. There is no metadata on the file, and nothing to say it was taken that night at all.
 
-**Your Objective:**
-Work out where this photograph was actually taken. Read the coastline, the fortifications, the church architecture and the stonework. Enter the town, the landmark, or the coordinates as `lat,lng`.
+But it was taken somewhere.
+
+**What to do:** work out where. Look at the coastline, the fort walls, the stonework and the church tower. The place is real and you can name it.
+
+**Answer:** the town, the landmark, or coordinates as `lat,lng`.

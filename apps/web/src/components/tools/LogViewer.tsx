@@ -59,7 +59,7 @@ export const LogViewer: React.FC = () => {
         {/* Visual Stopped Clock Exhibit (5 cols) */}
         <div className="md:col-span-5 bg-[#251910] p-4 rounded-sm border-2 border-signal/40 shadow-desk flex flex-col items-center justify-between relative overflow-hidden">
           <div className="w-full flex items-center justify-between pb-2 border-b border-signal/20 text-[11px] font-mono text-dim">
-            <span className="font-typewriter font-bold text-signal">EXHIBIT #A: CRIME SCENE DESK CLOCK</span>
+            <span className="font-typewriter font-bold text-signal">EXHIBIT A: THE DESK CLOCK</span>
             <span className="px-1.5 py-0.5 rounded bg-alarm/20 text-alarm font-bold">FROZEN 22:17</span>
           </div>
 
@@ -106,9 +106,9 @@ export const LogViewer: React.FC = () => {
             <div className="flex items-center justify-between pb-1 border-b border-ink/20">
               <span className="font-typewriter font-bold text-xs flex items-center gap-2 text-alarm">
                 <Clock className="w-4 h-4 text-alarm" />
-                PATHOLOGY CADAVER PROTOCOL
+                POLICE SURGEON'S NOTE
               </span>
-              <span className="stamp stamp-open text-[9px]">OFFICIAL ME NOTE</span>
+              <span className="stamp stamp-open text-[9px]">SIGNED</span>
             </div>
 
             <blockquote className="font-serif text-xs text-ink/90 leading-relaxed italic bg-manila/50 p-3 rounded border border-ink/15">
@@ -148,7 +148,7 @@ export const LogViewer: React.FC = () => {
             <div className="flex items-center justify-between pb-2 border-b border-signal/30">
               <div className="flex items-center gap-2">
                 <span className="font-typewriter font-bold text-signal text-sm">
-                  EXHIBIT #A FORENSIC BLOWUP // HEAVY BRASS CARRIAGE CLOCK
+                  EXHIBIT A, CLOSE UP: HEAVY BRASS DESK CLOCK
                 </span>
               </div>
               <button
@@ -184,7 +184,7 @@ export const LogViewer: React.FC = () => {
           <div className="flex items-center gap-2">
             <Terminal className="w-4 h-4 text-[#8BC34A]" />
             <span className="font-typewriter font-bold text-[#A5D6A7] tracking-wider uppercase text-[11px]">
-              INCIDENT FORENSIC TELEMETRY RECORDER // MODEL-86
+              DEVICE LOGS RECOVERED FROM THE HOUSE
             </span>
           </div>
 
@@ -227,7 +227,7 @@ export const LogViewer: React.FC = () => {
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Filter telemetry streams..."
+              placeholder="Search the logs..."
               className="w-full bg-[#0D150B] text-[#A5D6A7] font-mono text-xs pl-8 pr-3 py-1 rounded border border-[#254018] focus:border-[#8BC34A] focus:outline-none"
             />
           </div>
@@ -239,9 +239,9 @@ export const LogViewer: React.FC = () => {
             <thead className="bg-[#142010] text-[#A5D6A7] sticky top-0 border-b border-[#254018] z-10">
               <tr>
                 <th className="py-2 px-3">SOURCE</th>
-                <th className="py-2 px-3">RECORDED TIMESTAMP</th>
-                <th className="py-2 px-3">HARDWARE REFERENCE</th>
-                <th className="py-2 px-3">EVENT TELEMETRY LOG</th>
+                <th className="py-2 px-3">TIME AS RECORDED</th>
+                <th className="py-2 px-3">CLOCK / TIMEZONE</th>
+                <th className="py-2 px-3">WHAT HAPPENED</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[#182913]">
@@ -300,7 +300,7 @@ export const LogViewer: React.FC = () => {
       ) : (
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded border-2 border-signal/40 space-y-2.5 shadow-desk">
           <label className="block text-xs font-serif text-label font-medium">
-            Enter the start of the Medical Examiner's window of death (4-digit 24-hour IST, e.g. 2145):
+            When does the window of death START? Four digits, 24-hour IST, like 2145.
           </label>
           <div className="flex gap-2">
             <input
@@ -316,7 +316,7 @@ export const LogViewer: React.FC = () => {
               disabled={submitting || !answerInput.trim()}
               className="px-6 py-2 bg-signal hover:bg-signal/90 text-ink font-typewriter font-bold text-xs rounded transition-all shadow-md disabled:opacity-50"
             >
-              {submitting ? 'Verifying Chronology...' : 'Submit TOD Window'}
+              {submitting ? 'Checking...' : 'Submit time'}
             </button>
           </div>
 
