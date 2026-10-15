@@ -60,6 +60,12 @@ app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/case', caseRoutes);
 
+// Health check. Render pings this, and an external uptime pinger can hit it
+// during the event to stop a free instance spinning down mid-case.
+app.get('/api/health', (_req, res) => {
+  res.json({ ok: true, at: new Date().toISOString() });
+});
+
 // Serve frontend build and public assets if they exist
 const webDistPath = path.resolve(rootDir, 'apps/web/dist');
 const webPublicPath = path.resolve(rootDir, 'apps/web/public');

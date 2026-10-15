@@ -1,0 +1,61 @@
+# Render blueprint for The Last Recording.
+#
+# One web service: the Express server builds and serves the React app, the
+# API and the SSE leaderboard stream. Everything runs in a single process.
+#
+# BEFORE THE EVENT, read the two warnings at the bottom of this file.
+services:
+  - type: web
+    name: murder-mystery
+    runtime: node
+    plan: free
+    region: singapore          # closest Render region to Mumbai
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: false          # deploy on purpose, never mid-event
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # Salts the stored answer hashes. CHANGE THIS, then re-run
+      # `npm run hash-answers` and commit the regenerated file. The default
+      # in config.ts is published in this repository, so leaving it unset
+      # means anyone with the repo can recompute every answer.
+      - key: ANSWER_SECRET
+        generateValue: true
+
+      - key: SESSION_SECRET
+        generateValue: true
+
+      # The organiser password for /hq. The default is in the public repo.
+      - key: ADMIN_PASSWORD
+        sync: false
+
+      # Optional. The contents of content/answers.key.json as a single JSON
+      # string. That file is git-ignored so it is not deployed; set this and
+      # the admin Answer Key tab works on the deployed box too. Leave unset
+      # and the tab simply shows nothing.
+      - key: ANSWER_KEY_JSON
+        sync: false
+
+# ─────────────────────────────────────────────────────────────────────────
+# WARNING 1: the free plan has no persistent disk.
+#
+# The SQLite file lives on the instance filesystem, which is wiped on every
+# deploy and on every spin-down. A free service spins down after 15 minutes
+# without traffic and takes 30-60 seconds to wake. If that happens between
+# batches, every registered squad and all their progress is gone.
+#
+# Options, cheapest first:
+#   - run the server on a laptop on the room's network instead; for eight
+#     teams in one room this is faster and cannot lose data
+#   - move to the Starter plan and attach a persistent disk
+#   - stay on free, keep an external uptime pinger hitting /api/health for
+#     the whole event window, and export results often
+#
+# WARNING 2: this repository is public.
+#
+# content/levels/NN/reveal.md, scenes.json, cast.json and the test suite all
+# contain answers. Make the repository private before the event.
+# ─────────────────────────────────────────────────────────────────────────

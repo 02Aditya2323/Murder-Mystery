@@ -311,12 +311,23 @@ router.post('/override', requireAdminAuth, (req: AuthenticatedRequest, res: Resp
  * accept rather than what a document says it should.
  */
 router.get('/answer-key', requireAdminAuth, (_req: Request, res: Response) => {
+  // The key file is git-ignored, so it does not exist on a deployed box.
+  // ANSWER_KEY_JSON lets the host supply it as an environment variable
+  // instead, which keeps it off the public repo but still available to the
+  // organiser running the room.
   let key: any = { beats: [], kits: [] };
+  let source = 'none';
   try {
     const p = path.resolve(rootDir, 'content/answers.key.json');
-    if (fs.existsSync(p)) key = JSON.parse(fs.readFileSync(p, 'utf8'));
+    if (fs.existsSync(p)) {
+      key = JSON.parse(fs.readFileSync(p, 'utf8'));
+      source = 'file';
+    } else if (process.env.ANSWER_KEY_JSON) {
+      key = JSON.parse(process.env.ANSWER_KEY_JSON);
+      source = 'env';
+    }
   } catch {
-    return res.status(500).json({ error: 'The answer key file could not be read.' });
+    return res.status(500).json({ error: 'The answer key could not be parsed.' });
   }
 
   let kitsJson: any[] = [];
@@ -339,7 +350,7 @@ router.get('/answer-key', requireAdminAuth, (_req: Request, res: Response) => {
     };
   });
 
-  return res.json({ beats: key.beats || [], kits, warning: key._WARNING || null });
+  return res.json({ beats: key.beats || [], kits, source, warning: key._WARNING || null });
 });
 
 router.get('/theories', requireAdminAuth, (_req: Request, res: Response) => {
