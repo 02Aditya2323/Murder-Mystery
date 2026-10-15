@@ -24,8 +24,10 @@ import {
 export const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
 
+  const [answerKey, setAnswerKey] = useState<any>(null);
+  const [keyRevealed, setKeyRevealed] = useState(false);
   const [activeTab, setActiveTab] = useState<
-    'live' | 'teams' | 'kits' | 'overrides' | 'theories' | 'preview'
+    'live' | 'teams' | 'kits' | 'answers' | 'overrides' | 'theories' | 'preview'
   >('live');
 
   const [previewLevel, setPreviewLevel] = useState(1);
@@ -111,6 +113,9 @@ export const AdminDashboard: React.FC = () => {
   useEffect(() => {
     if (activeTab === 'theories') {
       fetchTheories();
+    }
+    if (activeTab === 'answers' && !answerKey) {
+      api.getAnswerKey().then(setAnswerKey).catch(() => setAnswerKey({ error: true }));
     }
   }, [activeTab]);
 
@@ -307,6 +312,7 @@ export const AdminDashboard: React.FC = () => {
           { id: 'live', label: 'Live Squad Board' },
           { id: 'teams', label: 'Squad Import / Export' },
           { id: 'kits', label: 'Kit Answers (Level 8)' },
+          { id: 'answers', label: 'Answer Key' },
           { id: 'overrides', label: 'Manual Overrides' },
           { id: 'theories', label: 'Theory Grading' },
           { id: 'preview', label: 'Level Preview' }
@@ -578,6 +584,91 @@ export const AdminDashboard: React.FC = () => {
         )}
 
         {/* 4. MANUAL OVERRIDES */}
+        {activeTab === 'answers' && (
+          <div className="space-y-5">
+            <div className="p-4 rounded border-2 border-alarm/60 bg-alarm/5 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="font-typewriter font-bold text-sm uppercase text-alarm">
+                  Every answer in the case
+                </p>
+                <p className="text-xs text-dim mt-1">
+                  Do not open this on a screen a squad can see.
+                </p>
+              </div>
+              <button
+                onClick={() => setKeyRevealed((v) => !v)}
+                className="px-4 py-2 rounded border border-alarm/60 text-xs font-typewriter uppercase hover:bg-alarm/10"
+              >
+                {keyRevealed ? 'Hide' : 'Reveal'}
+              </button>
+            </div>
+
+            {!answerKey && <p className="text-xs text-dim">Loading…</p>}
+            {answerKey?.error && (
+              <p className="text-xs text-alarm">
+                content/answers.key.json could not be read on the server.
+              </p>
+            )}
+
+            {keyRevealed && answerKey && !answerKey.error && (
+              <>
+                <div>
+                  <h3 className="font-typewriter text-xs uppercase tracking-wider mb-2">The ten beats</h3>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs border-collapse">
+                      <thead className="bg-ink/40">
+                        <tr>
+                          <th className="border border-signal/20 px-2 py-1.5 text-left">#</th>
+                          <th className="border border-signal/20 px-2 py-1.5 text-left">Beat</th>
+                          <th className="border border-signal/20 px-2 py-1.5 text-left">Answer</th>
+                          <th className="border border-signal/20 px-2 py-1.5 text-left">How it is reached</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {answerKey.beats?.map((b: any) => (
+                          <tr key={b.beat}>
+                            <td className="border border-signal/15 px-2 py-1.5">{b.beat}</td>
+                            <td className="border border-signal/15 px-2 py-1.5">{b.title}</td>
+                            <td className="border border-signal/15 px-2 py-1.5 font-mono text-ok">{b.answer}</td>
+                            <td className="border border-signal/15 px-2 py-1.5 text-dim">{b.how}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="font-typewriter text-xs uppercase tracking-wider mb-2">
+                    Beat 8, kit by kit
+                  </h3>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {answerKey.kits?.map((k: any) => (
+                      <div key={k.kit_no} className="p-3 rounded border border-signal/25 bg-ink/30 space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <span className="font-typewriter text-sm font-bold">KIT #{k.kit_no}</span>
+                          <span className="font-mono text-lg text-ok tracking-widest">{k.answer}</span>
+                        </div>
+                        <p className="text-[11px] text-dim font-mono">{k.ics} &nbsp;|&nbsp; {k.inputs}</p>
+                        <p className="text-[11px] text-dim">Jumper left out: <span className="font-mono">{k.missingStage}</span></p>
+                        {!k.seeded && (
+                          <p className="text-[11px] text-alarm">Not seeded in the database. Reset the DB to pick it up.</p>
+                        )}
+                        <details className="text-[11px]">
+                          <summary className="cursor-pointer text-dim hover:text-label">Wiring</summary>
+                          <pre className="mt-1 font-mono text-[10px] leading-relaxed whitespace-pre-wrap text-label/80">
+{k.wiring?.join('\n')}
+                          </pre>
+                        </details>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
         {activeTab === 'overrides' && (
           <div className="space-y-4 max-w-2xl">
             <div className="paper-sheet p-5 rounded text-ink space-y-4 border border-ink/20">

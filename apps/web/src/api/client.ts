@@ -53,6 +53,12 @@ export const api = {
       { method: 'POST', body: JSON.stringify({ teamName, kitNo }) }
     ),
   logout: () => apiRequest('/auth/logout', { method: 'POST' }),
+  getAnswerKey: () => apiRequest<{
+    beats: Array<{ beat: number; title: string; answer: string; how: string }>;
+    kits: Array<{ kit_no: number; ics: string; inputs: string; answer: string;
+                  missingStage: string; wiring: string[]; seeded: boolean }>;
+    warning: string | null;
+  }>('/admin/answer-key'),
   getMe: () => apiRequest('/auth/me'),
 
   // Levels

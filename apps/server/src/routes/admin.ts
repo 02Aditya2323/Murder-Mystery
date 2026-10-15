@@ -1,5 +1,7 @@
 import { Router, Request, Response } from 'express';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
 import { db, hashPassword, initTeamLevelState } from '../db.js';
 import { requireAdminAuth, signToken, AuthenticatedRequest } from '../auth.js';
 import {
@@ -21,7 +23,7 @@ import {
   isLeaderboardHidden,
   getLeaderboardData
 } from '../sse.js';
-import { ADMIN_PASSWORD, ANSWER_SECRET } from '../config.js';
+import { ADMIN_PASSWORD, ANSWER_SECRET, rootDir } from '../config.js';
 import { LevelStateRow, Team } from '../types.js';
 import { normalizeAnswer } from '../level-validator.js';
 import { THEORY_QUESTIONS } from './theory.js';
@@ -301,6 +303,45 @@ router.post('/override', requireAdminAuth, (req: AuthenticatedRequest, res: Resp
 });
 
 // Final Theory Review list
+/**
+ * The whole answer key, for the organiser running the room.
+ *
+ * Reads content/answers.key.json, which is git-ignored, plus the live kit
+ * table so the kit column always reflects what the server will actually
+ * accept rather than what a document says it should.
+ */
+router.get('/answer-key', requireAdminAuth, (_req: Request, res: Response) => {
+  let key: any = { beats: [], kits: [] };
+  try {
+    const p = path.resolve(rootDir, 'content/answers.key.json');
+    if (fs.existsSync(p)) key = JSON.parse(fs.readFileSync(p, 'utf8'));
+  } catch {
+    return res.status(500).json({ error: 'The answer key file could not be read.' });
+  }
+
+  let kitsJson: any[] = [];
+  try {
+    kitsJson = JSON.parse(
+      fs.readFileSync(path.resolve(rootDir, 'content/kits.json'), 'utf8')
+    ).kits || [];
+  } catch { /* fall back to the key file alone */ }
+
+  const seeded = db.prepare('SELECT kit_no FROM kits ORDER BY kit_no ASC').all() as Array<{ kit_no: number }>;
+  const seededSet = new Set(seeded.map((k) => k.kit_no));
+
+  const kits = (key.kits || []).map((row: any) => {
+    const live = kitsJson.find((k) => k.kit_no === row.kit_no);
+    return {
+      ...row,
+      answer: live ? live.answer : row.answer,
+      ics: live && live.ics ? live.ics.join(' + ') : row.ics,
+      seeded: seededSet.has(row.kit_no)
+    };
+  });
+
+  return res.json({ beats: key.beats || [], kits, warning: key._WARNING || null });
+});
+
 router.get('/theories', requireAdminAuth, (_req: Request, res: Response) => {
   const theories = db.prepare(`
     SELECT t.*, tm.name as team_name, tm.code as team_code, tm.kit_no

@@ -129,36 +129,27 @@ export function initDatabase() {
     `).run();
   }
 
-  // Seed default kits 1..10 if empty
+  // Seed kits from content/kits.json. That file is the single source of
+  // truth: it carries the ICs, the pre-set switches, the wiring and the
+  // expected reading, and the physical boards are built from it. Keeping a
+  // second copy of the answers here is how they drift apart.
   const kitCount = db.prepare('SELECT count(*) as count FROM kits').get() as { count: number };
   if (kitCount.count === 0) {
     const insertKit = db.prepare(`
       INSERT INTO kits (kit_no, answer_hash, alternates_json, updated_at)
       VALUES (?, ?, ?, datetime('now'))
     `);
-    // Seeded from content/kits.json: one distinct circuit per kit, so the
-    // switch pattern cannot be shouted from one table to the next.
-    // Seeded from content/kits.json. Each kit's ICs and input switches are
-    // pre-set; the team completes the missing jumper and reads three LEDs.
-    const defaultAnswers: Record<number, string> = {
-      1: '001',
-      2: '010',
-      3: '011',
-      4: '100',
-      5: '101',
-      6: '110',
-      7: '111',
-      8: '001',
-      9: '010',
-      10: '011'
-    };
-
-    for (let k = 1; k <= 10; k++) {
-      const ans = defaultAnswers[k] || `CHANGE_ME_${k}`;
+    let defs: Array<{ kit_no: number; answer: string }> = [];
+    try {
+      const raw = fs.readFileSync(path.resolve(rootDir, 'content/kits.json'), 'utf8');
+      defs = (JSON.parse(raw).kits || []) as Array<{ kit_no: number; answer: string }>;
+    } catch {
+      console.warn('content/kits.json could not be read; no kits seeded.');
+    }
+    for (const k of defs) {
       const hmac = crypto.createHmac('sha256', ANSWER_SECRET);
-      hmac.update(`KIT_${k}_SALT_1986:${ans}`);
-      const hash = hmac.digest('hex');
-      insertKit.run(k, hash, JSON.stringify([ans]));
+      hmac.update(`KIT_${k.kit_no}_SALT_1986:${k.answer}`);
+      insertKit.run(k.kit_no, hmac.digest('hex'), JSON.stringify([k.answer]));
     }
   }
 

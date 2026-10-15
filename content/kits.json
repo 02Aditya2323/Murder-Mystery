@@ -1,42 +1,43 @@
 {
-  "_comment": "Beat 8 (The Garage Panel). The ICs are seated and the four input switches are pre-set and printed on the sheet, so the team never hunts for an input combination. One jumper is missing. They deduce the missing gate from its truth table, complete the wiring, and read the three output LEDs as a three-digit binary number.",
-  "_batching": "Kits 8, 9 and 10 repeat the answers of kits 1, 2 and 3. They are seven apart, so with 4-5 teams per batch they will never sit in the same room at the same time. If you ever run more than seven teams concurrently, give the extra kits their own answers in /hq.",
   "kits": [
     {
       "kit_no": 1,
+      "ics": [
+        "7400",
+        "7402"
+      ],
       "inputs": {
-        "A": 0,
-        "B": 0,
-        "C": 1,
-        "D": 0
+        "A": 1,
+        "B": 1,
+        "C": 0
       },
       "gates": [
         {
-          "out": "F1",
+          "out": "n1",
           "inputs": "A, B",
+          "gate": "NAND",
+          "ic": "7400"
+        },
+        {
+          "out": "r1",
+          "inputs": "B, C",
+          "gate": "NOR",
+          "ic": "7402"
+        },
+        {
+          "out": "O3",
+          "inputs": "n1, r1",
           "gate": "?",
           "ic": "?"
-        },
-        {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "XNOR",
-          "ic": "74266"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "XNOR",
-          "ic": "74266"
         }
       ],
-      "missingOutput": "F1",
-      "missingInputs": "A, B",
+      "missingOutput": "O3",
+      "missingInputs": "n1, r1",
       "missingTruthTable": [
         {
           "x": 0,
           "y": 0,
-          "out": 0
+          "out": 1
         },
         {
           "x": 0,
@@ -53,108 +54,62 @@
           "y": 1,
           "out": 0
         }
+      ],
+      "ledOrder": [
+        "n1",
+        "r1",
+        "O3"
       ],
       "answer": "001"
     },
     {
       "kit_no": 2,
+      "ics": [
+        "7400",
+        "7402"
+      ],
       "inputs": {
-        "A": 1,
-        "B": 1,
-        "C": 1,
-        "D": 1
+        "A": 0,
+        "B": 0,
+        "C": 0
       },
       "gates": [
         {
-          "out": "F1",
+          "out": "r1",
           "inputs": "A, B",
-          "gate": "XOR",
-          "ic": "7486"
+          "gate": "NOR",
+          "ic": "7402"
         },
         {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "?",
-          "ic": "?"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "XOR",
-          "ic": "7486"
-        }
-      ],
-      "missingOutput": "F2",
-      "missingInputs": "C, D",
-      "missingTruthTable": [
-        {
-          "x": 0,
-          "y": 0,
-          "out": 0
-        },
-        {
-          "x": 0,
-          "y": 1,
-          "out": 0
-        },
-        {
-          "x": 1,
-          "y": 0,
-          "out": 0
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "out": 1
-        }
-      ],
-      "answer": "010"
-    },
-    {
-      "kit_no": 3,
-      "inputs": {
-        "A": 1,
-        "B": 1,
-        "C": 1,
-        "D": 0
-      },
-      "gates": [
-        {
-          "out": "F1",
-          "inputs": "A, B",
+          "out": "n1",
+          "inputs": "r1, C",
           "gate": "NAND",
           "ic": "7400"
         },
         {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "OR",
-          "ic": "7432"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
+          "out": "O3",
+          "inputs": "n1, A",
           "gate": "?",
           "ic": "?"
         }
       ],
-      "missingOutput": "F3",
-      "missingInputs": "A, D",
+      "missingOutput": "O3",
+      "missingInputs": "n1, A",
       "missingTruthTable": [
         {
           "x": 0,
           "y": 0,
-          "out": 0
+          "out": 1
         },
         {
           "x": 0,
           "y": 1,
-          "out": 1
+          "out": 0
         },
         {
           "x": 1,
           "y": 0,
-          "out": 1
+          "out": 0
         },
         {
           "x": 1,
@@ -162,38 +117,46 @@
           "out": 0
         }
       ],
-      "answer": "011"
+      "ledOrder": [
+        "r1",
+        "n1",
+        "O3"
+      ],
+      "answer": "110"
     },
     {
-      "kit_no": 4,
+      "kit_no": 3,
+      "ics": [
+        "7400",
+        "7402"
+      ],
       "inputs": {
         "A": 0,
         "B": 0,
-        "C": 0,
-        "D": 1
+        "C": 0
       },
       "gates": [
         {
-          "out": "F1",
-          "inputs": "A, B",
+          "out": "n1",
+          "inputs": "A, C",
+          "gate": "NAND",
+          "ic": "7400"
+        },
+        {
+          "out": "r1",
+          "inputs": "n1, B",
+          "gate": "NOR",
+          "ic": "7402"
+        },
+        {
+          "out": "O3",
+          "inputs": "B, C",
           "gate": "?",
           "ic": "?"
-        },
-        {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "XNOR",
-          "ic": "74266"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "XNOR",
-          "ic": "74266"
         }
       ],
-      "missingOutput": "F1",
-      "missingInputs": "A, B",
+      "missingOutput": "O3",
+      "missingInputs": "B, C",
       "missingTruthTable": [
         {
           "x": 0,
@@ -215,39 +178,115 @@
           "y": 1,
           "out": 0
         }
+      ],
+      "ledOrder": [
+        "n1",
+        "r1",
+        "O3"
+      ],
+      "answer": "101"
+    },
+    {
+      "kit_no": 4,
+      "ics": [
+        "7400",
+        "7402"
+      ],
+      "inputs": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "gates": [
+        {
+          "out": "r1",
+          "inputs": "A, C",
+          "gate": "NOR",
+          "ic": "7402"
+        },
+        {
+          "out": "n1",
+          "inputs": "B, B",
+          "gate": "NAND",
+          "ic": "7400"
+        },
+        {
+          "out": "O3",
+          "inputs": "r1, n1",
+          "gate": "?",
+          "ic": "?"
+        }
+      ],
+      "missingOutput": "O3",
+      "missingInputs": "r1, n1",
+      "missingTruthTable": [
+        {
+          "x": 0,
+          "y": 0,
+          "out": 1
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "out": 0
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "out": 0
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "out": 0
+        }
+      ],
+      "ledOrder": [
+        "r1",
+        "n1",
+        "O3"
       ],
       "answer": "100"
     },
     {
       "kit_no": 5,
+      "ics": [
+        "7400",
+        "7404"
+      ],
       "inputs": {
-        "A": 0,
-        "B": 0,
-        "C": 0,
-        "D": 1
+        "A": 1,
+        "B": 1,
+        "C": 1
       },
       "gates": [
         {
-          "out": "F1",
-          "inputs": "A, B",
+          "out": "t1",
+          "inputs": "A",
+          "gate": "NOT",
+          "ic": "7404"
+        },
+        {
+          "out": "n1",
+          "inputs": "t1, B",
           "gate": "NAND",
           "ic": "7400"
         },
         {
-          "out": "F2",
-          "inputs": "C, D",
+          "out": "n2",
+          "inputs": "B, C",
           "gate": "?",
           "ic": "?"
         },
         {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "XOR",
-          "ic": "7486"
+          "out": "O3",
+          "inputs": "n2",
+          "gate": "NOT",
+          "ic": "7404"
         }
       ],
-      "missingOutput": "F2",
-      "missingInputs": "C, D",
+      "missingOutput": "n2",
+      "missingInputs": "B, C",
       "missingTruthTable": [
         {
           "x": 0,
@@ -257,218 +296,64 @@
         {
           "x": 0,
           "y": 1,
-          "out": 0
+          "out": 1
         },
         {
           "x": 1,
           "y": 0,
-          "out": 0
+          "out": 1
         },
         {
           "x": 1,
           "y": 1,
-          "out": 1
+          "out": 0
         }
       ],
-      "answer": "101"
+      "ledOrder": [
+        "t1",
+        "n1",
+        "O3"
+      ],
+      "answer": "011"
     },
     {
       "kit_no": 6,
-      "inputs": {
-        "A": 0,
-        "B": 0,
-        "C": 1,
-        "D": 0
-      },
-      "gates": [
-        {
-          "out": "F1",
-          "inputs": "A, B",
-          "gate": "NAND",
-          "ic": "7400"
-        },
-        {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "XOR",
-          "ic": "7486"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "?",
-          "ic": "?"
-        }
+      "ics": [
+        "7400",
+        "7404"
       ],
-      "missingOutput": "F3",
-      "missingInputs": "A, D",
-      "missingTruthTable": [
-        {
-          "x": 0,
-          "y": 0,
-          "out": 0
-        },
-        {
-          "x": 0,
-          "y": 1,
-          "out": 1
-        },
-        {
-          "x": 1,
-          "y": 0,
-          "out": 1
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "out": 1
-        }
-      ],
-      "answer": "110"
-    },
-    {
-      "kit_no": 7,
       "inputs": {
         "A": 1,
         "B": 1,
-        "C": 0,
-        "D": 1
+        "C": 1
       },
       "gates": [
         {
-          "out": "F1",
-          "inputs": "A, B",
-          "gate": "?",
-          "ic": "?"
-        },
-        {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "XOR",
-          "ic": "7486"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "OR",
-          "ic": "7432"
-        }
-      ],
-      "missingOutput": "F1",
-      "missingInputs": "A, B",
-      "missingTruthTable": [
-        {
-          "x": 0,
-          "y": 0,
-          "out": 1
-        },
-        {
-          "x": 0,
-          "y": 1,
-          "out": 0
-        },
-        {
-          "x": 1,
-          "y": 0,
-          "out": 0
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "out": 1
-        }
-      ],
-      "answer": "111"
-    },
-    {
-      "kit_no": 8,
-      "inputs": {
-        "A": 1,
-        "B": 0,
-        "C": 0,
-        "D": 0
-      },
-      "gates": [
-        {
-          "out": "F1",
-          "inputs": "A, B",
-          "gate": "AND",
-          "ic": "7408"
-        },
-        {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "?",
-          "ic": "?"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "NAND",
-          "ic": "7400"
-        }
-      ],
-      "missingOutput": "F2",
-      "missingInputs": "C, D",
-      "missingTruthTable": [
-        {
-          "x": 0,
-          "y": 0,
-          "out": 0
-        },
-        {
-          "x": 0,
-          "y": 1,
-          "out": 1
-        },
-        {
-          "x": 1,
-          "y": 0,
-          "out": 1
-        },
-        {
-          "x": 1,
-          "y": 1,
-          "out": 1
-        }
-      ],
-      "answer": "001"
-    },
-    {
-      "kit_no": 9,
-      "inputs": {
-        "A": 1,
-        "B": 1,
-        "C": 1,
-        "D": 1
-      },
-      "gates": [
-        {
-          "out": "F1",
+          "out": "n1",
           "inputs": "A, B",
           "gate": "NAND",
           "ic": "7400"
         },
         {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "OR",
-          "ic": "7432"
+          "out": "t1",
+          "inputs": "n1",
+          "gate": "NOT",
+          "ic": "7404"
         },
         {
-          "out": "F3",
-          "inputs": "A, D",
+          "out": "O3",
+          "inputs": "t1, C",
           "gate": "?",
           "ic": "?"
         }
       ],
-      "missingOutput": "F3",
-      "missingInputs": "A, D",
+      "missingOutput": "O3",
+      "missingInputs": "t1, C",
       "missingTruthTable": [
         {
           "x": 0,
           "y": 0,
-          "out": 0
+          "out": 1
         },
         {
           "x": 0,
@@ -485,38 +370,52 @@
           "y": 1,
           "out": 0
         }
+      ],
+      "ledOrder": [
+        "n1",
+        "t1",
+        "O3"
       ],
       "answer": "010"
     },
     {
-      "kit_no": 10,
+      "kit_no": 7,
+      "ics": [
+        "7400",
+        "7404"
+      ],
       "inputs": {
-        "A": 1,
-        "B": 1,
-        "C": 1,
-        "D": 0
+        "A": 0,
+        "B": 0,
+        "C": 0
       },
       "gates": [
         {
-          "out": "F1",
+          "out": "t1",
+          "inputs": "C",
+          "gate": "NOT",
+          "ic": "7404"
+        },
+        {
+          "out": "n1",
+          "inputs": "A, t1",
+          "gate": "NAND",
+          "ic": "7400"
+        },
+        {
+          "out": "n2",
           "inputs": "A, B",
           "gate": "?",
           "ic": "?"
         },
         {
-          "out": "F2",
-          "inputs": "C, D",
-          "gate": "NAND",
-          "ic": "7400"
-        },
-        {
-          "out": "F3",
-          "inputs": "A, D",
-          "gate": "OR",
-          "ic": "7432"
+          "out": "O3",
+          "inputs": "n2",
+          "gate": "NOT",
+          "ic": "7404"
         }
       ],
-      "missingOutput": "F1",
+      "missingOutput": "n2",
       "missingInputs": "A, B",
       "missingTruthTable": [
         {
@@ -527,12 +426,12 @@
         {
           "x": 0,
           "y": 1,
-          "out": 0
+          "out": 1
         },
         {
           "x": 1,
           "y": 0,
-          "out": 0
+          "out": 1
         },
         {
           "x": 1,
@@ -540,7 +439,74 @@
           "out": 0
         }
       ],
-      "answer": "011"
+      "ledOrder": [
+        "n1",
+        "t1",
+        "O3"
+      ],
+      "answer": "110"
+    },
+    {
+      "kit_no": 8,
+      "ics": [
+        "7400",
+        "7404"
+      ],
+      "inputs": {
+        "A": 0,
+        "B": 1,
+        "C": 1
+      },
+      "gates": [
+        {
+          "out": "n1",
+          "inputs": "B, C",
+          "gate": "NAND",
+          "ic": "7400"
+        },
+        {
+          "out": "t1",
+          "inputs": "A",
+          "gate": "NOT",
+          "ic": "7404"
+        },
+        {
+          "out": "O1",
+          "inputs": "n1, t1",
+          "gate": "?",
+          "ic": "?"
+        }
+      ],
+      "missingOutput": "O1",
+      "missingInputs": "n1, t1",
+      "missingTruthTable": [
+        {
+          "x": 0,
+          "y": 0,
+          "out": 1
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "out": 1
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "out": 1
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "out": 0
+        }
+      ],
+      "ledOrder": [
+        "O1",
+        "n1",
+        "t1"
+      ],
+      "answer": "101"
     }
   ]
 }
