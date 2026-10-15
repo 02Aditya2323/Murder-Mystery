@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useGameStore } from '../../store/gameStore.js';
-import { Check, Save } from 'lucide-react';
+import { Check, Save, PanelRightClose } from 'lucide-react';
 
 type Tab = 'log' | 'hints' | 'notes' | 'standings';
 
 /** Fallback only: the server is authoritative and sends hintCostsSeconds. */
 const FALLBACK_COSTS = [120, 240, 420];
 
-export const CaseRail: React.FC<{ beats: any[]; elapsed: number }> = ({ beats }) => {
+export const CaseRail: React.FC<{ beats: any[]; elapsed: number; onCollapse?: () => void }> = ({ beats, onCollapse }) => {
   const {
     levelDetail, requestHint, notebookText, notebookSaved,
     setNotebookText, saveNotebook, leaderboard, leaderboardHidden, team
@@ -47,11 +47,25 @@ export const CaseRail: React.FC<{ beats: any[]; elapsed: number }> = ({ beats })
 
   return (
     <aside className="room-col rail" aria-label="Case rail">
-      <div className="rail-tabs" role="tablist">
+      <div className="rail-head">
+        <div className="rail-tabs" role="tablist">
         {tabBtn('log', 'CASE LOG', String(closed.length))}
         {tabBtn('hints', 'HINTS', `${hintsUsed}/${totalHints}`)}
         {tabBtn('notes', 'NOTES')}
         {tabBtn('standings', 'STANDINGS')}
+        </div>
+        {onCollapse && (
+          <button
+            type="button"
+            className="rail-collapse"
+            onClick={onCollapse}
+            aria-expanded="true"
+            aria-label="Hide the case rail"
+            title="Hide the case rail"
+          >
+            <PanelRightClose size={15} aria-hidden="true" />
+          </button>
+        )}
       </div>
 
       <div className="rail-body">

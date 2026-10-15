@@ -20,7 +20,8 @@
     "verify-layout": "node scripts/verify-layout.mjs",
     "gen-level10": "node scripts/gen-level10-osint.mjs",
     "generate-assets": "node scripts/gen-logs.mjs && node scripts/build-sql-level.mjs && node scripts/hash-answers.mjs",
-    "verify-registration": "node scripts/verify-registration.mjs"
+    "verify-registration": "node scripts/verify-registration.mjs",
+    "verify-rail": "node scripts/verify-rail.mjs"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",

@@ -50,10 +50,10 @@ export const FlagForm: React.FC = () => {
         <div className="p-3.5 bg-amber-950/10 rounded-lg border border-amber-900/20 text-xs font-serif leading-relaxed text-zinc-900 space-y-1">
           <div className="font-typewriter font-bold text-red-950 uppercase text-[11px] flex items-center gap-1.5">
             <User className="w-3.5 h-3.5 text-amber-800" />
-            OSINT INTELLIGENCE DISCOVERY TRAIL:
+            THE TRAIL LEAVES THIS BUILDING:
           </div>
           <p>
-            External intelligence indicates that club members' public social profiles contain encoded Base64 parameters pointing toward QR verification targets. Trace the identity associated with badge/liaison <strong className="font-mono text-red-900">4417</strong>.
+            Everyone attached to this case sits on the E-CESA council, and every one of them has a public professional profile. Go and read them. One bio carries something that is not a sentence. Liaison <strong className="font-mono text-red-900">4417</strong> tells you whose.
           </p>
         </div>
       </div>

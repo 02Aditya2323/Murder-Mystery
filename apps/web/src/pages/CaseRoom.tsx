@@ -19,7 +19,7 @@ import { KitStation } from '../components/tools/KitStation.js';
 import { CodeFill } from '../components/tools/CodeFill.js';
 import { FlagForm } from '../components/tools/FlagForm.js';
 
-import { FolderOpen, Gavel, LogOut, ArrowRight } from 'lucide-react';
+import { FolderOpen, Gavel, LogOut, ArrowRight, PanelRightClose, PanelRightOpen } from 'lucide-react';
 
 const THREE_HOURS = 3 * 60 * 60;
 
@@ -45,6 +45,17 @@ export const CaseRoom: React.FC = () => {
   } = useGameStore();
 
   const [openPerson, setOpenPerson] = useState<string | null>(null);
+  // The rail is 420px of permanent furniture. On a laptop that is a third of
+  // the width, and on the beats with a wide tool (the log table, the SQL
+  // console) the squad wants it gone. Remembered per browser so it survives a
+  // reload mid-case.
+  const [railOpen, setRailOpen] = useState<boolean>(() => {
+    try { return localStorage.getItem('mm_rail_open') !== '0'; } catch { return true; }
+  });
+  const toggleRail = () => setRailOpen((v) => {
+    try { localStorage.setItem('mm_rail_open', v ? '0' : '1'); } catch { /* private mode */ }
+    return !v;
+  });
   const [tick, setTick] = useState(0);
 
   useEffect(() => { init(); }, [init]);
@@ -155,7 +166,7 @@ export const CaseRoom: React.FC = () => {
       </div>
 
       {/* ── the work ─────────────────────────────────────────────────── */}
-      <div className="room-main">
+      <div className={`room-main${railOpen ? "" : " rail-hidden"}`}>
         <section className="room-col room-work">
           <div className="work-inner">
             {activeBeat && (
@@ -244,7 +255,21 @@ export const CaseRoom: React.FC = () => {
           </div>
         </section>
 
-        <CaseRail beats={beats} elapsed={elapsed} />
+        {railOpen ? (
+          <CaseRail beats={beats} elapsed={elapsed} onCollapse={toggleRail} />
+        ) : (
+          <button
+            type="button"
+            className="rail-reopen"
+            onClick={toggleRail}
+            aria-expanded="false"
+            aria-label="Show the case rail"
+            title="Show the case rail"
+          >
+            <PanelRightOpen size={16} aria-hidden="true" />
+            <span>CASE LOG</span>
+          </button>
+        )}
       </div>
 
       {person && <PersonSheet person={person} onClose={() => setOpenPerson(null)} />}

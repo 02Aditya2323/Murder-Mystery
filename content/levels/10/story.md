@@ -8,10 +8,14 @@ Adrian looks at the detective for a long moment, works out exactly what is about
 
 ---
 
-The liaison account is real and it belongs to a serving officer. The force does not publish its account register.
+The liaison account is real and it belongs to somebody on this investigation's own staff list. The force does not publish its account register, so you will not find it from the inside.
 
-But the officers attached to this investigation all have public profiles, and one of them has been careless with a number.
+You will find it from the outside.
 
-**What to do:** find the officer behind `LIAISON_4417`. Start from the number you already have. The trail runs through their public profile and out the other side; follow it until it stops.
+Everyone attached to the Ridge Road case is on the **E-CESA council**, and every one of them has a public professional profile. Real profiles, on the real internet. One of them has been careless with something they should not have left in the open.
+
+**What to do:** stop reading the case file and go and look these people up. The number you have already been given tells you which profile matters. What is sitting in that profile is not a sentence, and it is not the end of the trail either.
+
+Follow it until it stops. The flag is waiting at the end of it.
 
 **Answer:** the case flag, in the form `FLAG{...}`.

@@ -646,3 +646,42 @@
   margin: auto 0; padding: 22px 4px; text-align: center;
   color: var(--dim); font-size: .9rem; line-height: 1.6;
 }
+
+/* ── collapsible case rail ─────────────────────────────────────────────── */
+/* With the rail hidden the grid drops to a single column, so the work pane
+   takes the whole width back rather than leaving a 420px hole. work-inner
+   keeps its own max-width, so the reading measure never changes. */
+.room-main.rail-hidden { grid-template-columns: minmax(0, 1fr); }
+
+/* the tab strip and its collapse control share one row */
+.rail-head {
+  display: flex; align-items: stretch; flex: 0 0 auto;
+  background: #0A0C0F; border-bottom: 1px solid var(--line);
+}
+.rail-head .rail-tabs { flex: 1 1 auto; border-bottom: 0; }
+.rail-collapse {
+  flex: 0 0 auto; width: 38px; background: none; border: 0;
+  border-left: 1px solid var(--line); color: var(--dim);
+  cursor: pointer; display: grid; place-items: center;
+  transition: color .15s ease, background .15s ease;
+}
+.rail-collapse:hover { color: var(--brass); background: var(--surface-1); }
+
+/* the tab that brings it back: pinned to the top right of the work area */
+.rail-reopen {
+  position: fixed; top: 74px; right: 0; z-index: 25;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 13px 9px 11px;
+  background: var(--surface-1); color: var(--brass);
+  border: 1px solid var(--line); border-right: 0;
+  border-radius: 3px 0 0 3px; cursor: pointer;
+  font-family: 'Special Elite', monospace; font-size: 10px; letter-spacing: .14em;
+  transition: background .15s ease, color .15s ease;
+}
+.rail-reopen:hover { background: var(--surface-2); color: #F3EEE3; }
+
+@media (max-width: 1100px) {
+  /* the rail is already stacked underneath at this width, so hiding it would
+     only cost the squad their notes and hints for no gain */
+  .rail-collapse, .rail-reopen { display: none; }
+}
