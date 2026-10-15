@@ -14,9 +14,6 @@ import notebookRoutes from './routes/notebook.js';
 import theoryRoutes from './routes/theory.js';
 import leaderboardRoutes from './routes/leaderboard.js';
 import adminRoutes from './routes/admin.js';
-import characterRoutes from './routes/characters.js';
-import termRoutes from './routes/terms.js';
-import timelineRoutes from './routes/timeline.js';
 import caseRoutes from './routes/case.js';
 
 const app = express();
@@ -61,9 +58,6 @@ app.use('/api/notebook', notebookRoutes);
 app.use('/api/theory', theoryRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/characters', characterRoutes);
-app.use('/api/terms', termRoutes);
-app.use('/api/timeline', timelineRoutes);
 app.use('/api/case', caseRoutes);
 
 // Serve frontend build and public assets if they exist

@@ -156,7 +156,7 @@ export const DocViewer: React.FC = () => {
                 }`}
               >
                 <PhoneCall className="w-3.5 h-3.5 text-amber-800" />
-                <span>DOC 03: BT Phone Records</span>
+                <span>DOC 03: MTNL Phone Records</span>
               </button>
 
               <button
@@ -217,7 +217,7 @@ export const DocViewer: React.FC = () => {
                       </span>
                     </div>
                     <p className="text-[11px] font-mono text-ink/75">
-                      REF: CRIM-02-12-23 • SECTOR 4B • SCOTLAND YARD ARCHIVE COPY
+                      REF: CRIM-02-12-23 • ZONE 2 • CRIME BRANCH ARCHIVE COPY
                     </p>
                   </div>
                   <span className="stamp stamp-open text-xs">OFFICIAL DOCKET</span>
@@ -254,16 +254,16 @@ export const DocViewer: React.FC = () => {
               </div>
             )}
 
-            {/* DOCUMENT 3: BT PHONE RECORDS */}
+            {/* DOCUMENT 3: MTNL PHONE RECORDS */}
             {activeDocTab === 'D3' && (
               <div className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between border-b-2 border-ink pb-3 gap-2">
                   <div>
                     <h3 className="font-typewriter text-base sm:text-lg font-bold tracking-widest uppercase">
-                      BRITISH TELECOM // SUBSCRIBER CALL RECORD
+                      MTNL MUMBAI // SUBSCRIBER CALL RECORD
                     </h3>
                     <p className="text-[11px] font-mono text-ink/75">
-                      SUBSCRIBER: JULIAN MARSH • FIXED-LINE ID: 020 7946 0144 • EXCHANGE: HAMPSTEAD
+                      SUBSCRIBER: JULIAN MARSH • FIXED-LINE ID: 022 2367 0144 • EXCHANGE: MALABAR HILL
                     </p>
                   </div>
                   <span className="stamp stamp-closed text-xs">CERTIFIED</span>
@@ -313,15 +313,15 @@ export const DocViewer: React.FC = () => {
               <div className="space-y-4 font-serif bg-[#fbf6ec] p-5 rounded border border-[#c4b59d] shadow-sm transform rotate-[-0.2deg]">
                 <div className="border-b-2 border-zinc-900 pb-2 text-center">
                   <span className="font-serif text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 uppercase block font-typewriter">
-                    THE NORTH LONDON GAZETTE
+                    THE PENINSULA GAZETTE
                   </span>
                   <span className="text-[11px] text-zinc-600 font-mono block">
-                    Wednesday, 5 December 2023 • Late Edition • Price 45p • Page 4
+                    Wednesday, 5 December 2023 • Late Edition • Price Rs 4 • Page 4
                   </span>
                 </div>
 
                 <h4 className="font-bold text-sm sm:text-base leading-snug text-zinc-950 border-b border-zinc-300 pb-1">
-                  HAMPSTEAD TRAGEDY: PSYCHOLOGIST'S PATIENT QUESTIONED IN UNRESOLVED DEATH
+                  MALABAR HILL TRAGEDY: PSYCHOLOGIST'S PATIENT QUESTIONED IN UNRESOLVED DEATH
                 </h4>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs leading-relaxed text-zinc-800 text-justify">

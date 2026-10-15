@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { api, type TermEntry, type TimelineEvent } from '../api/client.js';
+import { api } from '../api/client.js';
 import {
   TeamInfo,
   LevelSummary,
@@ -18,19 +18,6 @@ interface EvidenceCard {
   level: number;
   title: string;
   text: string;
-}
-
-export interface CharacterProfile {
-  id: string;
-  name: string;
-  role: string;
-  classification: string;
-  status: string;
-  knownFacts: string[];
-  timeline: string[];
-  linkedEvidence: string[];
-  redacted: boolean;
-  patientCode?: string;
 }
 
 interface GameState {
@@ -52,9 +39,6 @@ interface GameState {
   isTheoryModalOpen: boolean;
   isPrintModalOpen: boolean;
   activeDrawerTab: 'notebook' | 'hints' | 'leaderboard';
-  characters: CharacterProfile[];
-  terms: TermEntry[];
-  timeline: TimelineEvent[];
   caseData: any | null;
 
   // Actions
@@ -71,10 +55,7 @@ interface GameState {
   setTheoryModalOpen: (open: boolean) => void;
   setPrintModalOpen: (open: boolean) => void;
   setActiveDrawerTab: (tab: 'notebook' | 'hints' | 'leaderboard') => void;
-  loadCharacters: () => Promise<void>;
   loadCase: () => Promise<void>;
-  loadTerms: () => Promise<void>;
-  loadTimeline: () => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -97,9 +78,6 @@ export const useGameStore = create<GameState>((set, get) => ({
   isTheoryModalOpen: false,
   isPrintModalOpen: false,
   activeDrawerTab: 'notebook',
-  characters: [],
-  terms: [],
-  timeline: [],
   caseData: null,
 
   init: async () => {
@@ -113,9 +91,6 @@ export const useGameStore = create<GameState>((set, get) => ({
       });
 
       if (me.team) {
-        await get().loadCharacters();
-        await get().loadTerms();
-        await get().loadTimeline();
         await get().loadCase();
 
         const levelsRes = await api.getLevels();
@@ -199,10 +174,7 @@ export const useGameStore = create<GameState>((set, get) => ({
           // Refresh levels list and current detail
           const levelsRes = await api.getLevels();
           set({ levels: levelsRes.levels, theoryUnlocked: !!levelsRes.theoryUnlocked });
-          await get().loadCharacters();
-          await get().loadTerms();
-          await get().loadTimeline();
-          await get().loadCase();
+                await get().loadCase();
           await get().selectLevel(selectedLevelId);
         } else if (res.nextStage) {
           // Advance to next stage in current level
@@ -303,30 +275,6 @@ export const useGameStore = create<GameState>((set, get) => ({
   ) => {
     set({ activeDrawerTab: tab });
   },
-loadTimeline: async () => {
-  try {
-    const response = await api.getTimeline();
-    set({ timeline: response.events ?? [] });
-  } catch (err) {
-    console.error('Failed to load timeline:', err);
-  }
-},
-loadTerms: async () => {
-  try {
-    const response = await api.getTerms();
-    set({ terms: response.terms ?? [] });
-  } catch (err) {
-    console.error('Failed to load important terms:', err);
-  }
-},
-loadCharacters: async () => {
-  try {
-    const response = await api.getCharacters();
-    set({ characters: response.characters ?? [] });
-  } catch (err) {
-    console.error('Failed to load character profiles:', err);
-  }
-},
 loadCase: async () => {
   try {
     const response = await api.getCase();

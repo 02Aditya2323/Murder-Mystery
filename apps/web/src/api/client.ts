@@ -60,9 +60,6 @@ export const api = {
   skipLevel: (level: number) =>
     apiRequest(`/levels/${level}/skip`, { method: 'POST' }),
   getMorseData: () => apiRequest('/levels/2/morse'),
-  getTimeline: () => apiRequest<{ events: TimelineEvent[] }>('/timeline'),
-  getTerms: () => apiRequest<{ terms: TermEntry[] }>('/terms'),
-  getCharacters: () => apiRequest<{ characters: any[]; levelsCompleted: number }>('/characters'),
   getCase: () => apiRequest<any>('/case'),
 
   // Notebook

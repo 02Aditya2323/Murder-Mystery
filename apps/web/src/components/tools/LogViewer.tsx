@@ -170,7 +170,7 @@ export const LogViewer: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-between text-xs font-mono text-dim pt-1">
-              <span>EVIDENCE ID: CR-2026-EX-A &bull; 14 KEATS GROVE</span>
+              <span>EVIDENCE ID: CR-2026-EX-A &bull; RIDGE ROAD, MALABAR HILL</span>
               <span className="text-signal font-bold">FROZEN TIME: 22:17 IST</span>
             </div>
           </div>

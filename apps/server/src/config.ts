@@ -8,7 +8,7 @@ dotenv.config();
 
 export const ANSWER_SECRET = process.env.ANSWER_SECRET || 'MURDER_MYSTERY_1986_SECRET_KEY';
 export const SESSION_SECRET = process.env.SESSION_SECRET || 'INVESTIGATION_COOKIE_SECRET_1986';
-export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'hampstead1986';
+export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'malabarhill2026';
 export const PORT = parseInt(process.env.PORT || '3000', 10);
 
 function resolveProjectRoot(): string {

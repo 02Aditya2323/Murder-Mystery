@@ -176,11 +176,11 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
     payload.evidenceCards = [
       { id: 'E1', title: 'E1: Clock & Desk Photographs', description: 'Crime scene photos of the smashed desk clock stopped at 22:17 with glass fragments.' },
       { id: 'E2', title: 'E2: Café & Bank Records', description: 'Four discrete bank payments and café receipts between Elias and Clara over the last eight weeks.' },
-      { id: 'E3', title: 'E3: Parking Ticket & Doorbell Video', description: 'Charity dinner garage exit barrier ticket at 22:58, plus neighbour camera footage of Lena\'s sedan outside Keats Grove at 23:38.' },
+      { id: 'E3', title: 'E3: Parking Ticket & Doorbell Video', description: 'Charity dinner garage exit barrier ticket at 22:58, plus neighbour camera footage of Lena\'s sedan outside the Ridge Road house at 23:38.' },
       { id: 'E4', title: 'E4: Seaside Promenade Photograph', description: 'Photograph uploaded by Adrian Cross at 22:21 captioned with a coastal view.' },
       { id: 'E5', title: 'E5: Text Message Extract', description: 'SMS message sent from Daniel Reed\'s mobile to Dr. Elias Vane 48 hours prior: "This isn\'t over."' },
       { id: 'E6', title: 'E6: Desk Appointment Diary', description: 'Leather calendar agenda recording Dr. Vane\'s clinical consultations and scheduled commitments.' },
-      { id: 'E7', title: 'E7: Private Hire Vehicle Dispatch', description: 'Licensed taxi dispatch record showing Noah Mercer dropped off on the corner of Keats Grove at 21:00.' },
+      { id: 'E7', title: 'E7: Private Hire Vehicle Dispatch', description: 'Licensed taxi dispatch record showing Noah Mercer dropped off one street from Ridge Road at 21:00.' },
       { id: 'E8', title: 'E8: Medical Examiner Preliminary Summary', description: 'Pathologist report establishing time of death 45 to 75 minutes post verified physical activity.' },
       { id: 'E9', title: 'E9: Audio Archive Session Three Transcript', description: 'Damaged transcript of Lena Vane disputing clinical certifications and professional liability.' }
     ];

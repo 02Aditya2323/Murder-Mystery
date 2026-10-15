@@ -469,7 +469,7 @@ export const AdminDashboard: React.FC = () => {
                 rows={6}
                 value={csvInput}
                 onChange={(e) => setCsvInput(e.target.value)}
-                placeholder="name,code,password,kit_no,members&#10;Baker Street Unit,BAKER,case1986,1,Inspector Lestrade;Dr. Watson&#10;Scotland Yard Bravo,YARD,case1986,2,Sgt. Miller;Constable Evans"
+                placeholder="name,code,password,kit_no,members&#10;Colaba Division,COLABA,ridgeroad,1,A. Deshpande;R. Watson&#10;Scotland Yard Bravo,YARD,case1986,2,Sgt. Miller;Constable Evans"
                 className="w-full bg-label/90 text-ink font-mono text-xs p-3 rounded border border-ink/30 focus:outline-none"
               />
 

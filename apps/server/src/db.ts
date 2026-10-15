@@ -172,7 +172,7 @@ export function initDatabase() {
         code: 'COLABA',
         password: 'ridgeroad',
         kit_no: 1,
-        members: ['Inspector Lestrade', 'Dr. Watson']
+        members: ['A. Deshpande', 'R. Iyer']
       },
       {
         id: 'team-2',
@@ -180,7 +180,7 @@ export function initDatabase() {
         code: 'MALABAR',
         password: 'ridgeroad',
         kit_no: 2,
-        members: ['Sgt. Miller', 'Constable Evans']
+        members: ['S. Kulkarni', 'N. Pillai']
       },
       {
         id: 'team-3',
@@ -188,7 +188,7 @@ export function initDatabase() {
         code: 'CRAWFORD',
         password: 'ridgeroad',
         kit_no: 3,
-        members: ['Officer Davis', 'Analyst Price']
+        members: ['M. Fernandes', 'T. Rao']
       }
     ];
 

@@ -43,7 +43,7 @@ const ok = (cond, msg) => { console.log((cond ? '  PASS  ' : '  FAIL  ') + msg);
 const adminCookie = await (async () => {
   const res = await fetch(BASE + '/api/admin/login', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ password: process.env.ADMIN_PW || 'hampstead1986' })
+    body: JSON.stringify({ password: process.env.ADMIN_PW || 'malabarhill2026' })
   });
   const c = (res.headers.getSetCookie?.() || []).map(x => x.split(';')[0]).join('; ');
   await fetch(BASE + '/api/admin/event/action', {
