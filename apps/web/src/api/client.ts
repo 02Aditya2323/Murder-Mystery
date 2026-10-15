@@ -47,6 +47,11 @@ export const api = {
   // Auth
   login: (code: string, password: string) =>
     apiRequest('/auth/login', { method: 'POST', body: JSON.stringify({ code, password }) }),
+  register: (teamName: string, kitNo: number) =>
+    apiRequest<{ ok: boolean; recoveryCode: string; team: { id: string; name: string; code: string; kitNo: number } }>(
+      '/auth/register',
+      { method: 'POST', body: JSON.stringify({ teamName, kitNo }) }
+    ),
   logout: () => apiRequest('/auth/logout', { method: 'POST' }),
   getMe: () => apiRequest('/auth/me'),
 

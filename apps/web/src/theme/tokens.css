@@ -1822,3 +1822,38 @@ body {
   }
 }
 
+
+/* ── registration additions ────────────────────────────────────────────── */
+/* The recovery code is shown exactly once, so it has to be unmissable and
+   unambiguous to copy onto paper. */
+.recovery-code {
+  margin: 4px 0 2px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(38px, 7vw, 54px);
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-indent: .22em;            /* balances the trailing letter-space */
+  text-align: center;
+  color: #7A2B22;
+  background: repeating-linear-gradient(
+    45deg, rgba(122,43,34,.05) 0 10px, rgba(122,43,34,.09) 10px 20px
+  );
+  border: 2px dashed rgba(122,43,34,.45);
+  border-radius: 4px;
+  padding: 18px 10px;
+}
+
+/* a quiet secondary action inside the case card */
+.case-text-link {
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+  align-self: center;
+  font-family: 'Source Serif 4', serif;
+  font-size: .82rem;
+  color: #7c6a52;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.case-text-link:hover { color: #3f3528; }

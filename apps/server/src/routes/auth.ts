@@ -1,5 +1,5 @@
 import { Router, Response } from 'express';
-import { db, hashPassword } from '../db.js';
+import { db, hashPassword, initTeamLevelState } from '../db.js';
 import { verifyToken, signToken, AuthenticatedRequest } from '../auth.js';
 import { getEventClock } from '../event-clock.js';
 import { Team, LevelStateRow } from '../types.js';
@@ -45,6 +45,88 @@ router.post('/login', (req, res) => {
       code: team.code,
       kitNo: team.kit_no
     }
+  });
+});
+
+/**
+ * Sign-up at the machine.
+ *
+ * The organiser sets the kit number on each PC once per batch; the squad then
+ * types the name they want and starts immediately. kit_no is deliberately NOT
+ * unique across teams: kit 1 is reused by the first squad of every batch, and
+ * those squads are never in the room at the same time.
+ *
+ * There is no password to remember. The session cookie is the auth. We hand
+ * back a short recovery code so a squad that closes the tab can get back into
+ * their own run instead of starting a second clock.
+ */
+const MAX_KIT = 8;
+const RECOVERY_ALPHABET = 'ACDEFGHJKLMNPQRTUVWXY34679'; // no O/0, I/1, S/5, B/8
+
+function makeRecoveryCode(): string {
+  let out = '';
+  for (let i = 0; i < 4; i++) {
+    out += RECOVERY_ALPHABET[Math.floor(Math.random() * RECOVERY_ALPHABET.length)];
+  }
+  return out;
+}
+
+router.post('/register', (req, res) => {
+  const rawName = typeof req.body?.teamName === 'string' ? req.body.teamName.trim() : '';
+  const kitNo = parseInt(req.body?.kitNo, 10);
+
+  if (!rawName) {
+    return res.status(400).json({ error: 'Pick a team name first.' });
+  }
+  if (rawName.length < 2 || rawName.length > 40) {
+    return res.status(400).json({ error: 'Team names run from 2 to 40 characters.' });
+  }
+  if (!Number.isInteger(kitNo) || kitNo < 1 || kitNo > MAX_KIT) {
+    return res.status(400).json({ error: 'This machine has no kit number set. Ask an organiser.' });
+  }
+
+  const clash = db.prepare('SELECT id FROM teams WHERE lower(name) = lower(?)').get(rawName);
+  if (clash) {
+    return res.status(409).json({ error: 'Another squad has taken that name. Pick a different one.' });
+  }
+
+  // The recovery code doubles as the squad's sign-in code.
+  let code = '';
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const candidate = makeRecoveryCode();
+    if (!db.prepare('SELECT id FROM teams WHERE code = ?').get(candidate)) {
+      code = candidate;
+      break;
+    }
+  }
+  if (!code) {
+    return res.status(500).json({ error: 'Could not allocate a recovery code. Tell an organiser.' });
+  }
+
+  const id = 'team-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+  db.prepare(
+    'INSERT INTO teams (id, name, code, pass_hash, kit_no, members_json, created_at) ' +
+    "VALUES (?, ?, ?, ?, ?, '[]', datetime('now'))"
+  ).run(id, rawName, code, hashPassword(code), kitNo);
+
+  initTeamLevelState(id);
+
+  // The clock starts here, for this squad only. Batches are staggered, so a
+  // 2pm squad must not inherit the 12pm squad's elapsed time.
+  db.prepare(
+    'UPDATE level_state SET started_at = ? WHERE team_id = ? AND level = 1 AND started_at IS NULL'
+  ).run(new Date().toISOString(), id);
+
+  res.cookie('investigation_session', signToken(id), {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: 24 * 60 * 60 * 1000
+  });
+
+  return res.json({
+    ok: true,
+    recoveryCode: code,
+    team: { id, name: rawName, code, kitNo }
   });
 });
 

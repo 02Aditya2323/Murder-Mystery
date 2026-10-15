@@ -26,7 +26,6 @@ try {
 }
 
 const BASE = process.env.BASE_URL || 'http://localhost:3000';
-const TEAM = { code: process.env.TEAM_CODE || 'COLABA', pass: process.env.TEAM_PASS || 'ridgeroad' };
 
 // Panels that are meant to scroll vertically: the pinned rail and the dossier
 // overlay. Nothing else on the page may become a vertical scroll container.
@@ -94,11 +93,17 @@ async function check(label, viewport, navigate) {
   await ctx.close();
 }
 
+// Registration, the way the room does it: the organiser binds a kit to the
+// machine with ?kit=N, then the squad names itself. Each run uses a fresh name
+// because squad names are unique for the whole event.
 const signIn = async (page) => {
-  await page.goto(BASE + '/enter', { waitUntil: 'networkidle' });
-  await page.fill('#squadcode', TEAM.code);
-  await page.fill('#squadpass', TEAM.pass);
+  await page.goto(BASE + '/enter?kit=1', { waitUntil: 'networkidle' });
+  await page.waitForTimeout(600);
+  await page.fill('#squadcode', 'Layout Check ' + Math.random().toString(36).slice(2, 8));
   await page.click('button[type=submit]');
+  await page.waitForTimeout(1200);
+  // the recovery code is shown once; acknowledge it to reach the case room
+  await page.getByRole('button', { name: /open the case/i }).click().catch(() => {});
   await page.waitForURL('**/case', { timeout: 20000 }).catch(() => {});
   await page.waitForTimeout(1800);
 };
