@@ -69,7 +69,7 @@ export const PhotoViewer: React.FC = () => {
           <div className="flex items-center gap-2">
             <Compass className="w-4 h-4 text-amber-500" />
             <span className="font-typewriter font-bold text-[#e6d8c3] tracking-wider text-xs sm:text-sm">
-              ADRIAN CROSS // SOCIAL MEDIA ALIBI EVIDENCE PHOTOGRAPH
+              ADRIAN CROSS // ALIBI IMAGE, RECONSTRUCTED
             </span>
           </div>
 
@@ -126,7 +126,7 @@ export const PhotoViewer: React.FC = () => {
 
             <img
               src={photoUrl}
-              alt="Adrian Cross alibi evidence photograph"
+              alt="Forensic reconstruction of the alibi image: angled fort bastions on the shore, a square fort alone in the water, a church bell tower on the rise, and a seafront promenade"
               onError={(e) => {
                 (e.target as HTMLImageElement).src = '/images/l7_geo_photo.jpg';
               }}
@@ -183,7 +183,7 @@ export const PhotoViewer: React.FC = () => {
         <form onSubmit={handleSubmit} className="p-4 bg-tape/90 rounded-lg border-2 border-signal/40 shadow-desk space-y-3">
           <label className="block text-xs font-serif text-label font-medium flex items-center gap-2">
             <MapPin className="w-4 h-4 text-signal" />
-            <span>Enter the verified location or landmark shown in this alibi photograph (or enter coordinates lat,lng):</span>
+            <span>Where was this drawn from? Enter the town or the landmark, or coordinates as lat,lng.</span>
           </label>
           <div className="flex flex-col sm:flex-row gap-2">
             <input
@@ -218,7 +218,7 @@ export const PhotoViewer: React.FC = () => {
                 LOCATION VERIFIED // CASE #07 SOLVED
               </span>
               <span className="text-xs font-serif text-emerald-100/80">
-                Alibi photograph traced to its real coastline. The memorial registry does the rest.
+                The alibi image traced to its real coastline. The memorial registry does the rest.
               </span>
             </div>
           </div>

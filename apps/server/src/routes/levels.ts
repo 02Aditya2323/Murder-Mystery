@@ -191,7 +191,7 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
     // cannot be read off another team's screen.
     payload.diaryPages = getDiaryPagesFor(teamId);
   } else if (levelNum === 7) {
-    payload.photoUrl = `/api/levels/7/assets/l7_geo_photo.jpg`;
+    payload.photoUrl = `/api/levels/7/assets/l7_geo_photo.svg`;
     const geoConfigPath = path.resolve(rootDir, 'content/assets-private/l7_geo_config.json');
     if (fs.existsSync(geoConfigPath)) {
       const geo = JSON.parse(fs.readFileSync(geoConfigPath, 'utf8'));
