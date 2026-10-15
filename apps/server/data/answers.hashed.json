@@ -11,6 +11,32 @@
         "nudges": {
           "2243": "Check whether you corrected for panel clock skew.",
           "2320": "Automated cloud backup syncs are not human activity."
+        },
+        "kitHashes": {
+          "1": [
+            "33f0d496080138abf704f6cafbc18bc2adfc79c5bcc4b4a67507d0d07039667f"
+          ],
+          "2": [
+            "5e8fcc89762f9d0773548d82384aabd355140e5bc590c08e788be0df7393c6ad"
+          ],
+          "3": [
+            "6d1d70ef8119f425b6fc21cc2d69b76dc591c31484f3850cf40a909d9b018456"
+          ],
+          "4": [
+            "d49f2f9d3068e936a8c5f2593293d22351725ce9db4e52e114628d9a162b5641"
+          ],
+          "5": [
+            "b2143fe12d6471328dc5b204b1e8ce288310f5deda006ac748beaa39c3279aa7"
+          ],
+          "6": [
+            "03d4c3bfa46669e7a36af223528f732c491e61d5405cbee9c9161eae100293a0"
+          ],
+          "7": [
+            "0da68de68a436ee133ac3f8b89a6be6a97d5a72c18bba9843311cf594bf67383"
+          ],
+          "8": [
+            "d8f1c72dc8e39b6448d8e42f8ef7e72f06c95593d315457af8fe32307d93fa84"
+          ]
         }
       }
     ]
@@ -68,7 +94,41 @@
           "f4274caea7e10d83d0632eced5d588241efbe5f7a2f8bb1407d96a82aa53d4b2",
           "46e59a52c5aef712eb94e6b7cfe58bbba476ce7748fa4fec6a027c05c7e2a915",
           "42fad757522872756a4df395f4b9df239aa381017030113e4c2f7cc25c5aefdb"
-        ]
+        ],
+        "kitHashes": {
+          "1": [
+            "272a78dd41f09cf393c363b858b363d9d55c1fbe7cf21884e26b9335071dde8e",
+            "d2cfc650b3a94539f64b8377050ad7f92373d00f4d90dac984ce0c9f9d32de77"
+          ],
+          "2": [
+            "ce2e1909b8d23a4d6a707f978261a2f1e51ad895f03f50c7bf1163b1a4d0194e",
+            "0e687ff835d1aba26ccad798ec8e2888f05ddf644f50426235b41b723ed119f6"
+          ],
+          "3": [
+            "d30c0a58dfb1b6b4328ea196835042cd1a32352a3d186fbb710ad782d9b072d2",
+            "baf35a6c9f6e766ee689ece4daf034884aed9b4ebbed3c9a038d33dad5c3adee"
+          ],
+          "4": [
+            "28d9994a62d681f7d9b4105c6e51c7c6a313da6980e59f426c08a0f6982f28ba",
+            "91cd717569f6e8da44a089dee2b71bc947464bdc5c60a8d07bbe608eeedc1cff"
+          ],
+          "5": [
+            "450f3648962ae6f82cef7f994c9f8b921bb4221dd66de9e5f58f063fa39b9371",
+            "5afc0c42a0b542a9d19eb049060eda7f3abbb68355833331093c44417337acbe"
+          ],
+          "6": [
+            "cb7891dc4910722a5c61b2a8a78a53836b61e86a300e7a8bc936ba9400b662ad",
+            "36f868e0e4bca3f7983dedf3e0cf233bb4b6cf8698c1e4390bf3ef91c8333a4d"
+          ],
+          "7": [
+            "659963135a4dab125010a7680c7b2a66cad1ceb1fb87032aa5e569af514fa639",
+            "5d60a3905a81cd8d11c3863abd2e029f858f777eef66504f052d99e59e053ba0"
+          ],
+          "8": [
+            "1790f602e4a15efd09f087ffe9612e0fd122556fdde9654072cb3fd52104012c",
+            "9cbbed9acf78c6d54dd78d54b008428c9fdeb27204a9d49478297889e3c07f12"
+          ]
+        }
       }
     ]
   },
@@ -166,6 +226,32 @@
             "60",
             "+",
             "%"
+          ]
+        },
+        "kitHashes": {
+          "1": [
+            "471055852d8ec2f1c9d7f05f37bc755724663678a107504f1e1739bf23919968"
+          ],
+          "2": [
+            "3c5780fc3c3302fe4793a330981d0530ea0996cd84fd71c5def7a7a0581cde28"
+          ],
+          "3": [
+            "013191a8984566cdb9919009d039c23f9dfa2d3faff51b62b77b1772a0df4fcb"
+          ],
+          "4": [
+            "fdba14d00fa7e5248358cb76c6abe16b180879a909557f41a1f5a23f1ec1247c"
+          ],
+          "5": [
+            "60c20a475b60814d8ed599d4afaf32210f1a147a91c48fd5551a79f947f3e8c3"
+          ],
+          "6": [
+            "fcd1302cd5f6faaf899da7fc8876dcebccd049ebd2000f7d730867259a906bcd"
+          ],
+          "7": [
+            "76293fb5865c288bd7390c9c372e1265df539a01a322963d5e8ed93624af62f4"
+          ],
+          "8": [
+            "9ab4807c35dc614698a3087007f33ac0318b471cdde5c654e24e982b32d4df5c"
           ]
         }
       }

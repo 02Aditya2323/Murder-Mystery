@@ -127,6 +127,19 @@ export function validateAnswer(params: {
   }
 
   const computed = computeHash(normalized, `LEVEL_${level}_SALT_1986`);
+
+  // Beats 1, 4 and 9 are seeded per kit, so eight teams in one room cannot
+  // call answers across the tables. When a beat has kitHashes, that team's
+  // kit is the ONLY list that counts: falling back to validHashes here would
+  // quietly let every kit's answer work everywhere.
+  if (stageData.kitHashes) {
+    const mine = teamKitNo ? stageData.kitHashes[String(teamKitNo)] : undefined;
+    if (!mine) {
+      return { correct: false, nudge: 'No kit is assigned to this squad. Tell an organiser.' };
+    }
+    return { correct: mine.includes(computed) };
+  }
+
   if (stageData.validHashes && stageData.validHashes.includes(computed)) {
     return { correct: true };
   }

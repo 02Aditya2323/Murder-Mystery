@@ -37,6 +37,25 @@ const DIARY_PAGES = [
   { canonical: 'P6', token: 'MV-29', text: 'The first day I did not speak. Not a syllable. When words only serve to let others rearrange your reality, silence is the only fortress. I will not explain myself again until someone sees what really took place.' }
 ];
 
+/**
+ * One kit's variant data for beats 1, 4 and 9. Returns undefined when the
+ * file is absent, so an un-generated deployment falls back to the shared
+ * content rather than failing to serve the beat at all.
+ */
+let variantCache: any = null;
+function readVariant(kitNo: number, field: string): any {
+  if (variantCache === null) {
+    try {
+      variantCache = JSON.parse(
+        fs.readFileSync(path.resolve(rootDir, 'content/variants.json'), 'utf8')
+      );
+    } catch {
+      variantCache = {};
+    }
+  }
+  return variantCache?.[String(kitNo)]?.[field];
+}
+
 function seedFrom(text: string): number {
   let h = 2166136261;
   for (let i = 0; i < text.length; i++) {
@@ -157,10 +176,12 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
 
   // Attach tool-specific data
   if (levelNum === 1) {
-    const logsPath = path.resolve(rootDir, 'content/assets-private/level1_logs.json');
-    console.log('[Level 1] Working directory:', process.cwd());
-    console.log('[Level 1] Logs path:', logsPath);
-    console.log('[Level 1] File exists:', fs.existsSync(logsPath));
+    // This squad's own log bundle. Each kit has a different panel skew and a
+    // different last human moment, so each kit has a different window.
+    const kit = req.team!.kit_no;
+    const perKit = path.resolve(rootDir, `content/assets-private/level1_logs.k${kit}.json`);
+    const shared = path.resolve(rootDir, 'content/assets-private/level1_logs.json');
+    const logsPath = fs.existsSync(perKit) ? perKit : shared;
     if (fs.existsSync(logsPath)) {
       payload.logs = JSON.parse(fs.readFileSync(logsPath, 'utf8'));
     }
@@ -219,12 +240,17 @@ router.get('/:n', requireTeamAuth, (req: AuthenticatedRequest, res: Response) =>
     // SHIFT_MIN is 58, not 42, so the forged row reads 22:10, BEFORE the
     // staged 22:17 attack. At 42 the cover story contradicted itself: the
     // study would have been bolted from inside after Vane was already dead.
+    // Per kit: a different shift and a different forged time, so the true
+    // lock time differs from table to table.
+    const v9 = readVariant(req.team!.kit_no, 'beat9');
+    const shiftMin: number = v9?.shift ?? 58;
+    const forgedTime: string = v9?.forgedTime ?? '22:10';
     payload.script = {
       filename: 'tidy_export.py',
       found: "Recovered from the research assistant's work laptop",
       language: 'python',
       code: `# tidy_export.py
-SHIFT_MIN = 58
+SHIFT_MIN = ${shiftMin}
 
 for row in raw_lock_log:
     if row.source == "LIAISON_4417":
@@ -237,7 +263,7 @@ for row in raw_lock_log:
     export(row)`
     };
     payload.exportRows = [
-      { time: '22:10', event: 'LOCK',   source: 'INTERIOR_PANEL' },
+      { time: forgedTime, event: 'LOCK',   source: 'INTERIOR_PANEL' },
       { time: '23:40', event: 'UNLOCK', source: 'MANUAL_KEY' },
       { time: '23:56', event: 'LOCK',   source: 'MANUAL_KEY' }
     ];
@@ -270,7 +296,16 @@ router.get('/:n/assets/:assetName(*)', requireTeamAuth, (req: AuthenticatedReque
 
   // Prevent directory traversal
   const safeAsset = path.normalize(assetName).replace(/^(\.\.[\/\\])+/, '');
-  const assetPath = path.resolve(rootDir, 'content/assets-private', safeAsset);
+  let assetPath = path.resolve(rootDir, 'content/assets-private', safeAsset);
+
+  // Beat 4's database is per kit. The client always asks for level4.sqlite;
+  // the server hands over this squad's own copy when one has been generated.
+  if (levelNum === 4 && safeAsset === 'level4.sqlite') {
+    const mine = path.resolve(
+      rootDir, 'content/assets-private', `level4.k${req.team!.kit_no}.sqlite`
+    );
+    if (fs.existsSync(mine)) assetPath = mine;
+  }
 
   if (!fs.existsSync(assetPath)) {
     return res.status(404).json({ error: 'Asset not found.' });

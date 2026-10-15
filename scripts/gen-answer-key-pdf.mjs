@@ -30,11 +30,15 @@ const kitCards = key.kits.map((k) => `
   <div class="kit">
     <div class="kh">
       <span class="kn">KIT ${k.kit_no}</span>
-      <span class="ka">${esc(k.answer)}</span>
+      <span class="ka">${esc(k.answer)}</span><span class="kal">beat 8</span>
     </div>
     <table class="kmeta">
+      <tr><th>Beat 1</th><td><span class="big">${esc(k.beat1 || "-")}</span> <em>${esc(k.beat1detail || "")}</em></td></tr>
+      <tr><th>Beat 4</th><td class="mono big">${esc(k.beat4 || "-")}</td></tr>
+      <tr><th>Beat 9</th><td><span class="mono big">${esc(k.beat9 || "-")}</span> <em>${esc(k.beat9detail || "")}</em></td></tr>
+      <tr><td colspan="2" class="rule"></td></tr>
       <tr><th>Chips</th><td>${esc(k.ics)}</td></tr>
-      <tr><th>Switches</th><td class="mono">${esc(k.inputs)} &nbsp;<em>taped down, do not move</em></td></tr>
+      <tr><th>Switches</th><td class="mono">${esc(k.inputs)} &nbsp;<em>taped down</em></td></tr>
       <tr><th>Jumper out</th><td class="mono">${esc(k.missingStage)}</td></tr>
     </table>
     <div class="wlabel">Full wiring</div>
@@ -73,6 +77,10 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><title>Answer Key
   table.kmeta td { padding: 0.8mm 0; }
   .mono { font-family: "Consolas", monospace; }
   .mono em { font-family: "Segoe UI", sans-serif; color: #8C281E; font-style: normal; font-size: 8pt; }
+  .big { font-weight: 700; color: #0d5c2f; font-size: 10pt; }
+  .kal { font-size: 6.5pt; color: #5b646f; display: block; text-align: right;
+         letter-spacing: 1px; text-transform: uppercase; margin-top: -1mm; }
+  td.rule { border-top: 0.6pt solid #e1e6ea; padding: 1mm 0 0 !important; }
   .wlabel { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 1px;
             color: #5b646f; margin-bottom: 1mm; }
   pre.wiring { font-family: "Consolas", monospace; font-size: 7.8pt; line-height: 1.45;
@@ -107,8 +115,10 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><title>Answer Key
 </div>
 
 <div class="pagebreak"></div>
-<h2>Beat 8 &mdash; the eight kits</h2>
-<p class="sub">Kits 1&ndash;4 are 7400 NAND + 7402 NOR. Kits 5&ndash;8 are 7400 NAND + 7404 inverter.
+<h2>The eight kits</h2>
+<p class="sub"><strong>Beats 1, 4, 8 and 9 are seeded per kit.</strong> Each squad only ever sees its own
+version, and the server refuses another kit's answer. Beats 2, 3, 5, 6, 7 and 10 are shared.<br>
+Kits 1&ndash;4 are 7400 NAND + 7402 NOR. Kits 5&ndash;8 are 7400 NAND + 7404 inverter.
 Every circuit uses both chips. Pin 14 to +5V and pin 7 to ground on each chip.
 Three output LEDs, read left to right.</p>
 <div class="kits">${kitCards}</div>

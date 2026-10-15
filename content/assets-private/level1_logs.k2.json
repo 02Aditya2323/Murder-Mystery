@@ -1,0 +1,198 @@
+[
+  {
+    "id": 1,
+    "source": "SEC",
+    "timestamp": "23-10 19:28:12",
+    "message": "SYSTEM_ARMED perimeter_only",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 2,
+    "source": "THERMO",
+    "timestamp": "2026-10-23 19:45:00",
+    "message": "COMFORT_TEMP target=21.5C current=21.0C",
+    "tz": "IST"
+  },
+  {
+    "id": 3,
+    "source": "PHONE",
+    "timestamp": "7:55 PM",
+    "message": "OUTGOING 022 2367 0912 03:14",
+    "tz": "IST"
+  },
+  {
+    "id": 4,
+    "source": "PC",
+    "timestamp": "2026-10-23T13:32:15Z",
+    "message": "SYNC session_cache_uploaded",
+    "tz": "UTC"
+  },
+  {
+    "id": 5,
+    "source": "DOORBELL",
+    "timestamp": "2026-10-23 20:15:02",
+    "message": "MOTION_DETECTED sidewalk_pedestrian",
+    "tz": "IST"
+  },
+  {
+    "id": 6,
+    "source": "PC",
+    "timestamp": "2026-10-23T14:55:40Z",
+    "message": "INPUT keyboard clinical_notes_p0101.doc",
+    "tz": "UTC"
+  },
+  {
+    "id": 7,
+    "source": "DOORBELL",
+    "timestamp": "2026-10-23 20:33:07",
+    "message": "FRONT_DOOR_OPEN (courier handoff)",
+    "tz": "IST"
+  },
+  {
+    "id": 8,
+    "source": "SEC",
+    "timestamp": "23-10 20:37:08",
+    "message": "FRONT_DOOR_OPEN zone=1",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 9,
+    "source": "SEC",
+    "timestamp": "23-10 20:38:09",
+    "message": "FRONT_DOOR_CLOSE zone=1",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 10,
+    "source": "THERMO",
+    "timestamp": "2026-10-23 20:50:00",
+    "message": "ZONE_4_HEAT active pump_cycle=on",
+    "tz": "IST"
+  },
+  {
+    "id": 11,
+    "source": "DOORBELL",
+    "timestamp": "2026-10-23 21:02:11",
+    "message": "NETWORK_INTERFACE_OFFLINE (Wi-Fi lost)",
+    "tz": "IST"
+  },
+  {
+    "id": 12,
+    "source": "SEC",
+    "timestamp": "23-10 21:08:22",
+    "message": "CORRIDOR_MOTION zone=2",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 13,
+    "source": "SEC",
+    "timestamp": "23-10 21:22:00",
+    "message": "VISITOR_EXIT door=front guest_badge=07",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 14,
+    "source": "PHONE",
+    "timestamp": "9:41 PM",
+    "message": "INCOMING unknown 0:52",
+    "tz": "IST"
+  },
+  {
+    "id": 15,
+    "source": "PC",
+    "timestamp": "2026-10-23T16:14:07Z",
+    "message": "INPUT keyboard",
+    "tz": "UTC"
+  },
+  {
+    "id": 16,
+    "source": "SEC",
+    "timestamp": "23-10 21:48:16",
+    "message": "STUDY_MOTION zone=4",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 17,
+    "source": "THERMO",
+    "timestamp": "2026-10-23 22:00:00",
+    "message": "SETBACK 19C",
+    "tz": "IST"
+  },
+  {
+    "id": 18,
+    "source": "SEC",
+    "timestamp": "23-10 22:03:10",
+    "message": "HEARTBEAT panel_ok batt=99%",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 19,
+    "source": "PC",
+    "timestamp": "2026-10-23T17:05:44Z",
+    "message": "SYNC backup_complete",
+    "tz": "UTC"
+  },
+  {
+    "id": 20,
+    "source": "SEC",
+    "timestamp": "23-10 22:30:00",
+    "message": "HEARTBEAT panel_ok batt=99%",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 21,
+    "source": "THERMO",
+    "timestamp": "2026-10-23 22:45:00",
+    "message": "TEMP_READING zone=4 19.1C",
+    "tz": "IST"
+  },
+  {
+    "id": 22,
+    "source": "PHONE",
+    "timestamp": "11:14 PM",
+    "message": "MISSED_CALL unknown",
+    "tz": "IST"
+  },
+  {
+    "id": 23,
+    "source": "THERMO",
+    "timestamp": "2026-10-23 23:15:00",
+    "message": "NIGHT_PROFILE_ACTIVE",
+    "tz": "IST"
+  },
+  {
+    "id": 24,
+    "source": "SEC",
+    "timestamp": "23-10 23:23:00",
+    "message": "HEARTBEAT panel_ok batt=98%",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 25,
+    "source": "PC",
+    "timestamp": "2026-10-23T18:22:10Z",
+    "message": "SYNC cloud_auth_refresh",
+    "tz": "UTC"
+  },
+  {
+    "id": 26,
+    "source": "THERMO",
+    "timestamp": "2026-10-23 23:45:00",
+    "message": "TEMP_READING zone=4 18.4C",
+    "tz": "IST"
+  },
+  {
+    "id": 27,
+    "source": "SEC",
+    "timestamp": "23-10 23:56:30",
+    "message": "PERIMETER_STATUS secure",
+    "tz": "IST (panel clock)"
+  },
+  {
+    "id": 28,
+    "source": "THERMO",
+    "timestamp": "2026-10-24 00:00:00",
+    "message": "DAILY_STATISTICS logged",
+    "tz": "IST"
+  }
+]
