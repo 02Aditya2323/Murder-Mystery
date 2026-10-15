@@ -4,6 +4,7 @@ import { useGameStore } from '../store/gameStore.js';
 import { MarkdownText } from '../components/LevelWorkspace.js';
 import { PersonSheet } from '../components/case/PersonSheet.js';
 import { CaseRail } from '../components/case/CaseRail.js';
+import { EvidenceUnlocked } from '../components/case/EvidenceUnlocked.js';
 import { FinalTheoryModal } from '../components/FinalTheoryModal.js';
 import { ToastContainer } from '../components/ToastContainer.js';
 
@@ -234,6 +235,7 @@ export const CaseRoom: React.FC = () => {
       </div>
 
       {person && <PersonSheet person={person} onClose={() => setOpenPerson(null)} />}
+      <EvidenceUnlocked />
       <FinalTheoryModal />
       <ToastContainer />
     </div>

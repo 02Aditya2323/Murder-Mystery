@@ -64,7 +64,7 @@ Access the application at `http://localhost:3000`.
 #### T-60 Minutes: System Initialization & Readiness Check
 1. Start the server (`npm start` or via Docker).
 2. Navigate to `http://<SERVER_IP>:3000/hq` (Emergency Login).
-   - Default master passcode: `hampstead1986` (configurable via `ADMIN_PASSWORD` in `.env`).
+   - Default master passcode: `malabarhill2026` (configurable via `ADMIN_PASSWORD` in `.env`).
 3. Check the **Pre-Flight Readiness Banner** at the top of the HQ dashboard:
    - Ensure all squads have an assigned hardware `kit_no`.
    - Ensure all Kit #1..10 stations have their secret answers configured.

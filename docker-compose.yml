@@ -12,7 +12,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - ADMIN_PASSWORD=hampstead1986
+      - ADMIN_PASSWORD=malabarhill2026
       - ANSWER_SECRET=MURDER_MYSTERY_1986_SECRET_KEY
       - SESSION_SECRET=INVESTIGATION_COOKIE_SECRET_1986
     volumes:

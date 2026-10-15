@@ -260,7 +260,7 @@ describe('Full 10-Level Investigation Happy Path E2E', () => {
     const adminLoginRes = await fetch(`${baseUrl}/admin/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: 'hampstead1986' })
+      body: JSON.stringify({ password: 'malabarhill2026' })
     });
     expect(adminLoginRes.status).toBe(200);
     const adminCookie = adminLoginRes.headers.get('set-cookie')!.split(';')[0];
