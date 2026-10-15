@@ -29,6 +29,10 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
+
+RUN apk add --no-cache python3 make g++
+
+
 COPY package.json package-lock.json ./
 COPY apps/server/package.json ./apps/server/
 
